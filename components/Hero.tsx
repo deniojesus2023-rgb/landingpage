@@ -85,6 +85,20 @@ export function Hero() {
         style={{ y, opacity, scale }}
         className="relative mx-auto max-w-6xl px-5 text-center sm:px-8"
       >
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+          className="mb-8 flex justify-center"
+        >
+          <img
+            src="/logo.png"
+            alt="HeroiVideo"
+            className="h-20 w-auto brightness-0 invert sm:h-24"
+          />
+        </motion.div>
+
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}

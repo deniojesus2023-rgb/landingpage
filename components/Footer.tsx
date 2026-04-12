@@ -7,14 +7,11 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-gold-400 via-gold-500 to-[#D68F00] shadow-glow">
-                <svg viewBox="0 0 24 24" className="h-5 w-5 text-ink-950" fill="currentColor">
-                  <path d="M12 2l2.39 4.84L20 7.77l-4 3.9.95 5.55L12 14.77 7.05 17.22 8 11.67 4 7.77l5.61-.93L12 2z" />
-                </svg>
-              </div>
-              <div className="text-lg font-extrabold tracking-tight text-white">
-                Heroi<span className="text-gradient-gold">Vídeo</span>
-              </div>
+              <img
+                src="/logo.png"
+                alt="HeroiVideo"
+                className="h-14 w-auto brightness-0 invert"
+              />
             </div>
             <p className="mt-5 max-w-sm text-[13px] leading-relaxed text-white/50">
               Transformamos o herói favorito do seu filho em um momento real,
