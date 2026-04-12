@@ -1,5 +1,20 @@
 import type { Metadata } from "next";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "HeroiVídeo — O herói favorito do seu filho fala o nome dele",
@@ -20,20 +35,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="bg-ink-950 text-white antialiased">{children}</body>
+    <html lang="pt-BR" className={`${inter.variable} ${fraunces.variable}`}>
+      <body className="bg-ink-950 font-sans text-white antialiased">
+        {children}
+      </body>
     </html>
   );
 }
