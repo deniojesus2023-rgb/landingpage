@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
-import { UrgencyBar } from "@/components/UrgencyBar";
 import { Hero } from "@/components/Hero";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HowItWorks } from "@/components/HowItWorks";
@@ -34,7 +33,6 @@ export default function HomePage() {
 
   return (
     <main className="relative overflow-hidden">
-      <UrgencyBar />
       <Navbar />
       <Hero />
       <LogoMarquee />
