@@ -7,9 +7,13 @@ import { Hero } from "@/components/Hero";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HowItWorks } from "@/components/HowItWorks";
 import { VideoDemo } from "@/components/VideoDemo";
+import { BeforeAfter } from "@/components/BeforeAfter";
 import { Characters } from "@/components/Characters";
+import { GiftComparison } from "@/components/GiftComparison";
 import { Testimonials } from "@/components/Testimonials";
+import { MeetTheTeam } from "@/components/MeetTheTeam";
 import { Pricing } from "@/components/Pricing";
+import { Guarantee } from "@/components/Guarantee";
 import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
@@ -34,10 +38,14 @@ export default function HomePage() {
       <Hero />
       <LogoMarquee />
       <VideoDemo />
+      <BeforeAfter />
       <HowItWorks />
       <Characters />
+      <GiftComparison />
       <Testimonials />
+      <MeetTheTeam />
       <Pricing onSelect={handleSelect} />
+      <Guarantee />
       <FAQ />
       <FinalCTA />
       <Footer />

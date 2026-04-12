@@ -7,7 +7,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ShimmerButton } from "./ui/ShimmerButton";
 
 export function Hero() {
@@ -238,6 +238,9 @@ export function Hero() {
 }
 
 function HeroPreviewCard() {
+  const [videoReady, setVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   return (
     <div className="relative">
       {/* Glow halo */}
@@ -260,47 +263,72 @@ function HeroPreviewCard() {
 
         {/* Video stage */}
         <div className="relative aspect-video">
+          {/* Gradient fallback (always rendered under the video) */}
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 675%22><defs><radialGradient id=%22g%22 cx=%2250%25%22 cy=%2240%25%22><stop offset=%220%25%22 stop-color=%22%23FF3B47%22/><stop offset=%22100%25%22 stop-color=%22%230A0B1A%22/></radialGradient></defs><rect width=%221200%22 height=%22675%22 fill=%22url(%23g)%22/></svg>')] bg-cover opacity-70" />
+
+          {/* Real looping background video (fades in when loaded) */}
+          <video
+            ref={videoRef}
+            src="/videos/hero-loop.mp4"
+            poster="/videos/hero-loop-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onLoadedData={() => setVideoReady(true)}
+            onError={() => setVideoReady(false)}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+              videoReady ? "opacity-95" : "opacity-0"
+            }`}
+          />
+
+          {/* Cinematic vignette over video */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
 
           {/* Subtle film grain */}
           <div className="grain" />
 
-          {/* Play button */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              animate={{
-                boxShadow: [
-                  "0 0 0 0 rgba(245,197,24,0.5)",
-                  "0 0 0 24px rgba(245,197,24,0)",
-                ],
-              }}
-              transition={{ duration: 2.2, repeat: Infinity }}
-              className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_60px_rgba(245,197,24,0.5)]"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="ml-1 h-8 w-8 text-ink-950"
+          {/* Play / pulse indicator — only when video is NOT ready (fallback mode) */}
+          {!videoReady && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                animate={{
+                  boxShadow: [
+                    "0 0 0 0 rgba(245,197,24,0.5)",
+                    "0 0 0 24px rgba(245,197,24,0)",
+                  ],
+                }}
+                transition={{ duration: 2.2, repeat: Infinity }}
+                className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_60px_rgba(245,197,24,0.5)]"
               >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </motion.div>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="ml-1 h-8 w-8 text-ink-950"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </motion.div>
+            </div>
+          )}
+
+          {/* Live REC badge — always visible */}
+          <div className="absolute right-4 top-4 flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-xl">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-crimson-500" />
+            AO VIVO
           </div>
 
           {/* Bottom caption */}
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-5">
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-5">
             <div className="flex items-end justify-between gap-4">
               <div>
                 <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-400">
-                  Ao vivo no WhatsApp · 00:42
+                  Cliente real · WhatsApp · 00:42
                 </div>
                 <div className="mt-1 font-display text-xl font-light text-white">
                   &quot;Lucas, aqui é o Homem-Aranha…&quot;
                 </div>
-              </div>
-              <div className="flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[11px] text-white/80 backdrop-blur">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-crimson-500" />
-                REC
               </div>
             </div>
           </div>
