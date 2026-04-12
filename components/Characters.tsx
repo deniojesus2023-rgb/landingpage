@@ -134,15 +134,6 @@ const characters: Character[] = [
     emoji: "🚀",
   },
   {
-    name: "Branca de Neve",
-    slug: "snow-white",
-    universe: "Disney",
-    color: "#E0477B",
-    tagline: "A princesa dos sete anões",
-    image: "/characters/snow-white.jpg",
-    emoji: "🍎",
-  },
-  {
     name: "Rapunzel",
     slug: "rapunzel",
     universe: "Disney",
