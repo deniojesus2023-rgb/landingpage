@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
-import { useEffect, useRef, useState, useCallback } from "react";
 
 type Character = {
   name: string;
@@ -137,94 +136,40 @@ const characters: Character[] = [
 ];
 
 /* ──────────────────────────────────────────── */
-/*  Carousel row – infinite auto-scroll        */
+/*  Carousel row – pure CSS infinite loop       */
 /* ──────────────────────────────────────────── */
 
 function CarouselRow({
   items,
   direction = "left",
-  speed = 35,
+  duration = 40,
 }: {
   items: Character[];
   direction?: "left" | "right";
-  speed?: number;
+  duration?: number;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false);
-  const scrollRef = useRef(0);
-  const rafRef = useRef<number>(0);
-  const lastTimeRef = useRef<number>(0);
+  // Duplicate items enough times to fill the viewport and loop seamlessly
+  const repeated = [...items, ...items, ...items, ...items];
 
-  // We duplicate items 3x so the strip is long enough for seamless loop
-  const tripled = [...items, ...items, ...items];
-  const singleSetWidth = useRef(0);
-
-  const measure = useCallback(() => {
-    if (!containerRef.current) return;
-    // width of one set of items
-    const children = containerRef.current.children;
-    const count = items.length;
-    let w = 0;
-    for (let i = 0; i < count; i++) {
-      w += (children[i] as HTMLElement).offsetWidth + 24; // gap-6 = 24px
-    }
-    singleSetWidth.current = w;
-  }, [items.length]);
-
-  useEffect(() => {
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [measure]);
-
-  useEffect(() => {
-    const animate = (time: number) => {
-      if (!lastTimeRef.current) lastTimeRef.current = time;
-      const delta = (time - lastTimeRef.current) / 1000; // seconds
-      lastTimeRef.current = time;
-
-      if (!isPaused && singleSetWidth.current > 0) {
-        const pxPerSec = speed;
-        if (direction === "left") {
-          scrollRef.current -= pxPerSec * delta;
-          if (Math.abs(scrollRef.current) >= singleSetWidth.current) {
-            scrollRef.current += singleSetWidth.current;
-          }
-        } else {
-          scrollRef.current += pxPerSec * delta;
-          if (scrollRef.current >= singleSetWidth.current) {
-            scrollRef.current -= singleSetWidth.current;
-          }
-        }
-
-        if (containerRef.current) {
-          containerRef.current.style.transform = `translateX(${scrollRef.current}px)`;
-        }
-      }
-
-      rafRef.current = requestAnimationFrame(animate);
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [isPaused, direction, speed]);
+  const animationName =
+    direction === "left" ? "scroll-left" : "scroll-right";
 
   return (
     <div
-      className="relative overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      className="group/row relative overflow-hidden"
     >
       {/* Fade edges */}
       <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-ink-950 to-transparent sm:w-24" />
       <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-ink-950 to-transparent sm:w-24" />
 
       <div
-        ref={containerRef}
-        className="flex gap-6 will-change-transform"
-        style={{ width: "max-content" }}
+        className="flex gap-6 will-change-transform group-hover/row:[animation-play-state:paused]"
+        style={{
+          width: "max-content",
+          animation: `${animationName} ${duration}s linear infinite`,
+        }}
       >
-        {tripled.map((c, i) => (
+        {repeated.map((c, i) => (
           <CarouselCard key={`${c.slug}-${i}`} character={c} />
         ))}
       </div>
@@ -294,7 +239,6 @@ function CarouselCard({ character }: { character: Character }) {
 /* ──────────────────────────────────────────── */
 
 export function Characters() {
-  // Split characters into 2 rows for a richer carousel effect
   const midpoint = Math.ceil(characters.length / 2);
   const row1 = characters.slice(0, midpoint);
   const row2 = characters.slice(midpoint);
@@ -331,7 +275,7 @@ export function Characters() {
         </div>
       </div>
 
-      {/* Carousel rows – full bleed */}
+      {/* Carousel rows */}
       <div className="relative mt-16 flex flex-col gap-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -339,7 +283,7 @@ export function Characters() {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <CarouselRow items={row1} direction="left" speed={40} />
+          <CarouselRow items={row1} direction="left" duration={35} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -347,7 +291,7 @@ export function Characters() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.15 }}
         >
-          <CarouselRow items={row2} direction="right" speed={30} />
+          <CarouselRow items={row2} direction="right" duration={45} />
         </motion.div>
       </div>
 
@@ -355,14 +299,14 @@ export function Characters() {
         <Reveal delay={0.2}>
           <div className="mt-14 flex flex-col items-center gap-3">
             <p className="text-center text-white/50">
-              Não encontrou o favorito?{" "}
+              {"Não encontrou o favorito? "}
               <a
                 href="#pedido"
                 className="font-semibold text-gold-400 underline decoration-gold-400/30 decoration-2 underline-offset-4 transition hover:decoration-gold-400"
               >
                 Fale com a gente
-              </a>{" "}
-              — atendemos pedidos especiais.
+              </a>
+              {" — atendemos pedidos especiais."}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] text-white/40">
               <span>+ Rapunzel</span>
