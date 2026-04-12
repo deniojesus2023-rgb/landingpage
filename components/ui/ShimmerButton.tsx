@@ -43,14 +43,14 @@ export const ShimmerButton = forwardRef<HTMLButtonElement, ShimmerButtonProps>(
     },
     ref
   ) {
-    const classes = `btn-shimmer relative inline-flex items-center justify-center gap-2.5 rounded-full font-bold tracking-tight transition-all duration-300 ease-out will-change-transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-gold-400/60 focus:ring-offset-2 focus:ring-offset-ink-950 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+    const classes = `btn-shimmer relative inline-flex items-center justify-center gap-2.5 rounded-[7px] font-bold tracking-tight transition-all duration-300 ease-out will-change-transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-gold-400/60 focus:ring-offset-2 focus:ring-offset-ink-950 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
 
     const inner = (
       <>
         {/* Glow aura */}
         <span
           aria-hidden
-          className="pointer-events-none absolute -inset-[1px] rounded-full opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-70"
+          className="pointer-events-none absolute -inset-[1px] rounded-[7px] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-70"
           style={{
             background:
               variant === "gold"

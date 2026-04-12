@@ -1,12 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  Bath,
+  Syringe,
+  Moon,
+  Salad,
+  Cake,
+  HeartCrack,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 import { ShimmerButton } from "./ui/ShimmerButton";
 
 type Card = {
-  emoji: string;
+  Icon: LucideIcon;
   pain: string;
   hero: string;
   solution: string;
@@ -15,7 +25,7 @@ type Card = {
 
 const cards: Card[] = [
   {
-    emoji: "🛁",
+    Icon: Bath,
     pain: "Não quer tomar banho de jeito nenhum?",
     hero: "Homem-Aranha",
     solution:
@@ -23,7 +33,7 @@ const cards: Card[] = [
     accent: "#E31B23",
   },
   {
-    emoji: "💉",
+    Icon: Syringe,
     pain: "Tem pavor de médico e vacina?",
     hero: "Capitão América",
     solution:
@@ -31,7 +41,7 @@ const cards: Card[] = [
     accent: "#2F70D2",
   },
   {
-    emoji: "😴",
+    Icon: Moon,
     pain: "Medo de dormir sozinho no quarto?",
     hero: "Batman",
     solution:
@@ -39,7 +49,7 @@ const cards: Card[] = [
     accent: "#7C5CFF",
   },
   {
-    emoji: "🥦",
+    Icon: Salad,
     pain: "Recusa comida e faz manha no prato?",
     hero: "Thor",
     solution:
@@ -47,7 +57,7 @@ const cards: Card[] = [
     accent: "#F5C518",
   },
   {
-    emoji: "🎂",
+    Icon: Cake,
     pain: "Aniversário chegando e sem ideia que emocione?",
     hero: "Elsa",
     solution:
@@ -55,7 +65,7 @@ const cards: Card[] = [
     accent: "#5EE7FF",
   },
   {
-    emoji: "💔",
+    Icon: HeartCrack,
     pain: "Pais separados, saudade, mudança de casa?",
     hero: "Moana",
     solution:
@@ -107,29 +117,33 @@ export function PainCards() {
             >
               {/* Glow halo on hover */}
               <div
-                className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-60"
+                className="pointer-events-none absolute -inset-px rounded-[7px] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-60"
                 style={{
                   background: `linear-gradient(135deg, ${c.accent}50, transparent 70%)`,
                 }}
               />
 
-              <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-7 backdrop-blur-xl transition-all duration-500 group-hover:border-white/25">
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-7 backdrop-blur-xl transition-all duration-500 group-hover:border-white/25">
                 {/* Accent corner gradient */}
                 <div
                   className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-20 blur-2xl transition-opacity duration-500 group-hover:opacity-40"
                   style={{ background: c.accent }}
                 />
 
-                {/* Emoji badge */}
+                {/* Icon badge */}
                 <div
-                  className="relative flex h-14 w-14 items-center justify-center rounded-2xl text-3xl"
+                  className="relative flex h-14 w-14 items-center justify-center rounded-[7px]"
                   style={{
                     background: `linear-gradient(135deg, ${c.accent}30, ${c.accent}08)`,
                     border: `1px solid ${c.accent}40`,
                     boxShadow: `0 8px 32px -12px ${c.accent}60`,
                   }}
                 >
-                  {c.emoji}
+                  <c.Icon
+                    className="h-7 w-7"
+                    strokeWidth={1.5}
+                    style={{ color: c.accent }}
+                  />
                 </div>
 
                 {/* Pain as a "question the parent asks" */}
@@ -174,7 +188,7 @@ export function PainCards() {
               href="#pedido"
               variant="gold"
               size="lg"
-              icon={<span className="text-base">🦸</span>}
+              icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
             >
               Quero resolver isso hoje
             </ShimmerButton>

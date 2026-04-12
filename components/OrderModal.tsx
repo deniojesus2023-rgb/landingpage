@@ -1,6 +1,23 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Backpack,
+  Bath,
+  Cake,
+  HeartCrack,
+  Lock,
+  Moon,
+  Salad,
+  Sparkles,
+  Syringe,
+  Trophy,
+  X as XIcon,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 type Plan = "essencial" | "duplo";
@@ -30,35 +47,35 @@ type FormData = {
   videos: VideoData[];
 };
 
-const characters = [
-  { name: "Homem-Aranha", emoji: "🕷️" },
-  { name: "Batman", emoji: "🦇" },
-  { name: "Superman", emoji: "🦸" },
-  { name: "Homem de Ferro", emoji: "🤖" },
-  { name: "Hulk", emoji: "💪" },
-  { name: "Capitão América", emoji: "🛡️" },
-  { name: "Thor", emoji: "⚡" },
-  { name: "Mulher Maravilha", emoji: "⚔️" },
-  { name: "Flash", emoji: "⚡" },
-  { name: "Elsa (Frozen)", emoji: "❄️" },
-  { name: "Moana", emoji: "🌊" },
-  { name: "Rapunzel", emoji: "👑" },
-  { name: "Branca de Neve", emoji: "🍎" },
-  { name: "Buzz Lightyear", emoji: "🚀" },
-  { name: "Outro", emoji: "✨" },
+const characters: { name: string }[] = [
+  { name: "Homem-Aranha" },
+  { name: "Batman" },
+  { name: "Superman" },
+  { name: "Homem de Ferro" },
+  { name: "Hulk" },
+  { name: "Capitão América" },
+  { name: "Thor" },
+  { name: "Mulher Maravilha" },
+  { name: "Flash" },
+  { name: "Elsa (Frozen)" },
+  { name: "Moana" },
+  { name: "Rapunzel" },
+  { name: "Branca de Neve" },
+  { name: "Buzz Lightyear" },
+  { name: "Outro" },
 ];
 
-const reasons = [
-  { key: "banho", emoji: "🛁", label: "Não quer tomar banho" },
-  { key: "medico", emoji: "💉", label: "Medo de médico / vacina" },
-  { key: "dormir", emoji: "😴", label: "Medo de dormir sozinho" },
-  { key: "comida", emoji: "🥦", label: "Não come direito" },
-  { key: "aniversario", emoji: "🎂", label: "Aniversário" },
-  { key: "saudade", emoji: "💔", label: "Saudade / mudança" },
-  { key: "escola", emoji: "🎒", label: "Primeiro dia de escola" },
-  { key: "incentivo", emoji: "🏆", label: "Conquista / incentivo" },
-  { key: "alegrar", emoji: "💛", label: "Só pra alegrar o dia" },
-  { key: "outro", emoji: "✨", label: "Outro motivo" },
+const reasons: { key: string; Icon: LucideIcon; label: string }[] = [
+  { key: "banho", Icon: Bath, label: "Não quer tomar banho" },
+  { key: "medico", Icon: Syringe, label: "Medo de médico / vacina" },
+  { key: "dormir", Icon: Moon, label: "Medo de dormir sozinho" },
+  { key: "comida", Icon: Salad, label: "Não come direito" },
+  { key: "aniversario", Icon: Cake, label: "Aniversário" },
+  { key: "saudade", Icon: HeartCrack, label: "Saudade / mudança" },
+  { key: "escola", Icon: Backpack, label: "Primeiro dia de escola" },
+  { key: "incentivo", Icon: Trophy, label: "Conquista / incentivo" },
+  { key: "alegrar", Icon: Sparkles, label: "Só pra alegrar o dia" },
+  { key: "outro", Icon: Sparkles, label: "Outro motivo" },
 ];
 
 const emptyVideo: VideoData = {
@@ -152,7 +169,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
     if (step === 0) return "Primeiro, quem é você?";
     if (step >= 1 && step <= videoCount) {
       return videoCount === 1
-        ? "Agora, conta sobre seu pequeno 💛"
+        ? "Agora, conta sobre seu pequeno"
         : `Vídeo ${step} de ${videoCount} — conta sobre ele`;
     }
     return "Tudo certo. Conferimos?";
@@ -167,7 +184,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
 
   const handleSubmit = () => {
     alert(
-      "✅ Pedido recebido!\n\nRedirecionando para o checkout seguro...\n\n(Troque pela URL real de Hotmart/Kiwify/Pix)"
+      "Pedido recebido!\n\nRedirecionando para o checkout seguro...\n\n(Troque pela URL real de Hotmart/Kiwify/Pix)"
     );
   };
 
@@ -188,7 +205,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 shadow-2xl"
+            className="relative w-full max-w-2xl overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 shadow-2xl"
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,197,24,0.12),transparent_60%)]" />
 
@@ -197,16 +214,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
               aria-label="Fechar"
               className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/60 transition hover:bg-white/10 hover:text-white"
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                className="h-4 w-4"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              >
-                <path d="M6 6l12 12M6 18L18 6" />
-              </svg>
+              <XIcon className="h-4 w-4" strokeWidth={2.5} />
             </button>
 
             {/* Progress + plan header */}
@@ -266,19 +274,9 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
               <button
                 onClick={() => setStep((s) => Math.max(0, s - 1))}
                 disabled={step === 0}
-                className="flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-white/60 transition hover:text-white disabled:pointer-events-none disabled:opacity-30"
+                className="flex items-center gap-2 rounded-[7px] px-4 py-2 text-[13px] font-semibold text-white/60 transition hover:text-white disabled:pointer-events-none disabled:opacity-30"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className="h-4 w-4"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
+                <ArrowLeft className="h-4 w-4" strokeWidth={2} />
                 Voltar
               </button>
 
@@ -286,28 +284,22 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
                 <button
                   onClick={() => stepValid && setStep((s) => s + 1)}
                   disabled={!stepValid}
-                  className="group flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[13px] font-bold text-ink-950 transition hover:bg-gold-400 disabled:pointer-events-none disabled:bg-white/10 disabled:text-white/40"
+                  className="group flex items-center gap-2 rounded-[7px] bg-white px-6 py-3 text-[13px] font-bold text-ink-950 transition hover:bg-gold-400 disabled:pointer-events-none disabled:bg-white/10 disabled:text-white/40"
                 >
                   Continuar
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
+                  <ArrowRight
                     className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M9 6l6 6-6 6" />
-                  </svg>
+                    strokeWidth={2}
+                  />
                 </button>
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="btn-shimmer relative flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_40px_rgba(255,59,71,0.5)] transition-transform hover:-translate-y-0.5"
+                  className="btn-shimmer relative flex items-center gap-2 overflow-hidden rounded-[7px] bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_40px_rgba(255,59,71,0.5)] transition-transform hover:-translate-y-0.5"
                 >
                   <span className="relative flex items-center gap-2">
-                    🔒 Finalizar pedido · R$ {price}
+                    <Lock className="h-4 w-4" strokeWidth={1.75} />
+                    Finalizar pedido · R$ {price}
                   </span>
                 </button>
               )}
@@ -357,9 +349,15 @@ function ParentStep({
           help="Confirmação do pedido."
         />
       </div>
-      <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4 text-[12px] text-white/70">
-        🔒 Seus dados são usados apenas para produzir e entregar seu vídeo.
-        Nunca compartilhamos com terceiros.
+      <div className="flex items-start gap-2 rounded-[7px] border border-cyan-400/20 bg-cyan-400/5 p-4 text-[12px] text-white/70">
+        <Lock
+          className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-cyan-400"
+          strokeWidth={1.75}
+        />
+        <span>
+          Seus dados são usados apenas para produzir e entregar seu vídeo. Nunca
+          compartilhamos com terceiros.
+        </span>
       </div>
     </div>
   );
@@ -413,13 +411,16 @@ function VideoStep({
                 key={c.name}
                 type="button"
                 onClick={() => onChange({ character: c.name })}
-                className={`group relative flex flex-col items-center gap-1 rounded-xl border px-2 py-3 text-center transition ${
+                className={`group relative flex flex-col items-center gap-1.5 rounded-[7px] border px-2 py-3 text-center transition ${
                   active
                     ? "border-gold-400 bg-gold-400/10 shadow-[0_0_20px_rgba(245,197,24,0.25)]"
                     : "border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.06]"
                 }`}
               >
-                <span className="text-xl">{c.emoji}</span>
+                <Sparkles
+                  className={`h-4 w-4 ${active ? "text-gold-400" : "text-white/40"}`}
+                  strokeWidth={1.75}
+                />
                 <span
                   className={`text-[10px] font-semibold leading-tight ${
                     active ? "text-white" : "text-white/60"
@@ -455,13 +456,13 @@ function VideoStep({
                 key={r.key}
                 type="button"
                 onClick={() => onChange({ reason: r.key })}
-                className={`flex items-center gap-2 rounded-full border px-3.5 py-2 text-[12px] font-semibold transition ${
+                className={`flex items-center gap-2 rounded-[7px] border px-3.5 py-2 text-[12px] font-semibold transition ${
                   active
                     ? "border-crimson-500 bg-crimson-500/15 text-white"
                     : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white"
                 }`}
               >
-                <span className="text-base">{r.emoji}</span>
+                <r.Icon className="h-4 w-4" strokeWidth={1.75} />
                 {r.label}
               </button>
             );
@@ -482,7 +483,7 @@ function VideoStep({
           value={video.message}
           onChange={(e) => onChange({ message: e.target.value })}
           placeholder="Ex: O Lucas tem 4 anos, acabou de aprender a andar de bicicleta sem rodinhas e está com medo da primeira semana de escola nova. Ele adora dizer 'sou forte igual você, pai'."
-          className="mt-3 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white placeholder:text-white/25 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
+          className="mt-3 w-full rounded-[7px] border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white placeholder:text-white/25 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
         />
       </div>
 
@@ -512,7 +513,7 @@ function ReviewStep({ form, plan }: { form: FormData; plan: Plan }) {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+      <div className="rounded-[7px] border border-white/10 bg-white/[0.03] p-5">
         <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400">
           Contato
         </div>
@@ -532,7 +533,7 @@ function ReviewStep({ form, plan }: { form: FormData; plan: Plan }) {
       {form.videos.map((v, i) => (
         <div
           key={i}
-          className="rounded-2xl border border-gold-400/20 bg-gradient-to-br from-gold-400/[0.06] to-transparent p-5"
+          className="rounded-[7px] border border-gold-400/20 bg-gradient-to-br from-gold-400/[0.06] to-transparent p-5"
         >
           <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
             Vídeo {i + 1}
@@ -570,7 +571,7 @@ function ReviewStep({ form, plan }: { form: FormData; plan: Plan }) {
         </div>
       ))}
 
-      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+      <div className="flex items-center justify-between rounded-[7px] border border-white/10 bg-white/[0.04] p-5">
         <div>
           <div className="text-[11px] font-bold uppercase tracking-wider text-white/50">
             Total
@@ -579,9 +580,15 @@ function ReviewStep({ form, plan }: { form: FormData; plan: Plan }) {
             R$ {price}
           </div>
         </div>
-        <div className="text-right text-[11px] text-white/50">
-          <div>⚡ Entrega em até 48h</div>
-          <div>🔒 Garantia total ou reembolso</div>
+        <div className="space-y-1 text-right text-[11px] text-white/50">
+          <div className="flex items-center justify-end gap-1.5">
+            <Zap className="h-3 w-3" strokeWidth={1.75} />
+            Entrega em até 48h
+          </div>
+          <div className="flex items-center justify-end gap-1.5">
+            <Lock className="h-3 w-3" strokeWidth={1.75} />
+            Garantia total ou reembolso
+          </div>
         </div>
       </div>
     </div>
@@ -626,7 +633,7 @@ function Field({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white placeholder:text-white/25 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
+        className="w-full rounded-[7px] border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white placeholder:text-white/25 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
       />
       {help && <div className="mt-1.5 text-[11px] text-white/35">{help}</div>}
     </div>

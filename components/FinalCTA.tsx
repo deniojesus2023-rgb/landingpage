@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Heart, Lock, Sparkles, Zap } from "lucide-react";
 import { Reveal } from "./ui/Reveal";
 import { ShimmerButton } from "./ui/ShimmerButton";
 
@@ -52,7 +53,7 @@ export function FinalCTA() {
               href="#pedido"
               variant="gold"
               size="xl"
-              icon={<span className="text-lg">🦸</span>}
+              icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
             >
               Quero esse momento agora
             </ShimmerButton>
@@ -62,15 +63,18 @@ export function FinalCTA() {
         <Reveal delay={0.4}>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] text-white/50">
             <span className="flex items-center gap-2">
-              🔒 Pagamento seguro
+              <Lock className="h-3.5 w-3.5" strokeWidth={1.75} />
+              Pagamento seguro
             </span>
             <span>•</span>
             <span className="flex items-center gap-2">
-              ⚡ Entrega em até 48h
+              <Zap className="h-3.5 w-3.5" strokeWidth={1.75} />
+              Entrega em até 48h
             </span>
             <span>•</span>
             <span className="flex items-center gap-2">
-              💛 100% de garantia
+              <Heart className="h-3.5 w-3.5" strokeWidth={1.75} />
+              100% de garantia
             </span>
           </div>
         </Reveal>

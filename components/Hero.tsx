@@ -9,6 +9,16 @@ import {
   useTransform,
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import {
+  Zap,
+  ShieldCheck,
+  Heart,
+  Clapperboard,
+  Star,
+  Check,
+  Play,
+  Wand2,
+} from "lucide-react";
 import { ShimmerButton } from "./ui/ShimmerButton";
 
 const NAMES = [
@@ -159,7 +169,8 @@ export function Hero() {
             vídeos sendo gravados agora
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-emerald-400">
-            ✓ <span className="font-bold tabular-nums">{deliveredToday}</span>{" "}
+            <Check className="h-3 w-3" strokeWidth={2.5} />
+            <span className="font-bold tabular-nums">{deliveredToday}</span>{" "}
             entregues hoje
           </span>
         </motion.div>
@@ -248,7 +259,7 @@ export function Hero() {
             href="#pedido"
             size="xl"
             variant="primary"
-            icon={<span className="text-lg">🦸</span>}
+            icon={<Wand2 className="h-4 w-4" strokeWidth={1.75} />}
           >
             Quero o vídeo agora
           </ShimmerButton>
@@ -257,11 +268,7 @@ export function Hero() {
             href="#como-funciona"
             size="xl"
             variant="secondary"
-            icon={
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            }
+            icon={<Play className="h-4 w-4" strokeWidth={1.75} />}
           >
             Ver exemplo (60s)
           </ShimmerButton>
@@ -275,14 +282,14 @@ export function Hero() {
           className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[12px] text-white/50"
         >
           {[
-            ["⚡", "Entrega em 48h"],
-            ["🔒", "Garantia de reembolso"],
-            ["💛", "+500 famílias emocionadas"],
-            ["🎬", "Marvel · Disney · DC"],
-            ["⭐", "4.9/5 · 120+ avaliações"],
-          ].map(([icon, label]) => (
+            { Icon: Zap, label: "Entrega em 48h" },
+            { Icon: ShieldCheck, label: "Garantia de reembolso" },
+            { Icon: Heart, label: "+500 famílias emocionadas" },
+            { Icon: Clapperboard, label: "Marvel · Disney · DC" },
+            { Icon: Star, label: "4.9/5 · 120+ avaliações" },
+          ].map(({ Icon, label }) => (
             <div key={label} className="flex items-center gap-2">
-              <span>{icon}</span>
+              <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
               <span className="font-medium">{label}</span>
             </div>
           ))}

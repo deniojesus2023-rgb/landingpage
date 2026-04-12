@@ -91,14 +91,14 @@ export function HowItWorks() {
               whileHover={{ y: -6 }}
               className="group relative"
             >
-              <div className="relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-8 backdrop-blur-xl transition-colors duration-500 hover:border-white/20">
+              <div className="relative h-full overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-8 backdrop-blur-xl transition-colors duration-500 hover:border-white/20">
                 {/* Hover sheen */}
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_var(--mx,50%)_var(--my,50%),rgba(255,255,255,0.08),transparent_60%)] opacity-0 transition-opacity group-hover:opacity-100" />
 
                 {/* Number */}
                 <div className="mb-6 flex items-center justify-between">
                   <div
-                    className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${step.gradient} text-white shadow-lg`}
+                    className={`flex h-14 w-14 items-center justify-center rounded-[7px] bg-gradient-to-br ${step.gradient} text-white shadow-lg`}
                   >
                     {step.icon}
                   </div>

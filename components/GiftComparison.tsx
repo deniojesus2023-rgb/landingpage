@@ -1,6 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  Check,
+  Gift,
+  PartyPopper,
+  Sparkles,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 import { ShimmerButton } from "./ui/ShimmerButton";
@@ -97,27 +105,36 @@ export function GiftComparison() {
           className="relative mt-16 hidden md:block"
         >
           {/* Highlight the HeroiVídeo column */}
-          <div className="pointer-events-none absolute bottom-0 left-[68%] top-0 z-0 w-[32%] rounded-3xl bg-gradient-to-b from-gold-400/15 via-gold-500/10 to-transparent blur-sm" />
+          <div className="pointer-events-none absolute bottom-0 left-[68%] top-0 z-0 w-[32%] rounded-[7px] bg-gradient-to-b from-gold-400/15 via-gold-500/10 to-transparent blur-sm" />
 
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-xl">
+          <div className="relative overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-white/[0.04] to-white/[0.01] backdrop-blur-xl">
             {/* Header */}
             <div className="grid grid-cols-[1.3fr_1fr_1fr_1.2fr] border-b border-white/10">
               <div className="p-5" />
               <div className="p-5 text-center">
-                <div className="text-2xl">🎁</div>
+                <Gift
+                  className="mx-auto h-6 w-6 text-white/60"
+                  strokeWidth={1.5}
+                />
                 <div className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white/50">
                   Brinquedo comum
                 </div>
               </div>
               <div className="p-5 text-center">
-                <div className="text-2xl">🎉</div>
+                <PartyPopper
+                  className="mx-auto h-6 w-6 text-white/60"
+                  strokeWidth={1.5}
+                />
                 <div className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white/50">
                   Festa temática
                 </div>
               </div>
               <div className="relative overflow-hidden border-x border-gold-400/40 bg-gradient-to-b from-gold-400/20 via-gold-500/10 to-transparent p-5 text-center">
                 <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
-                <div className="text-2xl">🦸</div>
+                <Sparkles
+                  className="mx-auto h-6 w-6 text-gold-400"
+                  strokeWidth={1.5}
+                />
                 <div className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-gold-400">
                   HeroiVídeo
                 </div>
@@ -146,17 +163,17 @@ export function GiftComparison() {
         {/* Mobile: stacked cards */}
         <div className="mt-12 grid gap-4 md:hidden">
           <MobileCard
-            emoji="🎁"
+            Icon={Gift}
             title="Brinquedo comum"
             rows={rows.map((r) => ({ label: r.label, ...r.toy }))}
           />
           <MobileCard
-            emoji="🎉"
+            Icon={PartyPopper}
             title="Festa temática"
             rows={rows.map((r) => ({ label: r.label, ...r.party }))}
           />
           <MobileCard
-            emoji="🦸"
+            Icon={Sparkles}
             title="HeroiVídeo"
             highlight
             rows={rows.map((r) => ({ label: r.label, ...r.hero }))}
@@ -174,7 +191,7 @@ export function GiftComparison() {
               href="#pedido"
               variant="gold"
               size="lg"
-              icon={<span className="text-base">🦸</span>}
+              icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
             >
               Quero o momento, não o brinquedo
             </ShimmerButton>
@@ -240,26 +257,29 @@ function Cell({
 }
 
 function MobileCard({
-  emoji,
+  Icon,
   title,
   rows,
   highlight = false,
 }: {
-  emoji: string;
+  Icon: LucideIcon;
   title: string;
   highlight?: boolean;
   rows: { label: string; value: string; good: boolean }[];
 }) {
   return (
     <div
-      className={`overflow-hidden rounded-2xl border backdrop-blur-xl ${
+      className={`overflow-hidden rounded-[7px] border backdrop-blur-xl ${
         highlight
           ? "border-gold-400/40 bg-gradient-to-br from-gold-400/15 via-gold-500/5 to-transparent"
           : "border-white/10 bg-white/[0.03]"
       }`}
     >
       <div className="flex items-center gap-3 border-b border-white/5 p-5">
-        <div className="text-2xl">{emoji}</div>
+        <Icon
+          className={`h-6 w-6 ${highlight ? "text-gold-400" : "text-white/60"}`}
+          strokeWidth={1.5}
+        />
         <div
           className={`text-[12px] font-bold uppercase tracking-widest ${
             highlight ? "text-gold-400" : "text-white/60"
@@ -281,9 +301,12 @@ function MobileCard({
               }`}
             >
               {r.good ? (
-                <span className="text-emerald-400">✓</span>
+                <Check
+                  className="h-3.5 w-3.5 text-emerald-400"
+                  strokeWidth={2.5}
+                />
               ) : (
-                <span className="text-white/30">×</span>
+                <X className="h-3.5 w-3.5 text-white/30" strokeWidth={2.5} />
               )}
               {r.value}
             </span>

@@ -70,7 +70,7 @@ export function FAQ() {
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="group relative w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-left backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
+                className="group relative w-full overflow-hidden rounded-[7px] border border-white/10 bg-white/[0.03] p-5 text-left backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
               >
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-[15px] font-semibold text-white">
