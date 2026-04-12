@@ -121,6 +121,15 @@ const characters: Character[] = [
     emoji: "⚔️",
   },
   {
+    name: "Branca de Neve",
+    slug: "snow-white",
+    universe: "Disney",
+    color: "#E8C50A",
+    tagline: "A mais bela de todas",
+    image: "/characters/snow-white.jpg",
+    emoji: "🍎",
+  },
+  {
     name: "Buzz Lightyear",
     slug: "buzz",
     universe: "Pixar",
