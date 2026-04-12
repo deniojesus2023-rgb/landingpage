@@ -44,7 +44,7 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative overflow-hidden py-28 sm:py-36">
+    <section id="faq" className="relative overflow-hidden py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl" />
       </div>

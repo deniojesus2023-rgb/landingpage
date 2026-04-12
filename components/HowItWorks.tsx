@@ -54,7 +54,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="como-funciona" className="relative overflow-hidden py-28 sm:py-36">
+    <section id="como-funciona" className="relative overflow-hidden py-16 sm:py-24">
       {/* Gradient accents */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-violet-500/10 blur-3xl" />

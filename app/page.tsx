@@ -7,7 +7,7 @@ import { Hero } from "@/components/Hero";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HowItWorks } from "@/components/HowItWorks";
 import { VideoDemo } from "@/components/VideoDemo";
-import { BeforeAfter } from "@/components/BeforeAfter";
+import { PainCards } from "@/components/PainCards";
 import { Characters } from "@/components/Characters";
 import { GiftComparison } from "@/components/GiftComparison";
 import { Testimonials } from "@/components/Testimonials";
@@ -18,6 +18,7 @@ import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { SocialProofToasts } from "@/components/SocialProofToasts";
 import { OrderModal } from "@/components/OrderModal";
 
 type Plan = "essencial" | "duplo";
@@ -38,7 +39,7 @@ export default function HomePage() {
       <Hero />
       <LogoMarquee />
       <VideoDemo />
-      <BeforeAfter />
+      <PainCards />
       <HowItWorks />
       <Characters />
       <GiftComparison />
@@ -50,6 +51,7 @@ export default function HomePage() {
       <FinalCTA />
       <Footer />
       <WhatsAppFloat />
+      {!modalOpen && <SocialProofToasts />}
       <OrderModal
         open={modalOpen}
         plan={plan}

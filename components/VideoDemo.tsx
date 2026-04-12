@@ -24,7 +24,7 @@ export function VideoDemo() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden py-28 sm:py-36"
+      className="relative overflow-hidden py-20 sm:py-28"
       id="demo"
     >
       <div className="pointer-events-none absolute inset-0 -z-10">
