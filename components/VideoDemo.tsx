@@ -127,8 +127,13 @@ function VideoPlayer() {
               >
                 {/* Background poster */}
                 <div className="absolute inset-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#1a1040] via-[#3a0e2e] to-[#501b0e]" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,59,71,0.4),transparent_50%),radial-gradient(circle_at_70%_60%,rgba(124,92,255,0.4),transparent_50%)]" />
+                  <img
+                    src="/video-poster.jpg"
+                    alt="Homem-Aranha - capa do video"
+                    className="absolute inset-0 h-full w-full object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#1a1040]/60 via-[#3a0e2e]/40 to-[#501b0e]/50" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,59,71,0.25),transparent_50%),radial-gradient(circle_at_70%_60%,rgba(124,92,255,0.25),transparent_50%)]" />
                   <div className="grain" />
                 </div>
 
