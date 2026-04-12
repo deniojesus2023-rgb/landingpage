@@ -45,7 +45,7 @@ export function VideoDemo() {
         </Reveal>
         <Reveal delay={0.2}>
           <p className="mx-auto mt-6 max-w-2xl text-white/60">
-            Assista a um vídeo real feito para o Arthur. Volume alto
+            Assista a um vídeo real feito para o Pedro. Volume alto
             recomendado — e mantenha os lenços por perto.
           </p>
         </Reveal>
@@ -193,10 +193,10 @@ function VideoPlayer() {
                   <div className="flex items-end justify-between gap-4">
                     <div>
                       <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-400">
-                        Cliente real · Arthur
+                        Cliente real · Pedro
                       </div>
                       <div className="mt-1 font-display text-xl font-light text-white sm:text-2xl md:text-3xl">
-                        &quot;Arthur, estava com medo de fazer coco&quot;
+                        &quot;Pedro, estava passando mal e não queria tomar remédio&quot;
                       </div>
                     </div>
                   </div>
