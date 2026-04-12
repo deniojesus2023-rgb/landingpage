@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HowItWorks } from "@/components/HowItWorks";
 import { VideoDemo } from "@/components/VideoDemo";
@@ -34,9 +33,8 @@ export default function HomePage() {
   return (
     <main className="relative overflow-hidden">
       <Navbar />
-      <Hero />
-      <LogoMarquee />
       <VideoDemo />
+      <LogoMarquee />
       <PainCards />
       <HowItWorks />
       <Characters />
