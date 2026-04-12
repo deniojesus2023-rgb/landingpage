@@ -122,12 +122,12 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}
           className="mx-auto max-w-5xl text-balance font-display text-[clamp(2.4rem,7vw,5.5rem)] font-light leading-[0.95] tracking-tight"
         >
-          <span className="text-gradient-hero">O herói favorito dele</span>
+          <span className="text-gradient-hero">O herói favorito do seu filho</span>
           <br />
           <span className="relative inline-block">
-            <span className="text-gradient-gold italic">fala o nome</span>{" "}
+            <span className="text-gradient-gold italic">falando o nome</span>{" "}
             <span className="relative inline-block text-gradient-gold italic">
-              do seu filho.
+              dele.
               <svg
                 viewBox="0 0 300 12"
                 className="absolute -bottom-2 left-0 w-full"

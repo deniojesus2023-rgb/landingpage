@@ -7,6 +7,7 @@ import { Hero } from "@/components/Hero";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HowItWorks } from "@/components/HowItWorks";
 import { VideoDemo } from "@/components/VideoDemo";
+import { PainCards } from "@/components/PainCards";
 import { Characters } from "@/components/Characters";
 import { GiftComparison } from "@/components/GiftComparison";
 import { Testimonials } from "@/components/Testimonials";
@@ -37,6 +38,7 @@ export default function HomePage() {
       <Hero />
       <LogoMarquee />
       <VideoDemo />
+      <PainCards />
       <HowItWorks />
       <Characters />
       <GiftComparison />

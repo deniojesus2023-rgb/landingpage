@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Plan = "essencial" | "duplo";
 
@@ -11,121 +11,97 @@ type OrderModalProps = {
   onClose: () => void;
 };
 
+type VideoData = {
+  childName: string;
+  childAge: string;
+  childNickname: string;
+  character: string;
+  otherCharacter: string;
+  reason: string;
+  message: string;
+  insideJoke: string;
+  deliveryDate: string;
+};
+
+type FormData = {
+  parentName: string;
+  whatsapp: string;
+  email: string;
+  videos: VideoData[];
+};
+
 const characters = [
-  "Homem-Aranha",
-  "Batman",
-  "Homem de Ferro",
-  "Elsa (Frozen)",
-  "Hulk",
-  "Mulher Maravilha",
-  "Thor",
-  "Capitão América",
-  "Buzz Lightyear",
-  "Moana",
-  "Outro (informo na mensagem)",
+  { name: "Homem-Aranha", emoji: "🕷️" },
+  { name: "Batman", emoji: "🦇" },
+  { name: "Superman", emoji: "🦸" },
+  { name: "Homem de Ferro", emoji: "🤖" },
+  { name: "Hulk", emoji: "💪" },
+  { name: "Capitão América", emoji: "🛡️" },
+  { name: "Thor", emoji: "⚡" },
+  { name: "Mulher Maravilha", emoji: "⚔️" },
+  { name: "Flash", emoji: "⚡" },
+  { name: "Elsa (Frozen)", emoji: "❄️" },
+  { name: "Moana", emoji: "🌊" },
+  { name: "Rapunzel", emoji: "👑" },
+  { name: "Branca de Neve", emoji: "🍎" },
+  { name: "Buzz Lightyear", emoji: "🚀" },
+  { name: "Outro", emoji: "✨" },
 ];
 
-const occasions = [
-  "Aniversário",
-  "Incentivo / conquista",
-  "Motivação para comer / dormir",
-  "Natal / Páscoa",
-  "Só para alegrar o dia",
-  "Outro",
+const reasons = [
+  { key: "banho", emoji: "🛁", label: "Não quer tomar banho" },
+  { key: "medico", emoji: "💉", label: "Medo de médico / vacina" },
+  { key: "dormir", emoji: "😴", label: "Medo de dormir sozinho" },
+  { key: "comida", emoji: "🥦", label: "Não come direito" },
+  { key: "aniversario", emoji: "🎂", label: "Aniversário" },
+  { key: "saudade", emoji: "💔", label: "Saudade / mudança" },
+  { key: "escola", emoji: "🎒", label: "Primeiro dia de escola" },
+  { key: "incentivo", emoji: "🏆", label: "Conquista / incentivo" },
+  { key: "alegrar", emoji: "💛", label: "Só pra alegrar o dia" },
+  { key: "outro", emoji: "✨", label: "Outro motivo" },
 ];
 
-function VideoFields({ index }: { index: number }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-      <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gold-400/20 text-[10px]">
-          {index}
-        </span>
-        Vídeo {index}
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Field label="Nome da criança" placeholder="Ex: Lucas" required />
-        <Field label="Idade" placeholder="Ex: 4" type="number" required />
-        <Select label="Personagem" required options={characters} />
-        <Select label="Ocasião" required options={occasions} />
-      </div>
-      <div className="mt-3">
-        <label className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-white/60">
-          Mensagem especial <span className="text-crimson-500">*</span>
-        </label>
-        <textarea
-          rows={3}
-          required
-          placeholder="Ex: Lucas, o Homem-Aranha sabe que você é super corajoso. Continue sendo incrível!"
-          className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white placeholder:text-white/30 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
-        />
-      </div>
-      <div className="mt-3">
-        <Field label="Data desejada para entrega (opcional)" type="date" />
-      </div>
-    </div>
-  );
-}
-
-function Field({
-  label,
-  placeholder,
-  type = "text",
-  required = false,
-}: {
-  label: string;
-  placeholder?: string;
-  type?: string;
-  required?: boolean;
-}) {
-  return (
-    <div>
-      <label className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-white/60">
-        {label} {required && <span className="text-crimson-500">*</span>}
-      </label>
-      <input
-        type={type}
-        required={required}
-        placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white placeholder:text-white/30 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
-      />
-    </div>
-  );
-}
-
-function Select({
-  label,
-  options,
-  required = false,
-}: {
-  label: string;
-  options: string[];
-  required?: boolean;
-}) {
-  return (
-    <div>
-      <label className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-white/60">
-        {label} {required && <span className="text-crimson-500">*</span>}
-      </label>
-      <select
-        required={required}
-        defaultValue=""
-        className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
-      >
-        <option value="" disabled className="bg-ink-900">
-          Selecione…
-        </option>
-        {options.map((o) => (
-          <option key={o} value={o} className="bg-ink-900">
-            {o}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
+const emptyVideo: VideoData = {
+  childName: "",
+  childAge: "",
+  childNickname: "",
+  character: "",
+  otherCharacter: "",
+  reason: "",
+  message: "",
+  insideJoke: "",
+  deliveryDate: "",
+};
 
 export function OrderModal({ open, plan, onClose }: OrderModalProps) {
+  const isDuplo = plan === "duplo";
+  const price = isDuplo ? "147,00" : "97,00";
+  const videoCount = isDuplo ? 2 : 1;
+
+  // Steps: 0 = parent info, 1..videoCount = each video, videoCount+1 = review
+  const totalSteps = videoCount + 2;
+
+  const [step, setStep] = useState(0);
+  const [form, setForm] = useState<FormData>({
+    parentName: "",
+    whatsapp: "",
+    email: "",
+    videos: Array.from({ length: videoCount }, () => ({ ...emptyVideo })),
+  });
+
+  // Reset when plan changes or modal opens
+  useEffect(() => {
+    if (open) {
+      setStep(0);
+      setForm({
+        parentName: "",
+        whatsapp: "",
+        email: "",
+        videos: Array.from({ length: videoCount }, () => ({ ...emptyVideo })),
+      });
+    }
+  }, [open, videoCount]);
+
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
@@ -139,8 +115,61 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
     };
   }, [open, onClose]);
 
-  const isDuplo = plan === "duplo";
-  const price = isDuplo ? "147,00" : "97,00";
+  const progress = ((step + 1) / totalSteps) * 100;
+
+  const updateVideo = (idx: number, patch: Partial<VideoData>) => {
+    setForm((f) => ({
+      ...f,
+      videos: f.videos.map((v, i) => (i === idx ? { ...v, ...patch } : v)),
+    }));
+  };
+
+  const stepValid = useMemo(() => {
+    if (step === 0) {
+      return (
+        form.parentName.trim().length > 1 &&
+        form.whatsapp.trim().length > 7 &&
+        /\S+@\S+\.\S+/.test(form.email)
+      );
+    }
+    if (step >= 1 && step <= videoCount) {
+      const v = form.videos[step - 1];
+      if (!v) return false;
+      const hasCharacter =
+        v.character && (v.character !== "Outro" || v.otherCharacter.trim());
+      return (
+        v.childName.trim().length > 1 &&
+        v.childAge.trim().length > 0 &&
+        hasCharacter &&
+        v.reason.length > 0 &&
+        v.message.trim().length > 10
+      );
+    }
+    return true;
+  }, [step, form, videoCount]);
+
+  const stepTitle = (() => {
+    if (step === 0) return "Primeiro, quem é você?";
+    if (step >= 1 && step <= videoCount) {
+      return videoCount === 1
+        ? "Agora, conta sobre seu pequeno 💛"
+        : `Vídeo ${step} de ${videoCount} — conta sobre ele`;
+    }
+    return "Tudo certo. Conferimos?";
+  })();
+
+  const stepSubtitle = (() => {
+    if (step === 0) return "Vamos usar isso pra mandar o vídeo pronto no seu WhatsApp.";
+    if (step >= 1 && step <= videoCount)
+      return "Quanto mais pessoal, mais emocionante. O roteirista lê tudo.";
+    return "Última olhada antes de finalizar. Você pode voltar pra ajustar.";
+  })();
+
+  const handleSubmit = () => {
+    alert(
+      "✅ Pedido recebido!\n\nRedirecionando para o checkout seguro...\n\n(Troque pela URL real de Hotmart/Kiwify/Pix)"
+    );
+  };
 
   return (
     <AnimatePresence>
@@ -149,7 +178,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-ink-950/80 px-4 py-10 backdrop-blur-xl"
+          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-ink-950/85 px-4 py-6 backdrop-blur-xl sm:py-10"
           onClick={(e) => {
             if (e.target === e.currentTarget) onClose();
           }}
@@ -159,84 +188,447 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-            className="relative w-full max-w-xl overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 p-7 shadow-2xl sm:p-10"
+            className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 shadow-2xl"
           >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,197,24,0.15),transparent_60%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,197,24,0.12),transparent_60%)]" />
 
             <button
               onClick={onClose}
-              className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/60 transition hover:bg-white/10 hover:text-white"
+              aria-label="Fechar"
+              className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/60 transition hover:bg-white/10 hover:text-white"
             >
-              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-4 w-4"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              >
                 <path d="M6 6l12 12M6 18L18 6" />
               </svg>
             </button>
 
-            <div className="relative text-center">
-              <div className="inline-block rounded-full border border-gold-400/40 bg-gold-400/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-gold-400">
-                Plano {isDuplo ? "Duplo" : "Essencial"}
+            {/* Progress + plan header */}
+            <div className="relative border-b border-white/5 px-7 pt-7 sm:px-10">
+              <div className="flex items-center justify-between gap-3">
+                <div className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
+                  Plano {isDuplo ? "Duplo" : "Essencial"} · R$ {price}
+                </div>
+                <div className="text-[11px] font-semibold text-white/50">
+                  Etapa {step + 1} de {totalSteps}
+                </div>
               </div>
-              <h2 className="mt-4 font-display text-3xl font-light leading-tight text-white">
-                {isDuplo
-                  ? "Personalize os 2 vídeos"
-                  : "Personalize o vídeo"}
-              </h2>
-              <p className="mt-2 text-[13px] text-white/60">
-                Preenchimento rápido — em {isDuplo ? "3" : "2"} minutos você finaliza.
-              </p>
+              <div className="mt-4 h-1 overflow-hidden rounded-full bg-white/5">
+                <motion.div
+                  className="h-full rounded-full bg-gradient-to-r from-gold-400 via-gold-500 to-crimson-500"
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+                />
+              </div>
+
+              <div className="mt-6 pb-6">
+                <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
+                  {stepTitle}
+                </h2>
+                <p className="mt-2 text-[13px] text-white/60">{stepSubtitle}</p>
+              </div>
             </div>
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert(
-                  "✅ Pedido recebido!\n\nRedirecionando para o checkout seguro...\n\n(Troque pela URL real de Hotmart/Kiwify/Pix)"
-                );
-              }}
-              className="relative mt-8 space-y-5"
-            >
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                <div className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400">
-                  📋 Seus dados
-                </div>
-                <div className="space-y-3">
-                  <Field label="Seu nome" placeholder="Ex: Mariana Silva" required />
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <Field
-                      label="WhatsApp"
-                      placeholder="(11) 99999-9999"
-                      type="tel"
-                      required
+            {/* Step content */}
+            <div className="relative px-7 py-7 sm:px-10">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={step}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {step === 0 && (
+                    <ParentStep form={form} setForm={setForm} />
+                  )}
+                  {step >= 1 && step <= videoCount && (
+                    <VideoStep
+                      video={form.videos[step - 1]}
+                      onChange={(patch) => updateVideo(step - 1, patch)}
                     />
-                    <Field
-                      label="E-mail"
-                      placeholder="seu@email.com"
-                      type="email"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
+                  )}
+                  {step === videoCount + 1 && (
+                    <ReviewStep form={form} plan={plan} />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-              <VideoFields index={1} />
-              {isDuplo && <VideoFields index={2} />}
-
+            {/* Navigation */}
+            <div className="relative flex items-center justify-between gap-3 border-t border-white/5 bg-ink-900/40 px-7 py-5 sm:px-10">
               <button
-                type="submit"
-                className="btn-shimmer relative w-full overflow-hidden rounded-full bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] py-5 text-[15px] font-bold text-white shadow-[0_10px_40px_rgba(255,59,71,0.5)] transition-transform hover:-translate-y-0.5"
+                onClick={() => setStep((s) => Math.max(0, s - 1))}
+                disabled={step === 0}
+                className="flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-white/60 transition hover:text-white disabled:pointer-events-none disabled:opacity-30"
               >
-                <span className="relative flex items-center justify-center gap-2">
-                  🔒 Finalizar pedido — R$ {price}
-                </span>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="h-4 w-4"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+                Voltar
               </button>
 
-              <p className="text-center text-[11px] text-white/40">
-                Pagamento 100% seguro · Garantia total de satisfação
-              </p>
-            </form>
+              {step < totalSteps - 1 ? (
+                <button
+                  onClick={() => stepValid && setStep((s) => s + 1)}
+                  disabled={!stepValid}
+                  className="group flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[13px] font-bold text-ink-950 transition hover:bg-gold-400 disabled:pointer-events-none disabled:bg-white/10 disabled:text-white/40"
+                >
+                  Continuar
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M9 6l6 6-6 6" />
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmit}
+                  className="btn-shimmer relative flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_40px_rgba(255,59,71,0.5)] transition-transform hover:-translate-y-0.5"
+                >
+                  <span className="relative flex items-center gap-2">
+                    🔒 Finalizar pedido · R$ {price}
+                  </span>
+                </button>
+              )}
+            </div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+/* ─────────────────────────── STEPS ─────────────────────────── */
+
+function ParentStep({
+  form,
+  setForm,
+}: {
+  form: FormData;
+  setForm: (f: FormData) => void;
+}) {
+  return (
+    <div className="space-y-4">
+      <Field
+        label="Seu nome"
+        placeholder="Ex: Mariana Silva"
+        value={form.parentName}
+        onChange={(v) => setForm({ ...form, parentName: v })}
+        required
+      />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field
+          label="WhatsApp"
+          placeholder="(11) 99999-9999"
+          type="tel"
+          value={form.whatsapp}
+          onChange={(v) => setForm({ ...form, whatsapp: v })}
+          required
+          help="Vamos entregar o vídeo aqui."
+        />
+        <Field
+          label="E-mail"
+          placeholder="voce@email.com"
+          type="email"
+          value={form.email}
+          onChange={(v) => setForm({ ...form, email: v })}
+          required
+          help="Confirmação do pedido."
+        />
+      </div>
+      <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4 text-[12px] text-white/70">
+        🔒 Seus dados são usados apenas para produzir e entregar seu vídeo.
+        Nunca compartilhamos com terceiros.
+      </div>
+    </div>
+  );
+}
+
+function VideoStep({
+  video,
+  onChange,
+}: {
+  video: VideoData;
+  onChange: (patch: Partial<VideoData>) => void;
+}) {
+  return (
+    <div className="space-y-6">
+      {/* Child */}
+      <div>
+        <StepLabel>1 · Sobre a criança</StepLabel>
+        <div className="mt-3 grid gap-4 sm:grid-cols-3">
+          <Field
+            label="Nome da criança"
+            placeholder="Ex: Lucas"
+            value={video.childName}
+            onChange={(v) => onChange({ childName: v })}
+            required
+          />
+          <Field
+            label="Idade"
+            placeholder="4"
+            type="number"
+            value={video.childAge}
+            onChange={(v) => onChange({ childAge: v })}
+            required
+          />
+          <Field
+            label="Apelido (opcional)"
+            placeholder="Lulu, Bebê…"
+            value={video.childNickname}
+            onChange={(v) => onChange({ childNickname: v })}
+          />
+        </div>
+      </div>
+
+      {/* Character picker */}
+      <div>
+        <StepLabel>2 · Qual é o herói favorito dele?</StepLabel>
+        <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-5">
+          {characters.map((c) => {
+            const active = video.character === c.name;
+            return (
+              <button
+                key={c.name}
+                type="button"
+                onClick={() => onChange({ character: c.name })}
+                className={`group relative flex flex-col items-center gap-1 rounded-xl border px-2 py-3 text-center transition ${
+                  active
+                    ? "border-gold-400 bg-gold-400/10 shadow-[0_0_20px_rgba(245,197,24,0.25)]"
+                    : "border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.06]"
+                }`}
+              >
+                <span className="text-xl">{c.emoji}</span>
+                <span
+                  className={`text-[10px] font-semibold leading-tight ${
+                    active ? "text-white" : "text-white/60"
+                  }`}
+                >
+                  {c.name}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        {video.character === "Outro" && (
+          <div className="mt-3">
+            <Field
+              label="Qual herói?"
+              placeholder="Ex: Patrulha Canina, Bela, Dragon Ball…"
+              value={video.otherCharacter}
+              onChange={(v) => onChange({ otherCharacter: v })}
+              required
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Reason picker */}
+      <div>
+        <StepLabel>3 · Por que esse vídeo? Qual dor ele resolve?</StepLabel>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {reasons.map((r) => {
+            const active = video.reason === r.key;
+            return (
+              <button
+                key={r.key}
+                type="button"
+                onClick={() => onChange({ reason: r.key })}
+                className={`flex items-center gap-2 rounded-full border px-3.5 py-2 text-[12px] font-semibold transition ${
+                  active
+                    ? "border-crimson-500 bg-crimson-500/15 text-white"
+                    : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white"
+                }`}
+              >
+                <span className="text-base">{r.emoji}</span>
+                {r.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Message */}
+      <div>
+        <StepLabel>4 · A mensagem que só você saberia escrever</StepLabel>
+        <p className="mt-1 text-[12px] text-white/45">
+          Quanto mais específico, mais arrepio. Conte conquistas, desafios,
+          coisas que ele fala…
+        </p>
+        <textarea
+          rows={4}
+          required
+          value={video.message}
+          onChange={(e) => onChange({ message: e.target.value })}
+          placeholder="Ex: O Lucas tem 4 anos, acabou de aprender a andar de bicicleta sem rodinhas e está com medo da primeira semana de escola nova. Ele adora dizer 'sou forte igual você, pai'."
+          className="mt-3 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white placeholder:text-white/25 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
+        />
+      </div>
+
+      {/* Optional extras */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field
+          label="Alguma piada interna? (opcional)"
+          placeholder="Ex: chama ele de 'Lulu Cabeção'"
+          value={video.insideJoke}
+          onChange={(v) => onChange({ insideJoke: v })}
+        />
+        <Field
+          label="Data desejada (opcional)"
+          type="date"
+          value={video.deliveryDate}
+          onChange={(v) => onChange({ deliveryDate: v })}
+          help="Entregamos em até 48h."
+        />
+      </div>
+    </div>
+  );
+}
+
+function ReviewStep({ form, plan }: { form: FormData; plan: Plan }) {
+  const isDuplo = plan === "duplo";
+  const price = isDuplo ? "147,00" : "97,00";
+
+  return (
+    <div className="space-y-5">
+      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+        <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400">
+          Contato
+        </div>
+        <div className="mt-3 space-y-1.5 text-[13px] text-white/80">
+          <div>
+            <span className="text-white/40">Nome:</span> {form.parentName}
+          </div>
+          <div>
+            <span className="text-white/40">WhatsApp:</span> {form.whatsapp}
+          </div>
+          <div>
+            <span className="text-white/40">E-mail:</span> {form.email}
+          </div>
+        </div>
+      </div>
+
+      {form.videos.map((v, i) => (
+        <div
+          key={i}
+          className="rounded-2xl border border-gold-400/20 bg-gradient-to-br from-gold-400/[0.06] to-transparent p-5"
+        >
+          <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
+            Vídeo {i + 1}
+          </div>
+          <div className="mt-3 space-y-1.5 text-[13px] text-white/80">
+            <div>
+              <span className="text-white/40">Para:</span> {v.childName} (
+              {v.childAge} anos{v.childNickname ? ` · "${v.childNickname}"` : ""})
+            </div>
+            <div>
+              <span className="text-white/40">Herói:</span>{" "}
+              {v.character === "Outro" ? v.otherCharacter : v.character}
+            </div>
+            <div>
+              <span className="text-white/40">Motivo:</span>{" "}
+              {reasons.find((r) => r.key === v.reason)?.label || "—"}
+            </div>
+            <div className="pt-2">
+              <span className="text-white/40">Mensagem:</span>
+              <p className="mt-1 italic text-white/70">&ldquo;{v.message}&rdquo;</p>
+            </div>
+            {v.insideJoke && (
+              <div>
+                <span className="text-white/40">Piada interna:</span>{" "}
+                {v.insideJoke}
+              </div>
+            )}
+            {v.deliveryDate && (
+              <div>
+                <span className="text-white/40">Data desejada:</span>{" "}
+                {v.deliveryDate}
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+
+      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+        <div>
+          <div className="text-[11px] font-bold uppercase tracking-wider text-white/50">
+            Total
+          </div>
+          <div className="mt-1 font-display text-3xl font-light text-white">
+            R$ {price}
+          </div>
+        </div>
+        <div className="text-right text-[11px] text-white/50">
+          <div>⚡ Entrega em até 48h</div>
+          <div>🔒 Garantia total ou reembolso</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────── PRIMITIVES ─────────────────────── */
+
+function StepLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
+      {children}
+    </div>
+  );
+}
+
+function Field({
+  label,
+  placeholder,
+  type = "text",
+  required = false,
+  value,
+  onChange,
+  help,
+}: {
+  label: string;
+  placeholder?: string;
+  type?: string;
+  required?: boolean;
+  value: string;
+  onChange: (v: string) => void;
+  help?: string;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-white/60">
+        {label} {required && <span className="text-crimson-500">*</span>}
+      </label>
+      <input
+        type={type}
+        required={required}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white placeholder:text-white/25 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-gold-400/30"
+      />
+      {help && <div className="mt-1.5 text-[11px] text-white/35">{help}</div>}
+    </div>
   );
 }
