@@ -255,7 +255,7 @@ export function Characters() {
   return (
     <section
       id="personagens"
-      className="relative overflow-hidden bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950 py-28 sm:py-36"
+      className="relative overflow-hidden bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950 py-20 sm:py-28"
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-grid-pattern [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />

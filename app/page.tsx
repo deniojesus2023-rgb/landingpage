@@ -18,6 +18,7 @@ import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { SocialProofToasts } from "@/components/SocialProofToasts";
 import { OrderModal } from "@/components/OrderModal";
 
 type Plan = "essencial" | "duplo";
@@ -50,6 +51,7 @@ export default function HomePage() {
       <FinalCTA />
       <Footer />
       <WhatsAppFloat />
+      {!modalOpen && <SocialProofToasts />}
       <OrderModal
         open={modalOpen}
         plan={plan}

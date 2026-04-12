@@ -6,7 +6,7 @@ import { ShimmerButton } from "./ui/ShimmerButton";
 
 export function FinalCTA() {
   return (
-    <section className="relative overflow-hidden py-32 sm:py-40">
+    <section className="relative overflow-hidden py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-crimson-600/30 via-violet-500/25 to-gold-500/30" />
         <motion.div

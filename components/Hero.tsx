@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  AnimatePresence,
   motion,
   useMotionValue,
   useScroll,
@@ -9,6 +10,17 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ShimmerButton } from "./ui/ShimmerButton";
+
+const NAMES = [
+  "Lucas",
+  "Helena",
+  "Arthur",
+  "Sofia",
+  "Miguel",
+  "Laura",
+  "Pedro",
+  "Alice",
+];
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -42,16 +54,35 @@ export function Hero() {
       `radial-gradient(600px circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.08), transparent 40%)`
   );
 
+  // Rotating child name
+  const [nameIndex, setNameIndex] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => {
+      setNameIndex((i) => (i + 1) % NAMES.length);
+    }, 1800);
+    return () => clearInterval(t);
+  }, []);
+
+  // Live counters — start with plausible seed, tick up randomly
+  const [videosNow, setVideosNow] = useState(27);
+  const [deliveredToday, setDeliveredToday] = useState(14);
+  useEffect(() => {
+    const t = setInterval(() => {
+      setVideosNow((n) => n + (Math.random() > 0.6 ? 1 : 0));
+      setDeliveredToday((n) => n + (Math.random() > 0.85 ? 1 : 0));
+    }, 6000);
+    return () => clearInterval(t);
+  }, []);
+
   return (
     <section
       ref={ref}
-      className="relative isolate overflow-hidden bg-ink-950 pt-10 pb-32 sm:pt-16 sm:pb-40"
+      className="relative isolate overflow-hidden bg-ink-950 pt-10 pb-20 sm:pt-14 sm:pb-28"
     >
       {/* Animated gradient mesh background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(124,92,255,0.25),transparent_55%),radial-gradient(circle_at_80%_20%,rgba(255,59,71,0.22),transparent_55%),radial-gradient(circle_at_50%_80%,rgba(245,197,24,0.18),transparent_60%)]" />
 
-        {/* Aurora blobs */}
         <motion.div
           className="aurora-blob left-[10%] top-[15%] h-[420px] w-[420px] bg-violet-500"
           animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
@@ -68,17 +99,14 @@ export function Hero() {
           transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* Grid pattern */}
         <div className="absolute inset-0 bg-grid-pattern [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]" />
 
-        {/* Spotlight that follows cursor */}
         <motion.div
           className="pointer-events-none absolute inset-0"
           style={{ background: spotlightBg }}
         />
       </div>
 
-      {/* Grain overlay */}
       <div className="grain" />
 
       <motion.div
@@ -90,12 +118,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
-          className="mb-8 flex justify-center"
+          className="mb-6 flex justify-center"
         >
           <img
             src="/logo.png"
             alt="HeroiVideo"
-            className="h-20 w-auto brightness-0 invert sm:h-24"
+            className="h-16 w-auto brightness-0 invert sm:h-20"
           />
         </motion.div>
 
@@ -104,7 +132,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/5 px-4 py-2 backdrop-blur-xl"
+          className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/5 px-4 py-2 backdrop-blur-xl"
         >
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-70" />
@@ -115,6 +143,27 @@ export function Hero() {
           </span>
         </motion.div>
 
+        {/* Live counter pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="mb-8 flex flex-wrap items-center justify-center gap-2 text-[11px] font-medium"
+        >
+          <span className="inline-flex items-center gap-2 rounded-full border border-crimson-500/30 bg-crimson-500/10 px-3 py-1.5 text-crimson-400">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-crimson-400 opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-crimson-500" />
+            </span>
+            <span className="font-bold tabular-nums">{videosNow}</span>
+            vídeos sendo gravados agora
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-emerald-400">
+            ✓ <span className="font-bold tabular-nums">{deliveredToday}</span>{" "}
+            entregues hoje
+          </span>
+        </motion.div>
+
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
@@ -122,12 +171,32 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}
           className="mx-auto max-w-5xl text-balance font-display text-[clamp(2.4rem,7vw,5.5rem)] font-light leading-[0.95] tracking-tight"
         >
-          <span className="text-gradient-hero">O herói favorito do seu filho</span>
+          <span className="text-gradient-hero">
+            O herói favorito do seu filho
+          </span>
           <br />
           <span className="relative inline-block">
             <span className="text-gradient-gold italic">falando o nome</span>{" "}
             <span className="relative inline-block text-gradient-gold italic">
-              dele.
+              {/* Rotating name */}
+              <span className="relative inline-block align-baseline">
+                <span className="invisible inline-block" aria-hidden>
+                  {NAMES.reduce((a, b) => (a.length >= b.length ? a : b))}
+                </span>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={NAMES[nameIndex]}
+                    initial={{ opacity: 0, y: "0.4em", filter: "blur(10px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: "-0.4em", filter: "blur(10px)" }}
+                    transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+                    className="absolute inset-0 flex items-baseline justify-center whitespace-nowrap"
+                  >
+                    {NAMES[nameIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              <span className="text-gradient-gold italic">.</span>
               <svg
                 viewBox="0 0 300 12"
                 className="absolute -bottom-2 left-0 w-full"
@@ -159,7 +228,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.3 }}
-          className="mx-auto mt-10 max-w-2xl text-balance text-[15px] leading-relaxed text-white/70 sm:text-[17px]"
+          className="mx-auto mt-8 max-w-2xl text-balance text-[15px] leading-relaxed text-white/70 sm:text-[17px]"
         >
           Homem-Aranha, Batman, Elsa e mais de 20 heróis. Um vídeo personalizado,
           com o nome, a mensagem e a ocasião que você escolher — entregue no seu
@@ -172,7 +241,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.45 }}
-          className="mt-12 flex flex-wrap items-center justify-center gap-4"
+          className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
           <ShimmerButton
             as="a"
@@ -189,11 +258,7 @@ export function Hero() {
             size="xl"
             variant="secondary"
             icon={
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z" />
               </svg>
             }
@@ -207,7 +272,7 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.7 }}
-          className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-[12px] text-white/50"
+          className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[12px] text-white/50"
         >
           {[
             ["⚡", "Entrega em 48h"],
@@ -223,12 +288,13 @@ export function Hero() {
           ))}
         </motion.div>
 
-        {/* Floating hero preview */}
+        {/* Floating hero preview with 3D tilt */}
         <motion.div
           initial={{ opacity: 0, y: 80 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-          className="relative mx-auto mt-20 w-full max-w-3xl"
+          className="relative mx-auto mt-14 w-full max-w-3xl"
+          style={{ perspective: 1200 }}
         >
           <HeroPreviewCard />
         </motion.div>
@@ -240,9 +306,40 @@ export function Hero() {
 function HeroPreviewCard() {
   const [videoReady, setVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // 3D tilt
+  const rotX = useMotionValue(0);
+  const rotY = useMotionValue(0);
+  const smoothRotX = useSpring(rotX, { stiffness: 120, damping: 18 });
+  const smoothRotY = useSpring(rotY, { stiffness: 120, damping: 18 });
+  const transform = useTransform(
+    [smoothRotX, smoothRotY],
+    ([rx, ry]: number[]) => `rotateX(${rx}deg) rotateY(${ry}deg)`
+  );
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    rotY.set(x * 10);
+    rotX.set(-y * 8);
+  };
+
+  const handleLeave = () => {
+    rotX.set(0);
+    rotY.set(0);
+  };
 
   return (
-    <div className="relative">
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      style={{ transform, transformStyle: "preserve-3d" }}
+      className="relative"
+    >
       {/* Glow halo */}
       <div className="absolute -inset-4 rounded-[32px] bg-gradient-to-br from-violet-500/40 via-crimson-500/30 to-gold-500/40 opacity-60 blur-2xl" />
 
@@ -263,10 +360,8 @@ function HeroPreviewCard() {
 
         {/* Video stage */}
         <div className="relative aspect-video">
-          {/* Gradient fallback (always rendered under the video) */}
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 675%22><defs><radialGradient id=%22g%22 cx=%2250%25%22 cy=%2240%25%22><stop offset=%220%25%22 stop-color=%22%23FF3B47%22/><stop offset=%22100%25%22 stop-color=%22%230A0B1A%22/></radialGradient></defs><rect width=%221200%22 height=%22675%22 fill=%22url(%23g)%22/></svg>')] bg-cover opacity-70" />
 
-          {/* Real looping background video (fades in when loaded) */}
           <video
             ref={videoRef}
             src="/videos/hero-loop.mp4"
@@ -283,13 +378,9 @@ function HeroPreviewCard() {
             }`}
           />
 
-          {/* Cinematic vignette over video */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
-
-          {/* Subtle film grain */}
           <div className="grain" />
 
-          {/* Play / pulse indicator — only when video is NOT ready (fallback mode) */}
           {!videoReady && (
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
@@ -313,13 +404,11 @@ function HeroPreviewCard() {
             </div>
           )}
 
-          {/* Live REC badge — always visible */}
           <div className="absolute right-4 top-4 flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-xl">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-crimson-500" />
             AO VIVO
           </div>
 
-          {/* Bottom caption */}
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-5">
             <div className="flex items-end justify-between gap-4">
               <div>
@@ -335,10 +424,11 @@ function HeroPreviewCard() {
         </div>
       </div>
 
-      {/* Floating pills around card */}
+      {/* Floating pills — lifted in 3D space */}
       <motion.div
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transform: "translateZ(60px)" }}
         className="absolute -left-4 top-10 hidden items-center gap-2 rounded-full border border-white/10 bg-ink-800/90 px-3 py-2 text-[11px] font-medium shadow-xl backdrop-blur-xl sm:flex"
       >
         <span>⭐</span>
@@ -347,6 +437,7 @@ function HeroPreviewCard() {
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transform: "translateZ(80px)" }}
         className="absolute -right-4 top-24 hidden items-center gap-2 rounded-full border border-white/10 bg-ink-800/90 px-3 py-2 text-[11px] font-medium shadow-xl backdrop-blur-xl sm:flex"
       >
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
@@ -355,6 +446,7 @@ function HeroPreviewCard() {
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transform: "translateZ(100px)" }}
         className="absolute -bottom-4 left-16 hidden items-center gap-2 rounded-2xl border border-white/10 bg-ink-800/90 px-4 py-2.5 text-[11px] font-medium shadow-xl backdrop-blur-xl sm:flex"
       >
         <div className="flex -space-x-2">
@@ -368,6 +460,6 @@ function HeroPreviewCard() {
         </div>
         <span>Mariana acabou de pedir</span>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

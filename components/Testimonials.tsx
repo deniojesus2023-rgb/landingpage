@@ -75,7 +75,7 @@ export function Testimonials() {
   return (
     <section
       id="depoimentos"
-      className="relative overflow-hidden py-28 sm:py-36"
+      className="relative overflow-hidden py-16 sm:py-24"
     >
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-0 top-1/3 h-96 w-96 rounded-full bg-violet-500/15 blur-3xl" />

@@ -85,7 +85,7 @@ export function Pricing({ onSelect }: { onSelect: (plan: Plan) => void }) {
   return (
     <section
       id="pedido"
-      className="relative overflow-hidden bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950 py-28 sm:py-36"
+      className="relative overflow-hidden bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950 py-20 sm:py-28"
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-0 h-[800px] w-[1100px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(245,197,24,0.15),transparent_60%)] blur-2xl" />
