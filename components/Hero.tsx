@@ -15,7 +15,6 @@ import {
   Heart,
   Clapperboard,
   Star,
-  Check,
   Play,
   Wand2,
 } from "lucide-react";
@@ -73,17 +72,6 @@ export function Hero() {
     return () => clearInterval(t);
   }, []);
 
-  // Live counters — start with plausible seed, tick up randomly
-  const [videosNow, setVideosNow] = useState(27);
-  const [deliveredToday, setDeliveredToday] = useState(14);
-  useEffect(() => {
-    const t = setInterval(() => {
-      setVideosNow((n) => n + (Math.random() > 0.6 ? 1 : 0));
-      setDeliveredToday((n) => n + (Math.random() > 0.85 ? 1 : 0));
-    }, 6000);
-    return () => clearInterval(t);
-  }, []);
-
   return (
     <section
       ref={ref}
@@ -123,58 +111,6 @@ export function Hero() {
         style={{ y, opacity, scale }}
         className="relative mx-auto max-w-6xl px-5 text-center sm:px-8"
       >
-        {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
-          className="mb-6 flex justify-center"
-        >
-          <img
-            src="/logo.png"
-            alt="HeroiVideo"
-            className="h-16 w-auto brightness-0 invert sm:h-20"
-          />
-        </motion.div>
-
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-          className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold-400/30 bg-gold-400/5 px-4 py-2 backdrop-blur-xl"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-70" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-400" />
-          </span>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gold-400">
-            Presente cinematográfico · Entrega 48h
-          </span>
-        </motion.div>
-
-        {/* Live counter pill */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="mb-8 flex flex-wrap items-center justify-center gap-2 text-[11px] font-medium"
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-crimson-500/30 bg-crimson-500/10 px-3 py-1.5 text-crimson-400">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-crimson-400 opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-crimson-500" />
-            </span>
-            <span className="font-bold tabular-nums">{videosNow}</span>
-            vídeos sendo gravados agora
-          </span>
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-emerald-400">
-            <Check className="h-3 w-3" strokeWidth={2.5} />
-            <span className="font-bold tabular-nums">{deliveredToday}</span>{" "}
-            entregues hoje
-          </span>
-        </motion.div>
-
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
