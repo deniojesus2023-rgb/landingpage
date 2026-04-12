@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Heart } from "lucide-react";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 
@@ -36,7 +37,7 @@ export function Guarantee() {
 
           {/* Details card */}
           <Reveal delay={0.2}>
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-8 backdrop-blur-xl sm:p-10">
+            <div className="relative overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-8 backdrop-blur-xl sm:p-10">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_0%,rgba(29,185,84,0.15),transparent_60%)]" />
 
               <div className="relative">
@@ -90,9 +91,12 @@ export function Guarantee() {
                   ))}
                 </ul>
 
-                <div className="mt-8 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-400/10 text-xl">
-                    💛
+                <div className="mt-8 flex items-center gap-3 rounded-[7px] border border-white/10 bg-white/5 p-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-400/10">
+                    <Heart
+                      className="h-5 w-5 text-gold-400"
+                      strokeWidth={1.75}
+                    />
                   </div>
                   <p className="text-[12px] italic text-white/60">
                     &ldquo;Ainda não precisamos devolver o dinheiro de ninguém.

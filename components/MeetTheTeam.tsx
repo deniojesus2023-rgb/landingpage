@@ -1,32 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  Clapperboard,
+  Film,
+  Headphones,
+  MessageSquare,
+  type LucideIcon,
+} from "lucide-react";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 
-const team = [
+const team: {
+  name: string;
+  role: string;
+  Icon: LucideIcon;
+  color: string;
+}[] = [
   {
     name: "Diretor criativo",
     role: "Ex-animador de estúdio",
-    emoji: "🎬",
+    Icon: Clapperboard,
     color: "#FF3B47",
   },
   {
     name: "Editor de vídeo",
     role: "10+ anos em pós-produção",
-    emoji: "🎞️",
+    Icon: Film,
     color: "#7C5CFF",
   },
   {
     name: "Sound designer",
     role: "Mixagem e dublagem",
-    emoji: "🎧",
+    Icon: Headphones,
     color: "#5EE7FF",
   },
   {
     name: "Atendimento",
     role: "Suporte humano no WhatsApp",
-    emoji: "💬",
+    Icon: MessageSquare,
     color: "#1DB954",
   },
 ];
@@ -66,9 +78,9 @@ export function MeetTheTeam() {
           transition={{ duration: 0.8 }}
           className="relative mx-auto mt-16 max-w-4xl"
         >
-          <div className="absolute -inset-4 rounded-[32px] bg-gradient-to-br from-gold-500/20 via-violet-500/15 to-crimson-500/20 opacity-60 blur-2xl" />
+          <div className="absolute -inset-4 rounded-[7px] bg-gradient-to-br from-gold-500/20 via-violet-500/15 to-crimson-500/20 opacity-60 blur-2xl" />
 
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 backdrop-blur-xl">
+          <div className="relative overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 backdrop-blur-xl">
             <div className="grid gap-0 md:grid-cols-[auto_1fr]">
               {/* Portrait */}
               <div className="relative aspect-square w-full overflow-hidden md:w-72">
@@ -115,7 +127,7 @@ export function MeetTheTeam() {
                   ].map((s) => (
                     <div
                       key={s.label}
-                      className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-center sm:p-4"
+                      className="rounded-[7px] border border-white/10 bg-white/[0.03] p-3 text-center sm:p-4"
                     >
                       <div className="font-display text-2xl font-light text-gradient-gold sm:text-3xl">
                         {s.num}
@@ -156,7 +168,7 @@ export function MeetTheTeam() {
               whileHover={{ y: -4 }}
               className="group relative"
             >
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition-all duration-500 hover:border-white/20">
+              <div className="relative overflow-hidden rounded-[7px] border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition-all duration-500 hover:border-white/20">
                 <div
                   className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{
@@ -165,13 +177,17 @@ export function MeetTheTeam() {
                 />
                 <div className="relative">
                   <div
-                    className="flex h-12 w-12 items-center justify-center rounded-xl text-xl"
+                    className="flex h-12 w-12 items-center justify-center rounded-[7px]"
                     style={{
                       background: `linear-gradient(135deg, ${m.color}30, ${m.color}10)`,
                       border: `1px solid ${m.color}40`,
                     }}
                   >
-                    {m.emoji}
+                    <m.Icon
+                      className="h-5 w-5"
+                      strokeWidth={1.75}
+                      style={{ color: m.color }}
+                    />
                   </div>
                   <div className="mt-4 text-[13px] font-bold text-white">
                     {m.name}

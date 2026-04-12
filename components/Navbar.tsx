@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
+import { Clapperboard } from "lucide-react";
 import { ShimmerButton } from "./ui/ShimmerButton";
 
 export function Navbar() {
@@ -30,7 +31,7 @@ export function Navbar() {
       <div className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
         <a href="#" className="group flex items-center gap-2.5">
           <div className="relative">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-gold-400 via-gold-500 to-[#D68F00] shadow-glow">
+            <div className="flex h-9 w-9 items-center justify-center rounded-[7px] bg-gradient-to-br from-gold-400 via-gold-500 to-[#D68F00] shadow-glow">
               <svg
                 viewBox="0 0 24 24"
                 className="h-5 w-5 text-ink-950"
@@ -39,7 +40,7 @@ export function Navbar() {
                 <path d="M12 2l2.39 4.84L20 7.77l-4 3.9.95 5.55L12 14.77 7.05 17.22 8 11.67 4 7.77l5.61-.93L12 2z" />
               </svg>
             </div>
-            <div className="absolute inset-0 rounded-xl bg-gold-400/50 opacity-0 blur-xl transition group-hover:opacity-70" />
+            <div className="absolute inset-0 rounded-[7px] bg-gold-400/50 opacity-0 blur-xl transition group-hover:opacity-70" />
           </div>
           <div className="text-lg font-extrabold tracking-tight text-white">
             Heroi<span className="text-gradient-gold">Vídeo</span>
@@ -64,7 +65,7 @@ export function Navbar() {
           href="#pedido"
           size="md"
           variant="gold"
-          icon={<span className="text-base">🎬</span>}
+          icon={<Clapperboard className="h-4 w-4" strokeWidth={1.75} />}
         >
           Pedir agora
         </ShimmerButton>

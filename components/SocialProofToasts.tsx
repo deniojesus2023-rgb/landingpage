@@ -198,7 +198,7 @@ export function SocialProofToasts() {
             animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
             exit={{ opacity: 0, x: -40, scale: 0.95 }}
             transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-            className="pointer-events-auto relative flex max-w-[320px] items-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-ink-900/90 p-3 pr-9 shadow-2xl shadow-black/50 backdrop-blur-xl"
+            className="pointer-events-auto relative flex max-w-[320px] items-center gap-3 overflow-hidden rounded-[7px] border border-white/10 bg-ink-900/90 p-3 pr-9 shadow-2xl shadow-black/50 backdrop-blur-xl"
           >
             {/* Accent edge */}
             <div

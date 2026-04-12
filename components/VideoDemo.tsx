@@ -114,7 +114,7 @@ function VideoPlayer() {
       {/* Halo glow */}
       <div className="absolute -inset-6 rounded-[36px] bg-gradient-to-br from-crimson-500/30 via-violet-500/30 to-gold-500/30 opacity-60 blur-3xl transition group-hover:opacity-100" />
 
-      <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-ink-900 shadow-2xl">
+      <div className="relative overflow-hidden rounded-[7px] border border-white/10 bg-ink-900 shadow-2xl">
         <div className="relative aspect-video">
           <AnimatePresence mode="wait">
             {!isPlaying ? (
@@ -253,7 +253,7 @@ function VideoPlayer() {
                 {/* Nenhum video configurado - mensagem */}
                 {!YOUTUBE_ID && !VIMEO_ID && !VIDEO_URL && (
                   <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-ink-950 p-8">
-                    <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-center">
+                    <div className="rounded-[7px] border border-white/10 bg-white/5 px-6 py-4 text-center">
                       <p className="text-lg font-medium text-white">Configure o video</p>
                       <p className="mt-2 text-sm text-white/60">
                         Abra o arquivo <code className="rounded bg-white/10 px-1.5 py-0.5 text-gold-400">components/VideoDemo.tsx</code> e preencha uma das variaveis:

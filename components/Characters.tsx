@@ -194,7 +194,7 @@ function CarouselCard({ character }: { character: Character }) {
   return (
     <a
       href="#pedido"
-      className="group relative block h-[280px] w-[200px] flex-shrink-0 overflow-hidden rounded-2xl border border-white/10 transition-all duration-500 hover:border-white/25 sm:h-[340px] sm:w-[240px]"
+      className="group relative block h-[280px] w-[200px] flex-shrink-0 overflow-hidden rounded-[7px] border border-white/10 transition-all duration-500 hover:border-white/25 sm:h-[340px] sm:w-[240px]"
       style={{ boxShadow: `0 8px 32px -8px ${character.color}30` }}
     >
       <CharacterImage character={character} />
@@ -367,7 +367,9 @@ function CharacterFallback({ character }: { character: Character }) {
         background: `radial-gradient(circle at 50% 40%, ${character.color}, ${character.color}20 60%, #05060F 100%)`,
       }}
     >
-      <div className="text-6xl opacity-40 grayscale">{character.emoji}</div>
+      <div className="font-display text-7xl font-light text-white/20">
+        {character.name.charAt(0)}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  CreditCard,
+  Flame,
+  Lock,
+  RefreshCw,
+  Sparkles,
+  Zap,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
@@ -67,7 +75,7 @@ function useCountdown(initial: number) {
 function Digit({ value, label }: { value: number; label: string }) {
   return (
     <div className="relative flex min-w-[72px] flex-col items-center">
-      <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-ink-800 to-ink-900 px-5 py-3 backdrop-blur-xl">
+      <div className="relative overflow-hidden rounded-[7px] border border-white/15 bg-gradient-to-br from-ink-800 to-ink-900 px-5 py-3 backdrop-blur-xl">
         <div className="font-display text-4xl font-light tabular-nums text-gradient-gold">
           {String(value).padStart(2, "0")}
         </div>
@@ -134,7 +142,7 @@ export function Pricing({ onSelect }: { onSelect: (plan: Plan) => void }) {
               className={`relative ${plan.featured ? "md:-mt-4" : ""}`}
             >
               {plan.featured && (
-                <div className="glow-border rounded-[28px]">
+                <div className="glow-border rounded-[7px]">
                   <PlanCard plan={plan} onSelect={onSelect} />
                 </div>
               )}
@@ -147,14 +155,14 @@ export function Pricing({ onSelect }: { onSelect: (plan: Plan) => void }) {
         <Reveal delay={0.4}>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[12px] text-white/50">
             {[
-              ["🔒", "Pagamento 100% seguro"],
-              ["💳", "Pix, boleto ou cartão"],
-              ["↩️", "Satisfação garantida"],
-              ["⚡", "Entrega em até 48h"],
-            ].map(([i, l]) => (
-              <div key={l} className="flex items-center gap-2">
-                <span>{i}</span>
-                <span className="font-medium">{l}</span>
+              { Icon: Lock, label: "Pagamento 100% seguro" },
+              { Icon: CreditCard, label: "Pix, boleto ou cartão" },
+              { Icon: RefreshCw, label: "Satisfação garantida" },
+              { Icon: Zap, label: "Entrega em até 48h" },
+            ].map(({ Icon, label }) => (
+              <div key={label} className="flex items-center gap-2">
+                <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
+                <span className="font-medium">{label}</span>
               </div>
             ))}
           </div>
@@ -173,7 +181,7 @@ function PlanCard({
 }) {
   return (
     <div
-      className={`relative h-full overflow-hidden rounded-[28px] border p-8 backdrop-blur-xl sm:p-10 ${
+      className={`relative h-full overflow-hidden rounded-[7px] border p-8 backdrop-blur-xl sm:p-10 ${
         plan.featured
           ? "border-gold-400/40 bg-gradient-to-br from-ink-800 via-ink-900 to-ink-800"
           : "border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02]"
@@ -183,8 +191,9 @@ function PlanCard({
         <>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,197,24,0.25),transparent_60%)]" />
           <div className="absolute -top-px left-1/2 -translate-x-1/2">
-            <div className="relative -translate-y-1/2 rounded-full border border-gold-400/40 bg-gradient-to-br from-gold-400 to-gold-600 px-5 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-ink-950 shadow-[0_8px_32px_rgba(245,197,24,0.5)]">
-              🔥 Mais escolhido
+            <div className="relative -translate-y-1/2 inline-flex items-center gap-1.5 rounded-full border border-gold-400/40 bg-gradient-to-br from-gold-400 to-gold-600 px-5 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-ink-950 shadow-[0_8px_32px_rgba(245,197,24,0.5)]">
+              <Flame className="h-3 w-3" strokeWidth={2} />
+              Mais escolhido
             </div>
           </div>
         </>
@@ -257,12 +266,13 @@ function PlanCard({
             size="xl"
             className="w-full"
             onClick={() => onSelect(plan.id)}
-            icon={<span className="text-lg">🦸</span>}
+            icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
           >
             {plan.cta}
           </ShimmerButton>
-          <p className="mt-4 text-center text-[11px] text-white/40">
-            🔒 Checkout seguro · Garantia incondicional
+          <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-white/40">
+            <Lock className="h-3 w-3" strokeWidth={1.75} />
+            Checkout seguro · Garantia incondicional
           </p>
         </div>
       </div>
