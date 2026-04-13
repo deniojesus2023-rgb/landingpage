@@ -113,10 +113,10 @@ export function MeetTheTeam() {
                   Gabriel Rocha
                 </h3>
                 <p className="mt-4 text-[14px] leading-relaxed text-white/70">
-                  Ex-redator de desenhos animados infantis, pai de dois, e o
-                  cara que transforma um formulário de 5 campos numa cena que
-                  arranca lágrima até de tio folgado. Revisa pessoalmente cada
-                  vídeo antes de virar produção.
+Especialista em criar mensagens que tocam o coração das
+							crianças. Cada roteiro é escrito com carinho e atenção aos
+							detalhes, transformando informações simples em momentos
+							mágicos e inesquecíveis.
                 </p>
 
                 <div className="mt-6 grid grid-cols-3 gap-3 sm:gap-4">
