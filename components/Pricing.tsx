@@ -84,8 +84,8 @@ const plans: PlanConfig[] = [
   {
     id: "duplo",
     name: "Duplo",
-    tagline: "2 vídeos + economia de R$ 3",
-    oldPrice: "94",
+    tagline: "2 vídeos pelo preço de 1",
+    oldPrice: "147",
     price: "97",
     cents: "00",
     note: "pagamento único · mais pedido",
@@ -95,7 +95,7 @@ const plans: PlanConfig[] = [
       "Ideal para 2 filhos ou 2 datas diferentes",
       "Roteiro premium + revisão cinematográfica",
       "Garantia total de satisfação",
-      "Economia de R$ 3 vs. 2× Essencial",
+      "Economia de R$ 50 vs. comprar separado",
     ],
     bonuses: [
       {
