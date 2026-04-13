@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import {
   CreditCard,
   Flame,
+  Gift,
   Lock,
   RefreshCw,
   Sparkles,
@@ -16,9 +17,30 @@ import { ShimmerButton } from "./ui/ShimmerButton";
 
 type Plan = "essencial" | "duplo";
 
-const plans = [
+type PlanBonus = {
+  title: string;
+  description: string;
+  value: string;
+};
+
+type PlanConfig = {
+  id: Plan;
+  name: string;
+  tagline: string;
+  oldPrice: string;
+  price: string;
+  cents: string;
+  note: string;
+  features: string[];
+  bonuses?: PlanBonus[];
+  cta: string;
+  variant: "primary" | "gold";
+  featured: boolean;
+};
+
+const plans: PlanConfig[] = [
   {
-    id: "essencial" as const,
+    id: "essencial",
     name: "Essencial",
     tagline: "1 vídeo personalizado",
     oldPrice: "147",
@@ -34,11 +56,11 @@ const plans = [
       "Garantia total de satisfação",
     ],
     cta: "Quero o vídeo",
-    variant: "primary" as const,
+    variant: "primary",
     featured: false,
   },
   {
-    id: "duplo" as const,
+    id: "duplo",
     name: "Duplo",
     tagline: "2 vídeos + economia de R$ 47",
     oldPrice: "220",
@@ -49,13 +71,26 @@ const plans = [
       "2 vídeos em HD (até 60s cada)",
       "Heróis e mensagens totalmente independentes",
       "Ideal para 2 filhos ou 2 datas diferentes",
-      "Entrega via WhatsApp em até 48h",
       "Roteiro premium + revisão cinematográfica",
       "Garantia total de satisfação",
       "Economia de R$ 47 vs. 2× Essencial",
     ],
+    bonuses: [
+      {
+        title: "Entrega VIP em 24h",
+        description:
+          "Seus vídeos prontos no dia seguinte — sem fila, com prioridade máxima.",
+        value: "R$ 47",
+      },
+      {
+        title: "Pôster cinematográfico digital",
+        description:
+          "Cartaz personalizado estilo filme com o nome da criança, pronto pra imprimir ou usar de wallpaper.",
+        value: "R$ 50",
+      },
+    ],
     cta: "Quero os 2 vídeos",
-    variant: "gold" as const,
+    variant: "gold",
     featured: true,
   },
 ];
@@ -176,9 +211,13 @@ function PlanCard({
   plan,
   onSelect,
 }: {
-  plan: (typeof plans)[number];
+  plan: PlanConfig;
   onSelect: (p: Plan) => void;
 }) {
+  const bonusTotal = plan.bonuses?.reduce(
+    (acc, b) => acc + parseInt(b.value.replace(/\D/g, ""), 10),
+    0,
+  );
   return (
     <div
       className={`relative h-full overflow-hidden rounded-[7px] border p-8 backdrop-blur-xl sm:p-10 ${
@@ -235,6 +274,12 @@ function PlanCard({
             </span>
           </div>
           <div className="mt-2 text-[12px] text-white/50">{plan.note}</div>
+          {bonusTotal ? (
+            <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-gold-400/40 bg-gold-400/10 px-3 py-1 text-[11px] font-semibold text-gold-400">
+              <Gift className="h-3 w-3" strokeWidth={2} />
+              + R$ {bonusTotal} em bônus grátis
+            </div>
+          ) : null}
         </div>
 
         <ul className="mt-8 space-y-3.5">
@@ -259,6 +304,43 @@ function PlanCard({
             </li>
           ))}
         </ul>
+
+        {plan.bonuses && plan.bonuses.length > 0 && (
+          <div className="mt-8 rounded-[7px] border border-gold-400/30 bg-gradient-to-br from-gold-400/[0.08] via-gold-400/[0.04] to-transparent p-5">
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-gold-400">
+              <Gift className="h-3.5 w-3.5" strokeWidth={2} />
+              Bônus exclusivos Duplo
+            </div>
+            <ul className="mt-4 space-y-4">
+              {plan.bonuses.map((b) => (
+                <li key={b.title} className="flex items-start gap-3">
+                  <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_18px_rgba(245,197,24,0.35)]">
+                    <Sparkles
+                      className="h-3 w-3 text-ink-950"
+                      strokeWidth={2.5}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <div className="text-[14px] font-semibold text-white">
+                        {b.title}
+                      </div>
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-white/30 line-through">
+                        {b.value}
+                      </div>
+                      <div className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-400">
+                        Grátis
+                      </div>
+                    </div>
+                    <div className="mt-1 text-[12px] leading-snug text-white/60">
+                      {b.description}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div className="mt-10">
           <ShimmerButton
