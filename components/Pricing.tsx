@@ -177,7 +177,7 @@ export function Pricing({ onSelect }: { onSelect: (plan: Plan) => void }) {
               transition={{ duration: 0.7, delay: i * 0.15 }}
               className={`relative ${plan.featured ? "md:-mt-4" : ""}`}
             >
-              <PlanCard plan={plan} onSelect={onSelect} />
+              <PlanCard plan={plan} />
             </motion.div>
           ))}
         </div>
@@ -205,10 +205,8 @@ export function Pricing({ onSelect }: { onSelect: (plan: Plan) => void }) {
 
 function PlanCard({
   plan,
-  onSelect,
 }: {
   plan: PlanConfig;
-  onSelect: (p: Plan) => void;
 }) {
   const bonusTotal = plan.bonuses?.reduce(
     (acc, b) => acc + parseInt(b.value.replace(/\D/g, ""), 10),
