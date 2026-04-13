@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Heart, Lock, Sparkles, Zap } from "lucide-react";
+import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
 import { ShimmerButton } from "./ui/ShimmerButton";
 
@@ -48,15 +49,17 @@ export function FinalCTA() {
 
         <Reveal delay={0.3}>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-            <ShimmerButton
-              as="a"
-              href="#pedido"
-              variant="gold"
-              size="xl"
-              icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
-            >
-              Quero esse momento agora
-            </ShimmerButton>
+            <HoverBorderGradient>
+              <ShimmerButton
+                as="a"
+                href="#pedido"
+                variant="gold"
+                size="xl"
+                icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
+              >
+                Quero esse momento agora
+              </ShimmerButton>
+            </HoverBorderGradient>
           </div>
         </Reveal>
 

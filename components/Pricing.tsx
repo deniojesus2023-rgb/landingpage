@@ -11,6 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 import { ShimmerButton } from "./ui/ShimmerButton";
@@ -351,15 +352,17 @@ function PlanCard({
           plan.featured ? "bg-ink-900/50" : ""
         }`}
       >
-        <ShimmerButton
-          variant={plan.variant}
-          size="xl"
-          className="w-full"
-          onClick={() => onSelect(plan.id)}
-          icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
-        >
-          {plan.cta}
-        </ShimmerButton>
+        <HoverBorderGradient containerClassName="w-full">
+          <ShimmerButton
+            variant={plan.variant}
+            size="xl"
+            className="w-full"
+            onClick={() => onSelect(plan.id)}
+            icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
+          >
+            {plan.cta}
+          </ShimmerButton>
+        </HoverBorderGradient>
         <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-white/40">
           <Lock className="h-3 w-3" strokeWidth={1.75} />
           Checkout seguro · Garantia incondicional
