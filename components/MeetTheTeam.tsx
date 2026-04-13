@@ -84,20 +84,12 @@ export function MeetTheTeam() {
             <div className="grid gap-0 md:grid-cols-[auto_1fr]">
               {/* Portrait */}
               <div className="relative aspect-square w-full overflow-hidden md:w-72">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 50% 40%, #1E9DF1 0%, #7C5CFF 50%, #0a0b1a 100%)",
-                  }}
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/57af53a0-38f2-4937-831f-6c5d2a695392.jpeg"
+                  alt="Dênio Jesus - Roteirista"
+                  className="absolute inset-0 h-full w-full object-cover object-top"
                 />
-                <div className="grain" />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-transparent to-transparent" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="font-display text-9xl font-light text-white/20">
-                    GR
-                  </div>
-                </div>
                 <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[10px] font-semibold text-white/80 backdrop-blur-xl">
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
                   Online
@@ -110,7 +102,7 @@ export function MeetTheTeam() {
                   Roteirista chefe
                 </div>
                 <h3 className="mt-2 font-display text-3xl font-light leading-tight text-white sm:text-4xl">
-                  Gabriel Rocha
+                  Dênio Jesus
                 </h3>
                 <p className="mt-4 text-[14px] leading-relaxed text-white/70">
 Especialista em criar mensagens que tocam o coração das
