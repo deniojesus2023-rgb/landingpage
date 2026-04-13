@@ -277,18 +277,6 @@ function VideoPlayer() {
           </AnimatePresence>
         </div>
 
-        {/* Progress bar */}
-        <div className="flex items-center gap-3 border-t border-white/10 bg-ink-900/80 px-5 py-3 backdrop-blur">
-          <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-gold-400 to-gold-600 transition-all duration-300"
-              style={{ width: `${progress || 33}%` }}
-            />
-          </div>
-          <div className="text-[10px] tabular-nums text-white/40">
-            {currentTime} / {duration}
-          </div>
-        </div>
       </div>
     </div>
   );
