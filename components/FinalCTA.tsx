@@ -15,7 +15,7 @@ export function FinalCTA() {
             backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
           }}
           transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,59,71,0.4),transparent_50%),radial-gradient(circle_at_80%_70%,rgba(245,197,24,0.4),transparent_50%),radial-gradient(circle_at_50%_100%,rgba(124,92,255,0.4),transparent_50%)]"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,59,71,0.4),transparent_50%),radial-gradient(circle_at_80%_70%,rgba(30,157,241,0.4),transparent_50%),radial-gradient(circle_at_50%_100%,rgba(124,92,255,0.4),transparent_50%)]"
           style={{ backgroundSize: "200% 200%" }}
         />
         <div className="absolute inset-0 bg-ink-950/60" />

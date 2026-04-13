@@ -28,7 +28,7 @@ const reviews = [
     name: "Ana Teixeira",
     meta: "Mãe do Pedro, 3 anos",
     initials: "AT",
-    color: "#F5C518",
+    color: "#1E9DF1",
     rating: 5,
     text: "Meu filho tinha medo de dormir. O Homem-Aranha mandou uma mensagem pra ele e desde então vai pra cama sem choro. Mudou nossa rotina inteira. Incrível!",
     highlight: "Mudou nossa rotina inteira",
@@ -164,7 +164,7 @@ export function Testimonials() {
           transition={{ duration: 0.7 }}
           className="relative mt-16 overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 p-10 backdrop-blur-xl"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(245,197,24,0.12),transparent_60%),radial-gradient(circle_at_80%_50%,rgba(124,92,255,0.12),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(30,157,241,0.12),transparent_60%),radial-gradient(circle_at_80%_50%,rgba(124,92,255,0.12),transparent_60%)]" />
           <div className="relative grid grid-cols-2 gap-8 md:grid-cols-4">
             {[
               { value: 500, suffix: "+", label: "Vídeos entregues" },

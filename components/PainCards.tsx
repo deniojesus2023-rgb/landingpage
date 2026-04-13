@@ -54,7 +54,7 @@ const cards: Card[] = [
     hero: "Thor",
     solution:
       "Revela o segredo: “foi o brócolis que deu força pro Mjölnir.” Parece bobo? É. Funciona? Pergunta pras 500+ famílias que já usaram.",
-    accent: "#F5C518",
+    accent: "#1E9DF1",
   },
   {
     Icon: Cake,

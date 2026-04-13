@@ -17,7 +17,7 @@ type ShimmerButtonProps = {
 const variantClasses: Record<Variant, string> = {
   primary:
     "bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] text-white shadow-[0_10px_40px_-10px_rgba(255,59,71,0.7)] hover:shadow-[0_20px_60px_-10px_rgba(255,59,71,0.9)]",
-  gold: "bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 text-ink-950 shadow-[0_10px_40px_-10px_rgba(245,197,24,0.7)] hover:shadow-[0_20px_60px_-10px_rgba(245,197,24,0.9)]",
+  gold: "bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 text-ink-950 shadow-[0_10px_40px_-10px_rgba(30,157,241,0.7)] hover:shadow-[0_20px_60px_-10px_rgba(30,157,241,0.9)]",
   secondary:
     "bg-white/5 border border-white/15 text-white backdrop-blur-xl hover:bg-white/10",
   ghost: "bg-transparent text-white/80 hover:text-white",
@@ -54,7 +54,7 @@ export const ShimmerButton = forwardRef<HTMLButtonElement, ShimmerButtonProps>(
           style={{
             background:
               variant === "gold"
-                ? "radial-gradient(60% 60% at 50% 50%, rgba(245,197,24,0.75), transparent 70%)"
+                ? "radial-gradient(60% 60% at 50% 50%, rgba(30,157,241,0.75), transparent 70%)"
                 : variant === "primary"
                   ? "radial-gradient(60% 60% at 50% 50%, rgba(255,59,71,0.75), transparent 70%)"
                   : "radial-gradient(60% 60% at 50% 50%, rgba(124,92,255,0.6), transparent 70%)",

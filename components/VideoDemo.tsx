@@ -158,12 +158,12 @@ function VideoPlayer() {
                     <motion.div
                       animate={{
                         boxShadow: [
-                          "0 0 0 0 rgba(245,197,24,0.5)",
-                          "0 0 0 32px rgba(245,197,24,0)",
+                          "0 0 0 0 rgba(30,157,241,0.5)",
+                          "0 0 0 32px rgba(30,157,241,0)",
                         ],
                       }}
                       transition={{ duration: 2.2, repeat: Infinity }}
-                      className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_80px_rgba(245,197,24,0.6)]"
+                      className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_80px_rgba(30,157,241,0.6)]"
                     >
                       <svg
                         viewBox="0 0 24 24"

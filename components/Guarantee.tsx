@@ -117,7 +117,7 @@ function SealSvg() {
   return (
     <div className="relative h-72 w-72 sm:h-80 sm:w-80">
       {/* Glow behind */}
-      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(245,197,24,0.35),transparent_70%)] blur-2xl" />
+      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(30,157,241,0.35),transparent_70%)] blur-2xl" />
 
       {/* Rotating rim text */}
       <motion.svg
@@ -137,7 +137,7 @@ function SealSvg() {
           fontSize="17"
           fontWeight="800"
           letterSpacing="6"
-          fill="#F5C518"
+          fill="#1E9DF1"
           fontFamily="var(--font-sans), sans-serif"
         >
           <textPath href="#seal-curve">
@@ -154,9 +154,9 @@ function SealSvg() {
             <stop offset="100%" stopColor="#0a0b1a" />
           </radialGradient>
           <linearGradient id="seal-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFD65C" />
-            <stop offset="50%" stopColor="#F5C518" />
-            <stop offset="100%" stopColor="#E0AE00" />
+            <stop offset="0%" stopColor="#4FB5F7" />
+            <stop offset="50%" stopColor="#1E9DF1" />
+            <stop offset="100%" stopColor="#1A8CD8" />
           </linearGradient>
         </defs>
 
@@ -199,7 +199,7 @@ function SealSvg() {
           cy="160"
           r="82"
           fill="none"
-          stroke="#F5C518"
+          stroke="#1E9DF1"
           strokeWidth="0.5"
           opacity="0.3"
         />
@@ -240,7 +240,7 @@ function SealSvg() {
           textAnchor="middle"
           fontSize="10"
           fontWeight="800"
-          fill="#F5C518"
+          fill="#1E9DF1"
           fontFamily="var(--font-sans), sans-serif"
           letterSpacing="3"
         >
@@ -248,7 +248,7 @@ function SealSvg() {
         </text>
 
         {/* Ribbons/stars */}
-        <g fill="#F5C518" opacity="0.85">
+        <g fill="#1E9DF1" opacity="0.85">
           <circle cx="100" cy="160" r="2" />
           <circle cx="220" cy="160" r="2" />
           <circle cx="160" cy="100" r="2" />
