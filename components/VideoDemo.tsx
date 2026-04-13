@@ -132,21 +132,11 @@ function VideoPlayer() {
                     alt="Homem-Aranha - capa do video"
                     className="absolute inset-0 h-full w-full object-cover object-center"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#1a1040]/60 via-[#3a0e2e]/40 to-[#501b0e]/50" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,59,71,0.25),transparent_50%),radial-gradient(circle_at_70%_60%,rgba(124,92,255,0.25),transparent_50%)]" />
-                  <div className="grain" />
+                  {/* Overlay sutil para contraste do botão */}
+                  <div className="absolute inset-0 bg-black/25" />
                 </div>
 
-                {/* Scan lines */}
-                <div
-                  className="absolute inset-0 opacity-10"
-                  style={{
-                    backgroundImage:
-                      "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.2) 2px, rgba(255,255,255,0.2) 3px)",
-                  }}
-                />
-
-                {/* Play button */}
+                {/* Play button - centralizado e limpo */}
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
@@ -154,53 +144,25 @@ function VideoPlayer() {
                   onClick={handlePlay}
                   aria-label="Reproduzir video"
                 >
-                  <div className="relative">
-                    <motion.div
-                      animate={{
-                        boxShadow: [
-                          "0 0 0 0 rgba(30,157,241,0.5)",
-                          "0 0 0 32px rgba(30,157,241,0)",
-                        ],
-                      }}
-                      transition={{ duration: 2.2, repeat: Infinity }}
-                      className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_80px_rgba(30,157,241,0.6)]"
+                  <motion.div
+                    animate={{
+                      boxShadow: [
+                        "0 0 0 0 rgba(255,255,255,0.4)",
+                        "0 0 0 20px rgba(255,255,255,0)",
+                      ],
+                    }}
+                    transition={{ duration: 1.8, repeat: Infinity }}
+                    className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 shadow-2xl sm:h-20 sm:w-20"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="ml-1 h-6 w-6 text-ink-950 sm:h-8 sm:w-8"
                     >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="ml-1 h-10 w-10 text-ink-950"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </motion.div>
-                    <div className="mt-4 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
-                      Assistir
-                    </div>
-                  </div>
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </motion.div>
                 </motion.button>
-
-                {/* Corner labels */}
-                <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur-xl">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-crimson-500" />
-                  EPISODIO REAL
-                </div>
-                <div className="absolute right-5 top-5 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-[11px] font-medium text-white/70 backdrop-blur-xl">
-                  4K
-                </div>
-
-                {/* Bottom caption */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-6">
-                  <div className="flex items-end justify-between gap-4">
-                    <div>
-                      <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-400">
-                        Cliente real · Pedro
-                      </div>
-                      <div className="mt-1 font-display text-xl font-light text-white sm:text-2xl md:text-3xl">
-                        &quot;Pedro, estava passando mal e não queria tomar remédio&quot;
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </motion.div>
             ) : (
               <motion.div
