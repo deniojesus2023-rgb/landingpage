@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 import {
   CreditCard,
-  Flame,
   Gift,
   Lock,
   RefreshCw,
   Sparkles,
+  StarIcon,
   Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -176,12 +176,7 @@ export function Pricing({ onSelect }: { onSelect: (plan: Plan) => void }) {
               transition={{ duration: 0.7, delay: i * 0.15 }}
               className={`relative ${plan.featured ? "md:-mt-4" : ""}`}
             >
-              {plan.featured && (
-                <div className="glow-border rounded-[7px]">
-                  <PlanCard plan={plan} onSelect={onSelect} />
-                </div>
-              )}
-              {!plan.featured && <PlanCard plan={plan} onSelect={onSelect} />}
+              <PlanCard plan={plan} onSelect={onSelect} />
             </motion.div>
           ))}
         </div>
@@ -220,44 +215,48 @@ function PlanCard({
   );
   return (
     <div
-      className={`relative h-full overflow-hidden rounded-[7px] border p-8 backdrop-blur-xl sm:p-10 ${
+      className={`relative flex h-full flex-col overflow-hidden rounded-[7px] border backdrop-blur-xl ${
         plan.featured
           ? "border-gold-400/40 bg-gradient-to-br from-ink-800 via-ink-900 to-ink-800"
           : "border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02]"
       }`}
     >
-      {plan.featured && (
-        <>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(30,157,241,0.25),transparent_60%)]" />
-          <div className="absolute -top-px left-1/2 -translate-x-1/2">
-            <div className="relative -translate-y-1/2 inline-flex items-center gap-1.5 rounded-full border border-gold-400/40 bg-gradient-to-br from-gold-400 to-gold-600 px-5 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-ink-950 shadow-[0_8px_32px_rgba(30,157,241,0.5)]">
-              <Flame className="h-3 w-3" strokeWidth={2} />
-              Mais escolhido
-            </div>
-          </div>
-        </>
-      )}
+      {plan.featured && <BorderTrail size={120} />}
 
-      <div className="relative">
-        <div className="flex items-baseline justify-between">
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-gold-400">
-              Plano {plan.name}
-            </div>
-            <div className="mt-1 text-[13px] text-white/60">{plan.tagline}</div>
+      {/* Top-right badges */}
+      {plan.featured && (
+        <div className="absolute right-3 top-3 z-10 flex items-center gap-2">
+          <div className="flex items-center gap-1 rounded-[7px] border border-gold-400/40 bg-ink-950/80 px-2 py-1 text-[11px] font-semibold text-gold-400 backdrop-blur">
+            <StarIcon className="h-3 w-3 fill-current" strokeWidth={2} />
+            Popular
           </div>
         </div>
+      )}
 
-        <div className="mt-8">
+      {/* Section 1: Header with price */}
+      <div
+        className={`relative border-b border-white/10 p-8 sm:p-10 ${
+          plan.featured
+            ? "bg-[radial-gradient(circle_at_50%_0%,rgba(30,157,241,0.22),transparent_65%)]"
+            : ""
+        }`}
+      >
+        <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-gold-400">
+          Plano {plan.name}
+        </div>
+        <div className="mt-1 text-[13px] text-white/60">{plan.tagline}</div>
+
+        <div className="mt-7">
           <div className="flex items-center gap-3">
             <span className="text-[15px] text-white/40 line-through">
               R$ {plan.oldPrice}
             </span>
             <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-              -{Math.round(
+              -
+              {Math.round(
                 ((parseInt(plan.oldPrice) - parseInt(plan.price)) /
                   parseInt(plan.oldPrice)) *
-                  100
+                  100,
               )}
               %
             </span>
@@ -281,8 +280,11 @@ function PlanCard({
             </div>
           ) : null}
         </div>
+      </div>
 
-        <ul className="mt-8 space-y-3.5">
+      {/* Section 2: Features */}
+      <div className="relative flex-1 border-b border-white/10 p-8 sm:p-10">
+        <ul className="space-y-3.5">
           {plan.features.map((f) => (
             <li key={f} className="flex items-start gap-3 text-[14px]">
               <div className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600">
@@ -341,23 +343,59 @@ function PlanCard({
             </ul>
           </div>
         )}
-
-        <div className="mt-10">
-          <ShimmerButton
-            variant={plan.variant}
-            size="xl"
-            className="w-full"
-            onClick={() => onSelect(plan.id)}
-            icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
-          >
-            {plan.cta}
-          </ShimmerButton>
-          <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-white/40">
-            <Lock className="h-3 w-3" strokeWidth={1.75} />
-            Checkout seguro · Garantia incondicional
-          </p>
-        </div>
       </div>
+
+      {/* Section 3: Footer with CTA */}
+      <div
+        className={`relative p-8 sm:p-10 ${
+          plan.featured ? "bg-ink-900/50" : ""
+        }`}
+      >
+        <ShimmerButton
+          variant={plan.variant}
+          size="xl"
+          className="w-full"
+          onClick={() => onSelect(plan.id)}
+          icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
+        >
+          {plan.cta}
+        </ShimmerButton>
+        <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-white/40">
+          <Lock className="h-3 w-3" strokeWidth={1.75} />
+          Checkout seguro · Garantia incondicional
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────── */
+/*  BorderTrail — orbiting glow around featured */
+/* ──────────────────────────────────────────── */
+
+function BorderTrail({ size = 100 }: { size?: number }) {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[7px]">
+      <motion.div
+        className="absolute aspect-square rounded-full"
+        style={{
+          width: size,
+          offsetPath: `rect(0 auto auto 0 round ${size}px)`,
+          background:
+            "radial-gradient(circle, rgba(79,181,247,0.9), rgba(30,157,241,0.4) 40%, transparent 70%)",
+          boxShadow:
+            "0 0 60px 20px rgba(30,157,241,0.35), 0 0 120px 40px rgba(30,157,241,0.2)",
+          filter: "blur(8px)",
+        }}
+        animate={{
+          offsetDistance: ["0%", "100%"],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
     </div>
   );
 }
