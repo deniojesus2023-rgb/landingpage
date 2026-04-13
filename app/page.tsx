@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "@/components/Navbar";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HowItWorks } from "@/components/HowItWorks";
 import { VideoDemo } from "@/components/VideoDemo";
@@ -32,7 +31,6 @@ export default function HomePage() {
 
   return (
     <main className="relative overflow-hidden">
-      <Navbar />
       <VideoDemo />
       <LogoMarquee />
       <PainCards />
