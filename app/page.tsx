@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HowItWorks } from "@/components/HowItWorks";
 import { VideoDemo } from "@/components/VideoDemo";
@@ -16,19 +13,8 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { SocialProofToasts } from "@/components/SocialProofToasts";
-import { OrderModal } from "@/components/OrderModal";
-
-type Plan = "essencial" | "duplo";
 
 export default function HomePage() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [plan, setPlan] = useState<Plan>("essencial");
-
-  const handleSelect = (p: Plan) => {
-    setPlan(p);
-    setModalOpen(true);
-  };
-
   return (
     <main className="relative overflow-hidden">
       <VideoDemo />
@@ -39,18 +25,13 @@ export default function HomePage() {
       <GiftComparison />
       <Testimonials />
       <MeetTheTeam />
-      <Pricing onSelect={handleSelect} />
+      <Pricing />
       <Guarantee />
       <FAQ />
       <FinalCTA />
       <Footer />
       <WhatsAppFloat />
-      {!modalOpen && <SocialProofToasts />}
-      <OrderModal
-        open={modalOpen}
-        plan={plan}
-        onClose={() => setModalOpen(false)}
-      />
+      <SocialProofToasts />
     </main>
   );
 }

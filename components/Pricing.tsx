@@ -18,6 +18,27 @@ import { ShimmerButton } from "./ui/ShimmerButton";
 
 type Plan = "essencial" | "duplo";
 
+const WHATSAPP_NUMBER = "5511911346396";
+
+function redirectToWhatsApp(plan: PlanConfig) {
+  const planName = plan.name;
+  const price = `R$ ${plan.price},${plan.cents}`;
+  const videos = plan.id === "essencial" ? "1 video" : "2 videos";
+  
+  const message = `Ola! Tenho interesse no *Plano ${planName}*
+
+*Detalhes do plano:*
+- ${videos} personalizado(s)
+- Valor: ${price}
+
+Gostaria de mais informacoes para finalizar meu pedido!`;
+
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+  
+  window.open(whatsappUrl, "_blank");
+}
+
 type PlanBonus = {
   title: string;
   description: string;
@@ -44,8 +65,8 @@ const plans: PlanConfig[] = [
     id: "essencial",
     name: "Essencial",
     tagline: "1 vídeo personalizado",
-    oldPrice: "147",
-    price: "97",
+    oldPrice: "97",
+    price: "47",
     cents: "00",
     note: "pagamento único",
     features: [
@@ -63,9 +84,9 @@ const plans: PlanConfig[] = [
   {
     id: "duplo",
     name: "Duplo",
-    tagline: "2 vídeos + economia de R$ 47",
-    oldPrice: "220",
-    price: "147",
+    tagline: "2 vídeos + economia de R$ 3",
+    oldPrice: "94",
+    price: "97",
     cents: "00",
     note: "pagamento único · mais pedido",
     features: [
@@ -74,7 +95,7 @@ const plans: PlanConfig[] = [
       "Ideal para 2 filhos ou 2 datas diferentes",
       "Roteiro premium + revisão cinematográfica",
       "Garantia total de satisfação",
-      "Economia de R$ 47 vs. 2× Essencial",
+      "Economia de R$ 3 vs. 2× Essencial",
     ],
     bonuses: [
       {
@@ -123,7 +144,7 @@ function Digit({ value, label }: { value: number; label: string }) {
   );
 }
 
-export function Pricing({ onSelect }: { onSelect: (plan: Plan) => void }) {
+export function Pricing() {
   const { h, m, s } = useCountdown(5 * 3600 + 47 * 60 + 30);
 
   return (
@@ -355,7 +376,7 @@ function PlanCard({
             variant={plan.variant}
             size="xl"
             className="w-full"
-            onClick={() => onSelect(plan.id)}
+            onClick={() => redirectToWhatsApp(plan)}
             icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
           >
             {plan.cta}
