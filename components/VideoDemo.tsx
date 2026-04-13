@@ -128,7 +128,7 @@ function VideoPlayer() {
                 {/* Background poster */}
                 <div className="absolute inset-0">
                   <img
-                    src="/video-poster.jpg"
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4d17e57f-fa4f-4e5e-b7aa-dcad2b9daf34-Unknown.jpeg.jpeg"
                     alt="Homem-Aranha - capa do video"
                     className="absolute inset-0 h-full w-full object-cover object-center"
                   />
