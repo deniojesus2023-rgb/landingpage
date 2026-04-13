@@ -131,7 +131,7 @@ export function Pricing({ onSelect }: { onSelect: (plan: Plan) => void }) {
       className="relative overflow-hidden bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950 py-20 sm:py-28"
     >
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[800px] w-[1100px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(245,197,24,0.15),transparent_60%)] blur-2xl" />
+        <div className="absolute left-1/2 top-0 h-[800px] w-[1100px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(30,157,241,0.15),transparent_60%)] blur-2xl" />
         <div className="absolute inset-0 bg-grid-pattern [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
       </div>
 
@@ -228,9 +228,9 @@ function PlanCard({
     >
       {plan.featured && (
         <>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,197,24,0.25),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(30,157,241,0.25),transparent_60%)]" />
           <div className="absolute -top-px left-1/2 -translate-x-1/2">
-            <div className="relative -translate-y-1/2 inline-flex items-center gap-1.5 rounded-full border border-gold-400/40 bg-gradient-to-br from-gold-400 to-gold-600 px-5 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-ink-950 shadow-[0_8px_32px_rgba(245,197,24,0.5)]">
+            <div className="relative -translate-y-1/2 inline-flex items-center gap-1.5 rounded-full border border-gold-400/40 bg-gradient-to-br from-gold-400 to-gold-600 px-5 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-ink-950 shadow-[0_8px_32px_rgba(30,157,241,0.5)]">
               <Flame className="h-3 w-3" strokeWidth={2} />
               Mais escolhido
             </div>
@@ -314,7 +314,7 @@ function PlanCard({
             <ul className="mt-4 space-y-4">
               {plan.bonuses.map((b) => (
                 <li key={b.title} className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_18px_rgba(245,197,24,0.35)]">
+                  <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_18px_rgba(30,157,241,0.35)]">
                     <Sparkles
                       className="h-3 w-3 text-ink-950"
                       strokeWidth={2.5}

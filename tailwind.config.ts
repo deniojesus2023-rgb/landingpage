@@ -16,9 +16,9 @@ const config: Config = {
           600: "#1C2145",
         },
         gold: {
-          400: "#FFD65C",
-          500: "#F5C518",
-          600: "#E0AE00",
+          400: "#4FB5F7",
+          500: "#1E9DF1",
+          600: "#1A8CD8",
         },
         crimson: {
           500: "#FF3B47",
@@ -36,7 +36,7 @@ const config: Config = {
         display: ["var(--font-display)", "serif"],
       },
       boxShadow: {
-        glow: "0 0 40px rgba(245,197,24,0.35), 0 0 80px rgba(245,197,24,0.15)",
+        glow: "0 0 40px rgba(30,157,241,0.35), 0 0 80px rgba(30,157,241,0.15)",
         "glow-red": "0 0 40px rgba(255,59,71,0.45), 0 0 80px rgba(255,59,71,0.2)",
         "inner-soft": "inset 0 1px 0 rgba(255,255,255,0.08)",
       },

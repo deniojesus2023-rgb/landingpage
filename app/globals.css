@@ -30,7 +30,7 @@ body {
 
 /* Custom selection */
 ::selection {
-  background: rgba(245, 197, 24, 0.35);
+  background: rgba(30, 157, 241, 0.35);
   color: #fff;
 }
 
@@ -109,7 +109,7 @@ body {
   background: conic-gradient(
     from var(--angle, 0deg),
     transparent 0deg,
-    rgba(245, 197, 24, 0.9) 90deg,
+    rgba(30, 157, 241, 0.9) 90deg,
     transparent 180deg,
     rgba(124, 92, 255, 0.9) 270deg,
     transparent 360deg
@@ -184,7 +184,7 @@ details > summary::-webkit-details-marker {
 
 /* Utility: text gradient */
 .text-gradient-gold {
-  background: linear-gradient(135deg, #FFD65C 0%, #F5C518 50%, #FF9A1F 100%);
+  background: linear-gradient(135deg, #4FB5F7 0%, #1E9DF1 50%, #1C9CF0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

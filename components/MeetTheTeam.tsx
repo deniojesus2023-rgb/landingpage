@@ -88,7 +88,7 @@ export function MeetTheTeam() {
                   className="absolute inset-0"
                   style={{
                     background:
-                      "radial-gradient(circle at 50% 40%, #F5C518 0%, #7C5CFF 50%, #0a0b1a 100%)",
+                      "radial-gradient(circle at 50% 40%, #1E9DF1 0%, #7C5CFF 50%, #0a0b1a 100%)",
                   }}
                 />
                 <div className="grain" />

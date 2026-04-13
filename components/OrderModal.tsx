@@ -207,7 +207,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
             transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
             className="relative w-full max-w-2xl overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 shadow-2xl"
           >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,197,24,0.12),transparent_60%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(30,157,241,0.12),transparent_60%)]" />
 
             <button
               onClick={onClose}
@@ -413,7 +413,7 @@ function VideoStep({
                 onClick={() => onChange({ character: c.name })}
                 className={`group relative flex flex-col items-center gap-1.5 rounded-[7px] border px-2 py-3 text-center transition ${
                   active
-                    ? "border-gold-400 bg-gold-400/10 shadow-[0_0_20px_rgba(245,197,24,0.25)]"
+                    ? "border-gold-400 bg-gold-400/10 shadow-[0_0_20px_rgba(30,157,241,0.25)]"
                     : "border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.06]"
                 }`}
               >

@@ -74,7 +74,7 @@ const characters: Character[] = [
     name: "Homem de Ferro",
     slug: "iron-man",
     universe: "Marvel",
-    color: "#F5C518",
+    color: "#1E9DF1",
     tagline: "O genio bilionario",
     image: "/characters/iron-man.jpg",
     emoji: "🤖",
@@ -259,7 +259,7 @@ export function Characters() {
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-grid-pattern [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
-        <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(245,197,24,0.12),transparent_60%)]" />
+        <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(30,157,241,0.12),transparent_60%)]" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
