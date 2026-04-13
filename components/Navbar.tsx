@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import { Clapperboard } from "lucide-react";
 import { ShimmerButton } from "./ui/ShimmerButton";
 
@@ -29,22 +30,16 @@ export function Navbar() {
         style={{ background, backdropFilter, borderBottom }}
       />
       <div className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-        <a href="#" className="group flex items-center gap-2.5">
-          <div className="relative">
-            <div className="flex h-9 w-9 items-center justify-center rounded-[7px] bg-gradient-to-br from-gold-400 via-gold-500 to-[#D68F00] shadow-glow">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-5 w-5 text-ink-950"
-                fill="currentColor"
-              >
-                <path d="M12 2l2.39 4.84L20 7.77l-4 3.9.95 5.55L12 14.77 7.05 17.22 8 11.67 4 7.77l5.61-.93L12 2z" />
-              </svg>
-            </div>
-            <div className="absolute inset-0 rounded-[7px] bg-gold-400/50 opacity-0 blur-xl transition group-hover:opacity-70" />
-          </div>
-          <div className="text-lg font-extrabold tracking-tight text-white">
-            Heroi<span className="text-gradient-gold">Vídeo</span>
-          </div>
+        <a href="#" className="group relative flex items-center">
+          <Image
+            src="/logo-hv.webp"
+            alt="HeroiVídeo"
+            width={180}
+            height={48}
+            priority
+            className="h-10 w-auto sm:h-11"
+          />
+          <div className="pointer-events-none absolute inset-0 -z-10 bg-gold-400/40 opacity-0 blur-2xl transition group-hover:opacity-60" />
         </a>
 
         <div className="hidden items-center gap-8 md:flex">
