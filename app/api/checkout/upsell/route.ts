@@ -28,12 +28,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let items: { quantity: number; price: number; description: string }[];
+    let itens: { quantity: number; price: number; description: string }[];
     let redirectSuffix: string;
 
     if (type === "upsell") {
       if (plan === "essencial") {
-        items = [
+        itens = [
           {
             quantity: 1,
             price: 5000,
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
           },
         ];
       } else {
-        items = [
+        itens = [
           {
             quantity: 1,
             price: 4700,
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
       }
       redirectSuffix = `plan=${plan}&upsell=ok`;
     } else {
-      items = [
+      itens = [
         {
           quantity: 1,
           price: 1700,
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
 
     const payload: Record<string, unknown> = {
       handle,
-      items,
+      itens,
       order_nsu: orderNsu,
       redirect_url: redirectUrl,
       webhook_url: webhookUrl,
