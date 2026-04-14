@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -76,7 +76,6 @@ export function StickyMobileCTA() {
                 aria-label="Fazer pedido agora pelo WhatsApp"
               >
                 <span>Quero agora</span>
-                <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
               </ShinyButton>
             </div>
           </div>

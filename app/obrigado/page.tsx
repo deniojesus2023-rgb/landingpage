@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  ArrowRight,
   CheckCircle2,
   Heart,
   MessageCircle,
@@ -221,7 +220,6 @@ function ObrigadoInner() {
                     {plan === "essencial"
                       ? "Sim! Quero adicionar o 2º vídeo"
                       : "Sim! Quero entrega VIP + pôster"}
-                    <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
                   </ShinyButton>
                   <button
                     onClick={handleRejectUpsell}
@@ -327,7 +325,6 @@ function ObrigadoInner() {
                     className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-4 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
                   >
                     Ok, quero o pôster por R$ 17
-                    <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
                   </ShinyButton>
                   <button
                     onClick={handleRejectDownsell}

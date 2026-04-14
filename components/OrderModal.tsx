@@ -320,7 +320,6 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
                   className="inline-flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-7 py-3.5 text-[14px] font-bold leading-none text-white shadow-glow-blue"
                 >
                   Pagar com segurança · R$ {totalPriceStr}
-                  <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
                 </ShinyButton>
               )}
             </div>

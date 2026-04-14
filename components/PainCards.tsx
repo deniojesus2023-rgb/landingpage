@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
   Bath,
   Syringe,
   Moon,
@@ -186,7 +185,6 @@ export function PainCards() {
             <a href="#pedido">
               <ShinyButton className="inline-flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-8 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue">
                 Quero resolver isso hoje
-                <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
               </ShinyButton>
             </a>
           </div>

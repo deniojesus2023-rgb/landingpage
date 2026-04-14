@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
   CreditCard,
   Gift,
   Lock,
@@ -363,7 +362,6 @@ function PlanCard({
             onClick={() => goToCheckout(plan)}
           >
             {plan.cta}
-            <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
           </ShinyButton>
         </HoverBorderGradient>
         <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-white/40">

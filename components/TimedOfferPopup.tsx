@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -202,7 +202,6 @@ export function TimedOfferPopup() {
                   className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-4 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
                 >
                   Sim! Quero os 2 vídeos por R$ 97
-                  <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
                 </ShinyButton>
                 <button
                   onClick={handleClose}
