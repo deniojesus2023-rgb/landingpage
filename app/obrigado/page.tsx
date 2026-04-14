@@ -3,12 +3,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
   CheckCircle2,
-  Clock,
-  Gift,
   Heart,
   MessageCircle,
-  Sparkles,
   Zap,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -54,6 +52,7 @@ function ObrigadoInner() {
 
   const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
   const ss = String(secondsLeft % 60).padStart(2, "0");
+  const isUrgent = secondsLeft <= 60;
 
   const handleAcceptUpsell = () => {
     window.location.href = getUpsellUrl(plan);
@@ -73,17 +72,17 @@ function ObrigadoInner() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <main className="relative min-h-screen overflow-hidden bg-[#05060F]">
       {/* Background */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-ink-950 via-ink-900 to-ink-950" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#05060F] via-[#0A0B1A] to-[#05060F]" />
         <motion.div
           animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
           transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(30,157,241,0.18),transparent_55%),radial-gradient(circle_at_80%_70%,rgba(124,92,255,0.15),transparent_55%)]"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(30,157,241,0.12),transparent_55%),radial-gradient(circle_at_80%_70%,rgba(79,181,247,0.08),transparent_55%)]"
           style={{ backgroundSize: "200% 200%" }}
         />
-        <div className="absolute inset-0 bg-grid-pattern [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]" />
+        <div className="grain" />
       </div>
 
       <div className="mx-auto flex min-h-screen max-w-2xl items-center justify-center px-5 py-16 sm:px-8">
@@ -101,17 +100,17 @@ function ObrigadoInner() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 180, damping: 14 }}
-                className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-[0_0_60px_rgba(29,185,84,0.5)]"
+                className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-[0_0_60px_rgba(52,211,153,0.4)]"
               >
                 <CheckCircle2
                   className="h-12 w-12 text-white"
                   strokeWidth={2.5}
                 />
               </motion.div>
-              <h1 className="mt-8 font-display text-4xl font-light leading-[1.05] text-white sm:text-5xl">
-                Pagamento <span className="text-gradient-gold italic">confirmado!</span>
+              <h1 className="font-display mt-8 text-4xl font-medium leading-[1.05] text-white sm:text-5xl">
+                Pagamento <span className="text-gradient-gold">confirmado!</span>
               </h1>
-              <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-white/70">
+              <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-white/60">
                 Obrigado pela confiança. A gente já começou a preparar o vídeo do
                 seu pequeno.
               </p>
@@ -121,7 +120,7 @@ function ObrigadoInner() {
               <motion.div
                 animate={{ opacity: [0.3, 1, 0.3] }}
                 transition={{ duration: 1.4, repeat: Infinity }}
-                className="mx-auto mt-3 h-1 w-24 rounded-full bg-gradient-to-r from-gold-400 to-gold-600"
+                className="mx-auto mt-3 h-1 w-24 rounded-full bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7]"
               />
             </motion.div>
           )}
@@ -129,57 +128,67 @@ function ObrigadoInner() {
           {stage === "upsell" && (
             <motion.div
               key="upsell"
-              initial={{ opacity: 0, y: 40, scale: 0.96 }}
+              initial={{ opacity: 0, y: 40, scale: 0.94 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-              className="relative w-full overflow-hidden rounded-[12px] border border-gold-400/40 bg-gradient-to-br from-ink-800 via-ink-900 to-ink-950 p-7 shadow-[0_40px_120px_rgba(30,157,241,0.35)] sm:p-10"
+              transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+              className="relative w-full max-w-[440px] overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-b from-[#0F1128] to-[#0A0B1A] shadow-2xl shadow-black/50"
             >
-              <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -left-16 -top-16 h-72 w-72 rounded-full bg-gold-400/20 blur-3xl" />
-                <div className="absolute -bottom-20 -right-16 h-72 w-72 rounded-full bg-crimson-500/15 blur-3xl" />
-              </div>
-              <div className="relative">
+              {/* Glow effect top */}
+              <div className="pointer-events-none absolute -top-20 left-1/2 h-40 w-60 -translate-x-1/2 rounded-full bg-[#1E9DF1]/20 blur-[80px]" />
+              
+              {/* Grain overlay */}
+              <div className="grain" />
+
+              <div className="relative px-7 pb-7 pt-9 sm:px-7">
+                {/* Badge topo */}
                 <div className="flex justify-center">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-gold-400">
-                    <Gift className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#1E9DF1]/30 bg-[#1E9DF1]/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#4FB5F7]"
+                  >
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#4FB5F7]" />
                     Só aqui · só agora
-                  </div>
+                  </motion.div>
                 </div>
-                <h2 className="mt-6 text-balance text-center font-display text-3xl font-light leading-[1.05] text-white sm:text-4xl">
+
+                {/* Headline */}
+                <h2 className="font-display mt-5 text-balance text-center text-[22px] font-medium leading-[1.35] text-white">
                   Espera! Antes de sair,{" "}
-                  <span className="text-gradient-gold italic">libera pra mim?</span>
+                  <span className="text-gradient-gold">libera pra mim?</span>
                 </h2>
 
                 {plan === "essencial" ? (
                   <>
-                    <p className="mx-auto mt-5 max-w-md text-center text-[15px] leading-relaxed text-white/75">
+                    <p className="mx-auto mt-3 max-w-md text-center text-[15px] leading-[1.75] text-white/60">
                       Já que você acabou de pedir o Essencial, posso te oferecer
-                      algo que <strong className="text-white">só aparece agora</strong>:
-                      adicionar um <strong className="text-white">segundo vídeo</strong>{" "}
+                      algo que <strong className="font-medium text-white">só aparece agora</strong>:
+                      adicionar um <strong className="font-medium text-white">segundo vídeo</strong>{" "}
                       (pra outro filho, pra outro momento, pra outra data) por
-                      apenas <strong className="text-gold-400">+R$ 50</strong>.
+                      apenas <strong className="font-medium text-[#4FB5F7]">+R$ 50</strong>.
                     </p>
-                    <div className="mt-5 rounded-[9px] border border-white/10 bg-white/[0.03] p-4 text-[13px] text-white/65">
+                    <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4 text-[13px] leading-[1.6] text-white/60">
                       Pagando separado seria R$ 47 a mais — mas como você já é
-                      cliente, a gente libera um desconto de fato. <strong className="text-white">Comprando agora, cada vídeo sai por menos da metade do preço do Essencial.</strong>
+                      cliente, a gente libera um desconto de fato. <strong className="font-medium text-white">Comprando agora, cada vídeo sai por menos da metade do preço do Essencial.</strong>
                     </div>
                   </>
                 ) : (
                   <>
-                    <p className="mx-auto mt-5 max-w-md text-center text-[15px] leading-relaxed text-white/75">
+                    <p className="mx-auto mt-3 max-w-md text-center text-[15px] leading-[1.75] text-white/60">
                       Você pediu o Duplo — perfeito. Quer{" "}
-                      <strong className="text-white">
+                      <strong className="font-medium text-white">
                         receber os 2 vídeos em 24h
                       </strong>{" "}
                       (em vez de 48h) + o{" "}
-                      <strong className="text-white">
+                      <strong className="font-medium text-white">
                         Pôster Cinematográfico digital
                       </strong>
                       ? Tudo junto por apenas{" "}
-                      <strong className="text-gold-400">+R$ 47</strong>.
+                      <strong className="font-medium text-[#4FB5F7]">+R$ 47</strong>.
                     </p>
-                    <div className="mt-5 rounded-[9px] border border-white/10 bg-white/[0.03] p-4 text-[13px] text-white/65">
+                    <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4 text-[13px] leading-[1.6] text-white/60">
                       A entrega VIP 24h vale R$ 47 sozinha. O pôster vale R$ 50.
                       Hoje você leva os dois pelo preço de um.
                     </div>
@@ -187,33 +196,61 @@ function ObrigadoInner() {
                 )}
 
                 {/* Countdown */}
-                <div className="mt-6 flex items-center justify-center gap-2 rounded-full border border-crimson-500/30 bg-crimson-500/5 py-2 text-[12px] font-semibold text-crimson-500">
-                  <Clock className="h-3.5 w-3.5" strokeWidth={2.5} />
-                  Oferta expira em{" "}
-                  <span className="font-display tabular-nums text-white">
+                <div className="mt-5 flex items-center justify-center gap-2 rounded-[10px] border border-white/10 bg-white/5 px-4 py-2.5">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="9" r="5.5" stroke={isUrgent ? "#F87171" : "#1E9DF1"} strokeWidth="1.2"/>
+                    <path d="M8 6.5V9l1.5 1.5" stroke={isUrgent ? "#F87171" : "#1E9DF1"} strokeWidth="1.2" strokeLinecap="round"/>
+                    <path d="M6 2.5h4M8 2.5V4" stroke={isUrgent ? "#F87171" : "#1E9DF1"} strokeWidth="1.2" strokeLinecap="round"/>
+                  </svg>
+                  <span className="text-[13px] text-white/60">
+                    Oferta expira em
+                  </span>
+                  <span className={`min-w-[44px] text-[16px] font-medium tabular-nums ${isUrgent ? "text-red-400" : "text-white"}`}>
                     {mm}:{ss}
                   </span>
                 </div>
 
-                <div className="mt-7 flex flex-col gap-3">
+                {/* CTAs */}
+                <div className="mt-5 flex flex-col gap-2.5">
                   <button
                     onClick={handleAcceptUpsell}
-                    className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-[9px] bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 px-7 py-4 text-[15px] font-bold text-ink-950 shadow-[0_12px_40px_rgba(30,157,241,0.5)] transition active:scale-[0.98]"
+                    className="btn-shimmer w-full rounded-[14px] bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-[#1E9DF1]/25 transition hover:shadow-xl hover:shadow-[#1E9DF1]/30 active:scale-[0.98]"
                   >
-                    <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                    <Sparkles className="relative h-4 w-4" strokeWidth={2} />
-                    <span className="relative">
-                      {plan === "essencial"
-                        ? "Sim! Quero adicionar o 2º vídeo"
-                        : "Sim! Quero entrega VIP + pôster"}
-                    </span>
+                    {plan === "essencial"
+                      ? "Sim! Quero adicionar o 2º vídeo"
+                      : "Sim! Quero entrega VIP + pôster"}
                   </button>
                   <button
                     onClick={handleRejectUpsell}
-                    className="text-center text-[12px] text-white/40 transition hover:text-white/60"
+                    className="w-full bg-transparent px-4 py-2.5 text-center text-[13px] text-white/40 underline underline-offset-[3px] transition hover:text-white/60"
                   >
                     Não, obrigado — seguir sem o extra
                   </button>
+                </div>
+
+                {/* Trust */}
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-4 border-t border-white/10 pt-4">
+                  <span className="flex items-center gap-1.5 text-[12px] text-white/40">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                      <path d="M6.5 1.5C4.3 3 1.5 3.5 1.5 3.5S1 9 6.5 11.5C12 9 11.5 3.5 11.5 3.5S8.7 3 6.5 1.5Z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+                      <path d="M4 6.5l1.8 1.8 3-3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    Pagamento seguro
+                  </span>
+                  <span className="flex items-center gap-1.5 text-[12px] text-white/40">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                      <path d="M6.5 1.5l1.2 3.2H11l-2.6 1.9.9 3.1L6.5 7.8 3.7 9.7l.9-3.1L2 4.7h3.3L6.5 1.5Z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+                    </svg>
+                    Garantia de 14 dias
+                  </span>
+                  <span className="flex items-center gap-1.5 text-[12px] text-white/40">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                      <rect x="1.5" y="4" width="10" height="7.5" rx="1.2" stroke="currentColor" strokeWidth="1.1"/>
+                      <path d="M4.5 4V3a2 2 0 014 0v1" stroke="currentColor" strokeWidth="1.1"/>
+                      <circle cx="6.5" cy="7.5" r=".8" fill="currentColor"/>
+                    </svg>
+                    Entrega em 24h
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -222,59 +259,103 @@ function ObrigadoInner() {
           {stage === "downsell" && (
             <motion.div
               key="downsell"
-              initial={{ opacity: 0, y: 40, scale: 0.96 }}
+              initial={{ opacity: 0, y: 40, scale: 0.94 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-              className="relative w-full overflow-hidden rounded-[12px] border border-white/15 bg-gradient-to-br from-ink-800 via-ink-900 to-ink-950 p-7 shadow-2xl sm:p-10"
+              transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+              className="relative w-full max-w-[440px] overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-b from-[#0F1128] to-[#0A0B1A] shadow-2xl shadow-black/50"
             >
-              <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl" />
-              </div>
-              <div className="relative">
+              {/* Glow effect top - violet for downsell */}
+              <div className="pointer-events-none absolute -top-20 left-1/2 h-40 w-60 -translate-x-1/2 rounded-full bg-violet-500/15 blur-[80px]" />
+              
+              {/* Grain overlay */}
+              <div className="grain" />
+
+              <div className="relative px-7 pb-7 pt-9 sm:px-7">
+                {/* Badge topo */}
                 <div className="flex justify-center">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/40 bg-violet-500/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-violet-500">
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.07em] text-violet-400"
+                  >
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
                     Última chance
-                  </div>
+                  </motion.div>
                 </div>
-                <h2 className="mt-6 text-balance text-center font-display text-3xl font-light leading-[1.05] text-white sm:text-4xl">
+
+                {/* Headline */}
+                <h2 className="font-display mt-5 text-balance text-center text-[22px] font-medium leading-[1.35] text-white">
                   Entendi — e se fosse só{" "}
-                  <span className="text-gradient-gold italic">R$ 17?</span>
+                  <span className="text-gradient-gold">R$ 17?</span>
                 </h2>
-                <p className="mx-auto mt-5 max-w-md text-center text-[15px] leading-relaxed text-white/75">
+
+                <p className="mx-auto mt-3 max-w-md text-center text-[15px] leading-[1.75] text-white/60">
                   Sem problema em pular o extra. Mas ainda posso te oferecer só o{" "}
-                  <strong className="text-white">
+                  <strong className="font-medium text-white">
                     Pôster Cinematográfico digital
                   </strong>{" "}
                   (normalmente R$ 50) por apenas{" "}
-                  <strong className="text-gold-400">R$ 17</strong>. É um cartaz
+                  <strong className="font-medium text-[#4FB5F7]">R$ 17</strong>. É um cartaz
                   personalizado estilo filme com o nome e o herói da criança — pronto
                   pra imprimir ou usar de papel de parede do celular.
                 </p>
 
-                <div className="mt-6 flex items-center justify-center gap-2 rounded-full border border-crimson-500/30 bg-crimson-500/5 py-2 text-[12px] font-semibold text-crimson-500">
-                  <Clock className="h-3.5 w-3.5" strokeWidth={2.5} />
-                  Última chance · expira em{" "}
-                  <span className="font-display tabular-nums text-white">
+                {/* Countdown */}
+                <div className="mt-5 flex items-center justify-center gap-2 rounded-[10px] border border-white/10 bg-white/5 px-4 py-2.5">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="9" r="5.5" stroke={isUrgent ? "#F87171" : "#1E9DF1"} strokeWidth="1.2"/>
+                    <path d="M8 6.5V9l1.5 1.5" stroke={isUrgent ? "#F87171" : "#1E9DF1"} strokeWidth="1.2" strokeLinecap="round"/>
+                    <path d="M6 2.5h4M8 2.5V4" stroke={isUrgent ? "#F87171" : "#1E9DF1"} strokeWidth="1.2" strokeLinecap="round"/>
+                  </svg>
+                  <span className="text-[13px] text-white/60">
+                    Última chance · expira em
+                  </span>
+                  <span className={`min-w-[44px] text-[16px] font-medium tabular-nums ${isUrgent ? "text-red-400" : "text-white"}`}>
                     {mm}:{ss}
                   </span>
                 </div>
 
-                <div className="mt-7 flex flex-col gap-3">
+                {/* CTAs */}
+                <div className="mt-5 flex flex-col gap-2.5">
                   <button
                     onClick={handleAcceptDownsell}
-                    className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-[9px] bg-gradient-to-br from-violet-500 to-[#5a3eff] px-7 py-4 text-[15px] font-bold text-white shadow-[0_12px_40px_rgba(124,92,255,0.5)] transition active:scale-[0.98]"
+                    className="btn-shimmer w-full rounded-[14px] bg-gradient-to-r from-violet-500 to-violet-600 px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-violet-500/25 transition hover:shadow-xl hover:shadow-violet-500/30 active:scale-[0.98]"
                   >
-                    <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                    <Sparkles className="relative h-4 w-4" strokeWidth={2} />
-                    <span className="relative">Ok, quero o pôster por R$ 17</span>
+                    Ok, quero o pôster por R$ 17
                   </button>
                   <button
                     onClick={handleRejectDownsell}
-                    className="text-center text-[12px] text-white/40 transition hover:text-white/60"
+                    className="w-full bg-transparent px-4 py-2.5 text-center text-[13px] text-white/40 underline underline-offset-[3px] transition hover:text-white/60"
                   >
                     Não, obrigado — finalizar pedido
                   </button>
+                </div>
+
+                {/* Trust */}
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-4 border-t border-white/10 pt-4">
+                  <span className="flex items-center gap-1.5 text-[12px] text-white/40">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                      <path d="M6.5 1.5C4.3 3 1.5 3.5 1.5 3.5S1 9 6.5 11.5C12 9 11.5 3.5 11.5 3.5S8.7 3 6.5 1.5Z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+                      <path d="M4 6.5l1.8 1.8 3-3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    Pagamento seguro
+                  </span>
+                  <span className="flex items-center gap-1.5 text-[12px] text-white/40">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                      <path d="M6.5 1.5l1.2 3.2H11l-2.6 1.9.9 3.1L6.5 7.8 3.7 9.7l.9-3.1L2 4.7h3.3L6.5 1.5Z" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+                    </svg>
+                    Garantia de 14 dias
+                  </span>
+                  <span className="flex items-center gap-1.5 text-[12px] text-white/40">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                      <rect x="1.5" y="4" width="10" height="7.5" rx="1.2" stroke="currentColor" strokeWidth="1.1"/>
+                      <path d="M4.5 4V3a2 2 0 014 0v1" stroke="currentColor" strokeWidth="1.1"/>
+                      <circle cx="6.5" cy="7.5" r=".8" fill="currentColor"/>
+                    </svg>
+                    Entrega em 24h
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -292,31 +373,31 @@ function ObrigadoInner() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 180, damping: 14 }}
-                className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_60px_rgba(30,157,241,0.5)]"
+                className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#1E9DF1] to-[#4FB5F7] shadow-[0_0_60px_rgba(30,157,241,0.4)]"
               >
-                <Heart className="h-12 w-12 text-ink-950" strokeWidth={2.5} />
+                <Heart className="h-12 w-12 text-white" strokeWidth={2.5} />
               </motion.div>
-              <h1 className="mt-8 font-display text-4xl font-light leading-[1.05] text-white sm:text-5xl">
-                Tudo certo, <span className="text-gradient-gold italic">prontinho!</span>
+              <h1 className="font-display mt-8 text-4xl font-medium leading-[1.05] text-white sm:text-5xl">
+                Tudo certo, <span className="text-gradient-gold">prontinho!</span>
               </h1>
-              <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-white/70">
+              <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-white/60">
                 Em alguns minutos você vai receber um WhatsApp da nossa equipe com
                 os próximos passos: formulário com o nome da criança, herói
                 escolhido e a mensagem. Depois é só aguardar a entrega.
               </p>
 
               <div className="mx-auto mt-10 grid max-w-md gap-3">
-                <div className="flex items-start gap-3 rounded-[9px] border border-white/10 bg-white/[0.03] p-4 text-left">
-                  <Zap className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold-400" strokeWidth={2} />
-                  <div className="text-[13px] text-white/70">
-                    <strong className="text-white">Entrega em até 48h</strong>{" "}
+                <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4 text-left">
+                  <Zap className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#4FB5F7]" strokeWidth={2} />
+                  <div className="text-[13px] text-white/60">
+                    <strong className="font-medium text-white">Entrega em até 48h</strong>{" "}
                     após o formulário preenchido (24h no Duplo VIP).
                   </div>
                 </div>
-                <div className="flex items-start gap-3 rounded-[9px] border border-white/10 bg-white/[0.03] p-4 text-left">
-                  <Heart className="mt-0.5 h-4 w-4 flex-shrink-0 text-crimson-500" strokeWidth={2} />
-                  <div className="text-[13px] text-white/70">
-                    <strong className="text-white">Garantia de 14 dias</strong>{" "}
+                <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4 text-left">
+                  <Heart className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-400" strokeWidth={2} />
+                  <div className="text-[13px] text-white/60">
+                    <strong className="font-medium text-white">Garantia de 14 dias</strong>{" "}
                     — refazemos ou devolvemos 100% sem perguntas.
                   </div>
                 </div>
@@ -324,7 +405,7 @@ function ObrigadoInner() {
                   href="https://wa.me/5511911346396"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-[9px] border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-[13px] font-semibold text-emerald-400 transition hover:bg-emerald-400/15"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-[13px] font-semibold text-emerald-400 transition hover:bg-emerald-400/15"
                 >
                   <MessageCircle className="h-4 w-4" strokeWidth={2} />
                   Fale com a gente no WhatsApp
@@ -349,8 +430,8 @@ export default function ObrigadoPage() {
   return (
     <Suspense
       fallback={
-        <main className="flex min-h-screen items-center justify-center bg-ink-950">
-          <div className="text-[13px] text-white/40">Carregando…</div>
+        <main className="flex min-h-screen items-center justify-center bg-[#05060F]">
+          <div className="text-[13px] text-white/40">Carregando...</div>
         </main>
       }
     >
