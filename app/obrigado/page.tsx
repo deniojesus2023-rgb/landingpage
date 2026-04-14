@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  ArrowRight,
   CheckCircle2,
   Heart,
   MessageCircle,
@@ -215,11 +216,12 @@ function ObrigadoInner() {
                 <div className="mt-5 flex flex-col gap-2.5">
                   <ShinyButton
                     onClick={handleAcceptUpsell}
-                    className="w-full rounded-[14px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-center text-[16px] font-bold text-white shadow-glow-green"
+                    className="flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-[16px] font-bold text-white shadow-glow-green"
                   >
                     {plan === "essencial"
                       ? "Sim! Quero adicionar o 2º vídeo"
                       : "Sim! Quero entrega VIP + pôster"}
+                    <ArrowRight className="h-4 w-4" strokeWidth={2} />
                   </ShinyButton>
                   <button
                     onClick={handleRejectUpsell}
@@ -322,9 +324,10 @@ function ObrigadoInner() {
                 <div className="mt-5 flex flex-col gap-2.5">
                   <ShinyButton
                     onClick={handleAcceptDownsell}
-                    className="w-full rounded-[14px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-center text-[16px] font-bold text-white shadow-glow-green"
+                    className="flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-[16px] font-bold text-white shadow-glow-green"
                   >
                     Ok, quero o pôster por R$ 17
+                    <ArrowRight className="h-4 w-4" strokeWidth={2} />
                   </ShinyButton>
                   <button
                     onClick={handleRejectDownsell}

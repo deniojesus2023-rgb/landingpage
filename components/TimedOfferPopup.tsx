@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -199,9 +199,10 @@ export function TimedOfferPopup() {
               <div className="mt-5 flex flex-col gap-2.5">
                 <ShinyButton
                   onClick={handleAccept}
-                  className="w-full rounded-[14px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-center text-[16px] font-bold text-white shadow-glow-green"
+                  className="flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-[16px] font-bold text-white shadow-glow-green"
                 >
                   Sim! Quero os 2 vídeos por R$ 97
+                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
                 </ShinyButton>
                 <button
                   onClick={handleClose}

@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import {
+  ArrowRight,
   Check,
   Gift,
   PartyPopper,
-  Sparkles,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -187,9 +187,9 @@ export function GiftComparison() {
               com o impacto de <span className="text-gold-400">uma memória eterna</span>.
             </p>
             <a href="#pedido">
-              <ShinyButton className="flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green">
-                <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+              <ShinyButton className="flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green">
                 Quero o momento, não o brinquedo
+                <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </ShinyButton>
             </a>
           </div>

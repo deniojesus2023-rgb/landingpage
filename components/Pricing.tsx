@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import {
+  ArrowRight,
   CreditCard,
   Gift,
   Lock,
   RefreshCw,
-  Sparkles,
   StarIcon,
   Zap,
 } from "lucide-react";
@@ -358,11 +358,11 @@ function PlanCard({
       >
         <HoverBorderGradient containerClassName="w-full">
           <ShinyButton
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green"
+            className="flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green"
             onClick={() => goToCheckout(plan)}
           >
-            <Sparkles className="h-4 w-4" strokeWidth={1.75} />
             {plan.cta}
+            <ArrowRight className="h-4 w-4" strokeWidth={2} />
           </ShinyButton>
         </HoverBorderGradient>
         <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-white/40">

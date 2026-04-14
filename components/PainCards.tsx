@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion";
 import {
+  ArrowRight,
   Bath,
   Syringe,
   Moon,
   Salad,
   Cake,
   HeartCrack,
-  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 import { Reveal } from "./ui/Reveal";
@@ -184,9 +184,9 @@ export function PainCards() {
               <span className="text-gold-400">próximos 6 meses de birra.</span>
             </p>
             <a href="#pedido">
-              <ShinyButton className="flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green">
-                <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+              <ShinyButton className="flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green">
                 Quero resolver isso hoje
+                <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </ShinyButton>
             </a>
           </div>

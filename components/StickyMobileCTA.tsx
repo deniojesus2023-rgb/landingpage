@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -72,11 +72,11 @@ export function StickyMobileCTA() {
               </div>
               <ShinyButton
                 onClick={handleClick}
-                className="flex items-center gap-1.5 rounded-[9px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-5 py-3 text-[13px] font-bold text-white shadow-glow-green"
+                className="flex items-center gap-1.5 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-5 py-3 text-[13px] font-bold text-white shadow-glow-green"
                 aria-label="Fazer pedido agora pelo WhatsApp"
               >
-                <Sparkles className="h-4 w-4" strokeWidth={2} />
                 <span>Quero agora</span>
+                <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </ShinyButton>
             </div>
           </div>

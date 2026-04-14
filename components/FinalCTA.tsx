@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Heart, Lock, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Heart, Lock, Zap } from "lucide-react";
 import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
 import { ShinyButton } from "./ui/shiny-button";
@@ -51,9 +51,9 @@ export function FinalCTA() {
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
             <HoverBorderGradient>
               <a href="#pedido">
-                <ShinyButton className="flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green">
-                  <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+                <ShinyButton className="flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green">
                   Criar o vídeo do meu filho agora
+                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
                 </ShinyButton>
               </a>
             </HoverBorderGradient>

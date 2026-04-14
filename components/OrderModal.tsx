@@ -317,10 +317,10 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
               ) : (
                 <ShinyButton
                   onClick={handleSubmit}
-                  className="flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-7 py-3.5 text-[14px] font-bold text-white shadow-glow-green"
+                  className="flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-7 py-3.5 text-[14px] font-bold text-white shadow-glow-green"
                 >
-                  <Lock className="h-4 w-4" strokeWidth={1.75} />
                   Pagar com segurança · R$ {totalPriceStr}
+                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
                 </ShinyButton>
               )}
             </div>
