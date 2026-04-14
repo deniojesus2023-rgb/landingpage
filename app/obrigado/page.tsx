@@ -215,7 +215,7 @@ function ObrigadoInner() {
                 <div className="mt-5 flex flex-col gap-2.5">
                   <ShinyButton
                     onClick={handleAcceptUpsell}
-                    className="w-full rounded-[14px] bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-[#1E9DF1]/25 hover:shadow-xl hover:shadow-[#1E9DF1]/30"
+                    className="w-full rounded-[14px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-center text-[16px] font-bold text-white shadow-glow-green"
                   >
                     {plan === "essencial"
                       ? "Sim! Quero adicionar o 2º vídeo"
@@ -322,7 +322,7 @@ function ObrigadoInner() {
                 <div className="mt-5 flex flex-col gap-2.5">
                   <ShinyButton
                     onClick={handleAcceptDownsell}
-                    className="w-full rounded-[14px] bg-gradient-to-r from-violet-500 to-violet-600 px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/30"
+                    className="w-full rounded-[14px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-center text-[16px] font-bold text-white shadow-glow-green"
                   >
                     Ok, quero o pôster por R$ 17
                   </ShinyButton>

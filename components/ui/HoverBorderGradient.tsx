@@ -22,7 +22,7 @@ const movingMap: Record<Direction, string> = {
 
 // Azul Twitter da paleta do site (#1E9DF1)
 const highlight =
-  "radial-gradient(75% 181.15942028985506% at 50% 50%, #1E9DF1 0%, rgba(255, 255, 255, 0) 100%)";
+  "radial-gradient(75% 181.15942028985506% at 50% 50%, #10B981 0%, rgba(255, 255, 255, 0) 100%)";
 
 type HoverBorderGradientProps = {
   containerClassName?: string;

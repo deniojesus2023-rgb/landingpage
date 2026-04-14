@@ -317,7 +317,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
               ) : (
                 <ShinyButton
                   onClick={handleSubmit}
-                  className="flex items-center gap-2 rounded-[7px] bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_40px_rgba(255,59,71,0.5)]"
+                  className="flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-7 py-3.5 text-[14px] font-bold text-white shadow-glow-green"
                 >
                   <Lock className="h-4 w-4" strokeWidth={1.75} />
                   Pagar com segurança · R$ {totalPriceStr}

@@ -30,6 +30,11 @@ const config: Config = {
         cyan: {
           400: "#5EE7FF",
         },
+        emerald: {
+          400: "#34D399",
+          500: "#10B981",
+          600: "#059669",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
@@ -39,6 +44,7 @@ const config: Config = {
         glow: "0 0 40px rgba(30,157,241,0.35), 0 0 80px rgba(30,157,241,0.15)",
         "glow-red": "0 0 40px rgba(255,59,71,0.45), 0 0 80px rgba(255,59,71,0.2)",
         "inner-soft": "inset 0 1px 0 rgba(255,255,255,0.08)",
+        "glow-green": "0 0 30px rgba(16,185,129,0.5), 0 0 60px rgba(16,185,129,0.25)",
       },
       animation: {
         "gradient-x": "gradient-x 8s ease infinite",

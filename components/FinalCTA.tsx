@@ -51,7 +51,7 @@ export function FinalCTA() {
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
             <HoverBorderGradient>
               <a href="#pedido">
-                <ShinyButton className="flex items-center gap-2 rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 px-8 py-4 text-[15px] font-bold text-ink-950 shadow-[0_8px_28px_rgba(30,157,241,0.45)]">
+                <ShinyButton className="flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-8 py-4 text-[16px] font-bold text-white shadow-glow-green">
                   <Sparkles className="h-4 w-4" strokeWidth={1.75} />
                   Criar o vídeo do meu filho agora
                 </ShinyButton>

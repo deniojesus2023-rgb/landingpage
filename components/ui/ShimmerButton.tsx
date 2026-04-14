@@ -16,8 +16,8 @@ type ShimmerButtonProps = {
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] text-white shadow-[0_10px_40px_-10px_rgba(255,59,71,0.7)] hover:shadow-[0_20px_60px_-10px_rgba(255,59,71,0.9)]",
-  gold: "bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 text-ink-950 shadow-[0_10px_40px_-10px_rgba(30,157,241,0.7)] hover:shadow-[0_20px_60px_-10px_rgba(30,157,241,0.9)]",
+    "bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 text-white shadow-[0_0_30px_rgba(16,185,129,0.5),0_0_60px_rgba(16,185,129,0.25)] hover:shadow-[0_0_40px_rgba(16,185,129,0.6),0_0_80px_rgba(16,185,129,0.3)]",
+  gold: "bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 text-white shadow-[0_0_30px_rgba(16,185,129,0.5),0_0_60px_rgba(16,185,129,0.25)] hover:shadow-[0_0_40px_rgba(16,185,129,0.6),0_0_80px_rgba(16,185,129,0.3)]",
   secondary:
     "bg-white/5 border border-white/15 text-white backdrop-blur-xl hover:bg-white/10",
   ghost: "bg-transparent text-white/80 hover:text-white",
@@ -53,11 +53,9 @@ export const ShimmerButton = forwardRef<HTMLButtonElement, ShimmerButtonProps>(
           className="pointer-events-none absolute -inset-[1px] rounded-[7px] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-70"
           style={{
             background:
-              variant === "gold"
-                ? "radial-gradient(60% 60% at 50% 50%, rgba(30,157,241,0.75), transparent 70%)"
-                : variant === "primary"
-                  ? "radial-gradient(60% 60% at 50% 50%, rgba(255,59,71,0.75), transparent 70%)"
-                  : "radial-gradient(60% 60% at 50% 50%, rgba(124,92,255,0.6), transparent 70%)",
+              variant === "gold" || variant === "primary"
+                ? "radial-gradient(60% 60% at 50% 50%, rgba(16,185,129,0.75), transparent 70%)"
+                : "radial-gradient(60% 60% at 50% 50%, rgba(124,92,255,0.6), transparent 70%)",
           }}
         />
         <span className="relative z-10 flex items-center gap-2.5">
