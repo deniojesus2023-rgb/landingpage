@@ -19,15 +19,28 @@ export function TimedOfferPopup() {
   const [open, setOpen] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(COUNTDOWN_SECONDS);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const { isOpen: isOrderModalOpen, openOrderModal } = useOrderModal();
 
-  // Timer para abrir
+  // Timer para abrir (só abre se o OrderModal não estiver aberto)
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
 
-    const t = setTimeout(() => setOpen(true), DELAY_MS);
+    const t = setTimeout(() => {
+      // Não abre se o modal de pedido já estiver aberto
+      if (!isOrderModalOpen) {
+        setOpen(true);
+      }
+    }, DELAY_MS);
     return () => clearTimeout(t);
-  }, []);
+  }, [isOrderModalOpen]);
+
+  // Fecha o popup automaticamente se o OrderModal abrir
+  useEffect(() => {
+    if (isOrderModalOpen && open) {
+      setOpen(false);
+    }
+  }, [isOrderModalOpen, open]);
 
   // Countdown de urgência enquanto o popup está aberto
   useEffect(() => {
@@ -76,8 +89,6 @@ export function TimedOfferPopup() {
       sessionStorage.setItem(STORAGE_KEY, "1");
     }
   };
-
-  const { openOrderModal } = useOrderModal();
 
   const handleAccept = () => {
     if (typeof window !== "undefined") {

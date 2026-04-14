@@ -24,6 +24,7 @@ export function OrderModalProvider({ children }: { children: ReactNode }) {
   const [selectedPlan, setSelectedPlan] = useState<PlanId>("duplo");
 
   const openOrderModal = useCallback((plan: PlanId) => {
+    console.log("[v0] Opening order modal for plan:", plan);
     setSelectedPlan(plan);
     setIsOpen(true);
   }, []);
