@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { createCheckout, formatPhone } from "@/lib/checkout";
+import { fbEvents } from "@/components/TrackingScripts";
 import { ShinyButton } from "./ui/shiny-button";
 
 type Plan = "essencial" | "duplo";
@@ -133,6 +134,14 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
 
   useEffect(() => {
     if (!open) return;
+    
+    // Dispara evento InitiateCheckout do Facebook Pixel
+    fbEvents.initiateCheckout({
+      value: basePrice,
+      currency: "BRL",
+      content_name: plan === "duplo" ? "Plano Duplo" : "Plano Essencial",
+    });
+    
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -142,7 +151,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
       document.removeEventListener("keydown", handler);
       document.body.style.overflow = "";
     };
-  }, [open, onClose]);
+  }, [open, onClose, basePrice, plan]);
 
   const progress = ((step + 1) / totalSteps) * 100;
 

@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect } from "react";
+import { fbEvents } from "@/components/TrackingScripts";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HowItWorks } from "@/components/HowItWorks";
 import { VideoDemo } from "@/components/VideoDemo";
@@ -18,6 +22,14 @@ import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { TimedOfferPopup } from "@/components/TimedOfferPopup";
 
 export default function HomePage() {
+  // Dispara ViewContent quando a pagina carrega
+  useEffect(() => {
+    fbEvents.viewContent({
+      content_name: "Landing Page",
+      content_category: "Videos Personalizados",
+    });
+  }, []);
+
   return (
     <main className="relative overflow-hidden">
       <VideoDemo />

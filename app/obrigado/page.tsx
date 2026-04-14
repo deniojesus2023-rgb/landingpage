@@ -16,6 +16,7 @@ import {
   type PlanId,
 } from "@/lib/checkout";
 import { ShinyButton } from "@/components/ui/shiny-button";
+import { fbEvents } from "@/components/TrackingScripts";
 
 type Stage = "success" | "upsell" | "downsell" | "done";
 
@@ -43,6 +44,16 @@ function ObrigadoInner() {
     }, 1000);
     return () => clearInterval(i);
   }, [stage]);
+
+  // Dispara evento Purchase do Facebook Pixel (apenas uma vez)
+  useEffect(() => {
+    const purchaseValue = plan === "duplo" ? 147 : 67;
+    fbEvents.purchase({
+      value: purchaseValue,
+      currency: "BRL",
+      content_name: plan === "duplo" ? "Plano Duplo" : "Plano Essencial",
+    });
+  }, [plan]);
 
   // Auto-advance do "success" pro upsell depois de 2s
   useEffect(() => {
