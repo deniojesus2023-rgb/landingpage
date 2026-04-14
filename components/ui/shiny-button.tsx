@@ -3,8 +3,6 @@
 import React from "react";
 import { motion, type AnimationProps } from "framer-motion";
 
-import { cn } from "@/lib/utils";
-
 const animationProps: AnimationProps = {
   initial: { "--x": "100%", scale: 0.8 },
   animate: { "--x": "-100%", scale: 1 },
@@ -41,10 +39,7 @@ export const ShinyButton: React.FC<ShinyButtonProps> = ({
     <motion.button
       {...animationProps}
       {...props}
-      className={cn(
-        "relative rounded-full px-8 py-4 font-medium bg-[#1E9DF1] text-white backdrop-blur-xl transition-shadow duration-300 ease-in-out hover:shadow-[0_0_30px_rgba(30,157,241,0.5)]",
-        className
-      )}
+      className={`relative rounded-full px-8 py-4 font-medium bg-[#1E9DF1] text-white backdrop-blur-xl transition-shadow duration-300 ease-in-out hover:shadow-[0_0_30px_rgba(30,157,241,0.5)] ${className || ""}`}
     >
       <span
         className="relative block size-full text-base font-semibold tracking-wide text-white"
