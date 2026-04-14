@@ -239,7 +239,7 @@ function ObrigadoInner() {
                 </div>
                 <h2 className="mt-6 text-balance text-center font-display text-3xl font-light leading-[1.05] text-white sm:text-4xl">
                   Entendi — e se fosse só{" "}
-                  <span className="text-gradient-gold italic">R$ 27?</span>
+                  <span className="text-gradient-gold italic">R$ 17?</span>
                 </h2>
                 <p className="mx-auto mt-5 max-w-md text-center text-[15px] leading-relaxed text-white/75">
                   Sem problema em pular o extra. Mas ainda posso te oferecer só o{" "}
@@ -247,7 +247,7 @@ function ObrigadoInner() {
                     Pôster Cinematográfico digital
                   </strong>{" "}
                   (normalmente R$ 50) por apenas{" "}
-                  <strong className="text-gold-400">R$ 27</strong>. É um cartaz
+                  <strong className="text-gold-400">R$ 17</strong>. É um cartaz
                   personalizado estilo filme com o nome e o herói da criança — pronto
                   pra imprimir ou usar de papel de parede do celular.
                 </p>
@@ -267,7 +267,7 @@ function ObrigadoInner() {
                   >
                     <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                     <Sparkles className="relative h-4 w-4" strokeWidth={2} />
-                    <span className="relative">Ok, quero o pôster por R$ 27</span>
+                    <span className="relative">Ok, quero o pôster por R$ 17</span>
                   </button>
                   <button
                     onClick={handleRejectDownsell}

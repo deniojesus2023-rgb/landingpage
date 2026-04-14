@@ -24,14 +24,14 @@
  * Item único: "Vídeo Personalizado — Plano Essencial" · R$ 47 · qtd 1
  * Depois do pagamento → /obrigado?plan=essencial
  */
-export const CHECKOUT_ESSENCIAL = "";
+export const CHECKOUT_ESSENCIAL = "https://checkout.infinitepay.io/denispixx/1H6krLUtoF";
 
 /**
  * Checkout do plano DUPLO (2 vídeos, R$ 97)
  * Item único: "Kit 2 Vídeos Personalizados — Plano Duplo" · R$ 97 · qtd 1
  * Depois do pagamento → /obrigado?plan=duplo
  */
-export const CHECKOUT_DUPLO = "";
+export const CHECKOUT_DUPLO = "https://checkout.infinitepay.io/denispixx/2YDX3QpmTR";
 
 /* ════════════ UPSELLS ════════════ */
 
@@ -41,24 +41,24 @@ export const CHECKOUT_DUPLO = "";
  * Copy: "Adiciona um segundo vídeo por apenas +R$ 50 (em vez de R$ 97)"
  * Depois do pagamento → /obrigado?plan=essencial&upsell=ok
  */
-export const CHECKOUT_UPSELL_SEGUNDO_VIDEO = "";
+export const CHECKOUT_UPSELL_SEGUNDO_VIDEO = "https://checkout.infinitepay.io/denispixx/JmBxWfmIz";
 
 /**
  * UPSELL 2 (mostrado depois de comprar DUPLO)
  * Item único: "Entrega VIP 24h + Pôster Cinematográfico" · R$ 47 · qtd 1
  * Depois do pagamento → /obrigado?plan=duplo&upsell=ok
  */
-export const CHECKOUT_UPSELL_VIP_DUPLO = "";
+export const CHECKOUT_UPSELL_VIP_DUPLO = "https://checkout.infinitepay.io/denispixx/7eegOwqofr";
 
 /* ════════════ DOWNSELL (order-bump barato) ════════════ */
 
 /**
  * DOWNSELL (mostrado quando o cliente recusa o upsell, em qualquer plano)
- * Item único: "Pôster Cinematográfico Digital" · R$ 27 · qtd 1
- * Copy: "Pelo menos leva o pôster impressão-ready por R$ 27?"
+ * Item único: "Pôster Cinematográfico Digital" · R$ 17 · qtd 1
+ * Copy: "Pelo menos leva o pôster impressão-ready por R$ 17?"
  * Depois do pagamento → /obrigado?plan=X&downsell=ok
  */
-export const CHECKOUT_DOWNSELL_POSTER = "";
+export const CHECKOUT_DOWNSELL_POSTER = "https://checkout.infinitepay.io/denispixx/7eeibhiKL1";
 
 /* ════════════ FALLBACK / HELPERS ════════════ */
 
@@ -105,11 +105,11 @@ export function getUpsellUrl(plan: PlanId): string {
 }
 
 /**
- * URL para o downsell (pôster a R$ 27), usado quando o cliente recusa o upsell.
+ * URL para o downsell (pôster a R$ 17), usado quando o cliente recusa o upsell.
  */
 export function getDownsellUrl(plan: PlanId): string {
   if (CHECKOUT_DOWNSELL_POSTER) return CHECKOUT_DOWNSELL_POSTER;
   return whatsappFallback(
-    `Ola! Acabei de comprar o ${plan === "essencial" ? "Essencial" : "Duplo"} e quero adicionar o *poster cinematografico* por R$ 27.`,
+    `Ola! Acabei de comprar o ${plan === "essencial" ? "Essencial" : "Duplo"} e quero adicionar o *poster cinematografico* por R$ 17.`,
   );
 }

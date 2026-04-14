@@ -49,7 +49,7 @@ type FormData = {
   consent: boolean;
 };
 
-const BUMP_POSTER_PRICE = 27;
+const BUMP_POSTER_PRICE = 17;
 
 const characters: { name: string }[] = [
   { name: "Homem-Aranha" },
@@ -679,7 +679,7 @@ function ReviewStep({
                   Adicionar Pôster Cinematográfico
                 </span>
                 <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-400">
-                  -46%
+                  -66%
                 </span>
               </div>
               <p className="mt-1 text-[12px] leading-snug text-white/60">
@@ -692,7 +692,7 @@ function ReviewStep({
                   R$ 50
                 </span>
                 <span className="font-display text-xl font-light text-gold-400">
-                  + R$ 27
+                  + R$ 17
                 </span>
                 <span className="text-[10px] text-white/40">uma vez só</span>
               </div>
