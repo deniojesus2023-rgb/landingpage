@@ -5,6 +5,7 @@ import { OrderModal } from "@/components/OrderModal";
 import type { PlanId } from "@/lib/checkout";
 
 type OrderModalContextType = {
+  isOpen: boolean;
   openOrderModal: (plan: PlanId) => void;
   closeOrderModal: () => void;
 };
@@ -24,7 +25,6 @@ export function OrderModalProvider({ children }: { children: ReactNode }) {
   const [selectedPlan, setSelectedPlan] = useState<PlanId>("duplo");
 
   const openOrderModal = useCallback((plan: PlanId) => {
-    console.log("[v0] Opening order modal for plan:", plan);
     setSelectedPlan(plan);
     setIsOpen(true);
   }, []);
@@ -34,7 +34,7 @@ export function OrderModalProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <OrderModalContext.Provider value={{ openOrderModal, closeOrderModal }}>
+    <OrderModalContext.Provider value={{ isOpen, openOrderModal, closeOrderModal }}>
       {children}
       <OrderModal open={isOpen} plan={selectedPlan} onClose={closeOrderModal} />
     </OrderModalContext.Provider>
