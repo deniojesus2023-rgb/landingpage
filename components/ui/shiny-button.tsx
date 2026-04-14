@@ -39,10 +39,10 @@ export const ShinyButton: React.FC<ShinyButtonProps> = ({
     <motion.button
       {...animationProps}
       {...props}
-      className={`relative rounded-full px-8 py-4 font-medium bg-[#1E9DF1] text-white backdrop-blur-xl transition-shadow duration-300 ease-in-out hover:shadow-[0_0_30px_rgba(30,157,241,0.5)] ${className || ""}`}
+      className={`relative overflow-hidden font-medium backdrop-blur-xl transition-shadow duration-300 ease-in-out ${className || ""}`}
     >
       <span
-        className="relative block size-full text-base font-semibold tracking-wide text-white"
+        className="relative block size-full tracking-wide"
         style={{
           maskImage:
             "linear-gradient(-75deg, white calc(var(--x) + 20%), transparent calc(var(--x) + 30%), white calc(var(--x) + 100%))",
