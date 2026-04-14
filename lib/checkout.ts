@@ -51,6 +51,8 @@ export async function createCheckout(data: {
   customer: CustomerData;
   bumpPoster?: boolean;
 }): Promise<string> {
+  console.log("[v0] createCheckout chamado:", JSON.stringify(data, null, 2));
+  
   try {
     const res = await fetch("/api/checkout", {
       method: "POST",
@@ -66,13 +68,17 @@ export async function createCheckout(data: {
       }),
     });
 
+    console.log("[v0] Resposta do servidor:", res.status, res.statusText);
+    
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      console.error("[Checkout] Erro:", err);
+      console.error("[v0] Erro do servidor:", err);
       throw new Error(err.error || "Erro ao criar checkout");
     }
 
     const result = await res.json();
+    console.log("[v0] Resultado:", JSON.stringify(result, null, 2));
+    
     if (result.url) return result.url;
 
     throw new Error("URL de checkout não retornada");

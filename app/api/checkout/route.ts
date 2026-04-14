@@ -5,7 +5,10 @@ const INFINITEPAY_API = "https://api.infinitepay.io/invoices/public/checkout/lin
 export async function POST(req: NextRequest) {
   try {
     const handle = process.env.INFINITEPAY_HANDLE;
+    console.log("[v0] INFINITEPAY_HANDLE:", handle ? `configurado (${handle.substring(0, 3)}...)` : "NAO CONFIGURADO");
+    
     if (!handle) {
+      console.error("[v0] Erro: INFINITEPAY_HANDLE não configurado");
       return NextResponse.json(
         { error: "INFINITEPAY_HANDLE não configurado" },
         { status: 500 },
@@ -69,7 +72,8 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    console.log("[InfinitePay] Criando checkout:", JSON.stringify(payload, null, 2));
+    console.log("[v0] Criando checkout InfinitePay:", JSON.stringify(payload, null, 2));
+    console.log("[v0] URL da API:", INFINITEPAY_API);
 
     const response = await fetch(INFINITEPAY_API, {
       method: "POST",
@@ -77,9 +81,11 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify(payload),
     });
 
+    console.log("[v0] Status da resposta:", response.status);
+    
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("[InfinitePay] Erro na API:", response.status, errorText);
+      console.error("[v0] Erro na API InfinitePay:", response.status, errorText);
       return NextResponse.json(
         { error: "Erro ao criar checkout na InfinitePay", details: errorText },
         { status: response.status },
@@ -87,7 +93,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await response.json();
-    console.log("[InfinitePay] Checkout criado:", JSON.stringify(data, null, 2));
+    console.log("[v0] Resposta InfinitePay:", JSON.stringify(data, null, 2));
 
     return NextResponse.json({ url: data.url || data.checkout_url || data.link, orderNsu });
   } catch (error) {
