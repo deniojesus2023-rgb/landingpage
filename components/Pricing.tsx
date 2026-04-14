@@ -14,8 +14,7 @@ import { useEffect, useState } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
 import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
-import { SectionLabel } from "./ui/SectionLabel";
-import { ShimmerButton } from "./ui/ShimmerButton";
+import { ShinyButton } from "./ui/shiny-button";
 
 type Plan = "essencial" | "duplo";
 
@@ -357,15 +356,17 @@ function PlanCard({
         }`}
       >
         <HoverBorderGradient containerClassName="w-full">
-          <ShimmerButton
-            variant={plan.variant}
-            size="xl"
-            className="w-full"
+          <ShinyButton
+            className={`flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-[15px] font-bold shadow-[0_8px_28px_rgba(30,157,241,0.45)] ${
+              plan.variant === "gold" 
+                ? "bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 text-ink-950" 
+                : "bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] text-white"
+            }`}
             onClick={() => goToCheckout(plan)}
-            icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
           >
+            <Sparkles className="h-4 w-4" strokeWidth={1.75} />
             {plan.cta}
-          </ShimmerButton>
+          </ShinyButton>
         </HoverBorderGradient>
         <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-white/40">
           <Lock className="h-3 w-3" strokeWidth={1.75} />

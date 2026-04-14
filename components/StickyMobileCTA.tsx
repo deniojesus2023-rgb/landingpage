@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Sparkles, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
+import { ShinyButton } from "@/components/ui/shiny-button";
 
 /**
  * CTA fixa na parte de baixo da tela em mobile.
@@ -69,15 +70,14 @@ export function StickyMobileCTA() {
                   <span className="text-[10px] text-white/45">2 vídeos</span>
                 </div>
               </div>
-              <button
+              <ShinyButton
                 onClick={handleClick}
-                className="group relative flex items-center gap-1.5 overflow-hidden rounded-[9px] bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 px-5 py-3 text-[13px] font-bold text-ink-950 shadow-[0_8px_28px_rgba(30,157,241,0.45)] transition active:scale-[0.97]"
+                className="flex items-center gap-1.5 rounded-[9px] bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 px-5 py-3 text-[13px] font-bold text-ink-950 shadow-[0_8px_28px_rgba(30,157,241,0.45)]"
                 aria-label="Fazer pedido agora pelo WhatsApp"
               >
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 <Sparkles className="h-4 w-4" strokeWidth={2} />
-                <span className="relative">Quero agora</span>
-              </button>
+                <span>Quero agora</span>
+              </ShinyButton>
             </div>
           </div>
         </motion.div>

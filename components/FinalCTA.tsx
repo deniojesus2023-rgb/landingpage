@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Heart, Lock, Sparkles, Zap } from "lucide-react";
 import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
-import { ShimmerButton } from "./ui/ShimmerButton";
+import { ShinyButton } from "./ui/shiny-button";
 
 export function FinalCTA() {
   return (
@@ -50,15 +50,12 @@ export function FinalCTA() {
         <Reveal delay={0.3}>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
             <HoverBorderGradient>
-              <ShimmerButton
-                as="a"
-                href="#pedido"
-                variant="gold"
-                size="xl"
-                icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
-              >
-                Criar o vídeo do meu filho agora
-              </ShimmerButton>
+              <a href="#pedido">
+                <ShinyButton className="flex items-center gap-2 rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 px-8 py-4 text-[15px] font-bold text-ink-950 shadow-[0_8px_28px_rgba(30,157,241,0.45)]">
+                  <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+                  Criar o vídeo do meu filho agora
+                </ShinyButton>
+              </a>
             </HoverBorderGradient>
           </div>
         </Reveal>

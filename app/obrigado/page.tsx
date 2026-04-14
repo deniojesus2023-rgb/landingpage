@@ -16,6 +16,7 @@ import {
   getUpsellUrl,
   type PlanId,
 } from "@/lib/checkout";
+import { ShinyButton } from "@/components/ui/shiny-button";
 
 type Stage = "success" | "upsell" | "downsell" | "done";
 
@@ -212,14 +213,14 @@ function ObrigadoInner() {
 
                 {/* CTAs */}
                 <div className="mt-5 flex flex-col gap-2.5">
-                  <button
+                  <ShinyButton
                     onClick={handleAcceptUpsell}
-                    className="btn-shimmer w-full rounded-[14px] bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-[#1E9DF1]/25 transition hover:shadow-xl hover:shadow-[#1E9DF1]/30 active:scale-[0.98]"
+                    className="w-full rounded-[14px] bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-[#1E9DF1]/25 hover:shadow-xl hover:shadow-[#1E9DF1]/30"
                   >
                     {plan === "essencial"
                       ? "Sim! Quero adicionar o 2º vídeo"
                       : "Sim! Quero entrega VIP + pôster"}
-                  </button>
+                  </ShinyButton>
                   <button
                     onClick={handleRejectUpsell}
                     className="w-full bg-transparent px-4 py-2.5 text-center text-[13px] text-white/40 underline underline-offset-[3px] transition hover:text-white/60"
@@ -319,12 +320,12 @@ function ObrigadoInner() {
 
                 {/* CTAs */}
                 <div className="mt-5 flex flex-col gap-2.5">
-                  <button
+                  <ShinyButton
                     onClick={handleAcceptDownsell}
-                    className="btn-shimmer w-full rounded-[14px] bg-gradient-to-r from-violet-500 to-violet-600 px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-violet-500/25 transition hover:shadow-xl hover:shadow-violet-500/30 active:scale-[0.98]"
+                    className="w-full rounded-[14px] bg-gradient-to-r from-violet-500 to-violet-600 px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/30"
                   >
                     Ok, quero o pôster por R$ 17
-                  </button>
+                  </ShinyButton>
                   <button
                     onClick={handleRejectDownsell}
                     className="w-full bg-transparent px-4 py-2.5 text-center text-[13px] text-white/40 underline underline-offset-[3px] transition hover:text-white/60"

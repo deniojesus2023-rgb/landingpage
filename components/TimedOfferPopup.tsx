@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
+import { ShinyButton } from "@/components/ui/shiny-button";
 
 const DELAY_MS = 1 * 60 * 1000; // 1 minuto
 const STORAGE_KEY = "hv-timed-offer-dismissed";
@@ -196,12 +197,12 @@ export function TimedOfferPopup() {
 
               {/* CTAs */}
               <div className="mt-5 flex flex-col gap-2.5">
-                <button
+                <ShinyButton
                   onClick={handleAccept}
-                  className="btn-shimmer w-full rounded-[14px] bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-[#1E9DF1]/25 transition hover:shadow-xl hover:shadow-[#1E9DF1]/30 active:scale-[0.98]"
+                  className="w-full rounded-[14px] bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-[#1E9DF1]/25 hover:shadow-xl hover:shadow-[#1E9DF1]/30"
                 >
                   Sim! Quero os 2 vídeos por R$ 97
-                </button>
+                </ShinyButton>
                 <button
                   onClick={handleClose}
                   className="w-full bg-transparent px-4 py-2.5 text-center text-[13px] text-white/40 underline underline-offset-[3px] transition hover:text-white/60"
