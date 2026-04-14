@@ -5,7 +5,7 @@ import { Clock, Gift, Sparkles, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
 
-const DELAY_MS = 3 * 60 * 1000; // 3 minutos
+const DELAY_MS = 1 * 60 * 1000; // 1 minuto
 const STORAGE_KEY = "hv-timed-offer-dismissed";
 const COUNTDOWN_SECONDS = 10 * 60; // 10 minutos para decidir
 
