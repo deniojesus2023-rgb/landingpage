@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
-import { ShimmerButton } from "./ui/ShimmerButton";
+import { ShinyButton } from "./ui/shiny-button";
 
 type Row = {
   label: string;
@@ -186,15 +186,12 @@ export function GiftComparison() {
               O preço de <span className="text-white">um brinquedo esquecido</span>,
               com o impacto de <span className="text-gold-400">uma memória eterna</span>.
             </p>
-            <ShimmerButton
-              as="a"
-              href="#pedido"
-              variant="gold"
-              size="lg"
-              icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
-            >
-              Quero o momento, não o brinquedo
-            </ShimmerButton>
+            <a href="#pedido">
+              <ShinyButton className="flex items-center gap-2 rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 px-8 py-4 text-[15px] font-bold text-ink-950 shadow-[0_8px_28px_rgba(30,157,241,0.45)]">
+                <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+                Quero o momento, não o brinquedo
+              </ShinyButton>
+            </a>
           </div>
         </Reveal>
       </div>
