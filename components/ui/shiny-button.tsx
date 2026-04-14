@@ -1,22 +1,22 @@
 "use client";
 
 import React from "react";
-import { motion, type AnimationProps } from "framer-motion";
+import { motion } from "framer-motion";
 
-const animationProps: AnimationProps = {
-  initial: { "--x": "100%", scale: 0.8 },
-  animate: { "--x": "-100%", scale: 1 },
+const animationProps = {
+  initial: { "--x": "100%", scale: 0.8 } as React.CSSProperties & { scale: number },
+  animate: { "--x": "-100%", scale: 1 } as React.CSSProperties & { scale: number },
   whileTap: { scale: 0.95 },
   transition: {
     repeat: Infinity,
-    repeatType: "loop",
+    repeatType: "loop" as const,
     repeatDelay: 1,
-    type: "spring",
+    type: "spring" as const,
     stiffness: 20,
     damping: 15,
     mass: 2,
     scale: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 200,
       damping: 5,
       mass: 0.5,
