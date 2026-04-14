@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
 import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
+import { SectionLabel } from "./ui/SectionLabel";
 import { ShinyButton } from "./ui/shiny-button";
 
 type Plan = "essencial" | "duplo";
