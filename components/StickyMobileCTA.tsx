@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getCheckoutUrl } from "@/lib/checkout";
+import { useOrderModal } from "@/contexts/OrderModalContext";
 import { ShinyButton } from "@/components/ui/shiny-button";
 
 /**
@@ -38,8 +38,10 @@ export function StickyMobileCTA() {
     };
   }, []);
 
+  const { openOrderModal } = useOrderModal();
+  
   const handleClick = () => {
-    window.open(getCheckoutUrl("duplo"), "_blank");
+    openOrderModal("duplo");
   };
 
   return (
@@ -73,7 +75,7 @@ export function StickyMobileCTA() {
               <ShinyButton
                 onClick={handleClick}
                 className="inline-flex items-center gap-1.5 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-5 py-3 text-[13px] font-bold leading-none text-white shadow-glow-blue"
-                aria-label="Fazer pedido agora pelo WhatsApp"
+                aria-label="Fazer pedido agora"
               >
                 <span>Quero agora</span>
               </ShinyButton>
