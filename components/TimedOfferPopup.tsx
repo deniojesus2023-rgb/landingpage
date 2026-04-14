@@ -199,7 +199,7 @@ export function TimedOfferPopup() {
               <div className="mt-5 flex flex-col gap-2.5">
                 <ShinyButton
                   onClick={handleAccept}
-                  className="w-full rounded-[14px] bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-[#1E9DF1]/25 hover:shadow-xl hover:shadow-[#1E9DF1]/30"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-4 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
                 >
                   Sim! Quero os 2 vídeos por R$ 97
                 </ShinyButton>

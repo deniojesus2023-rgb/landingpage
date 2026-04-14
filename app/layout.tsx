@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
+import TrackingScripts from "@/components/TrackingScripts";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${inter.variable} ${fraunces.variable}`}>
       <body className="bg-ink-950 font-sans text-white antialiased">
+        <TrackingScripts />
         {children}
       </body>
     </html>

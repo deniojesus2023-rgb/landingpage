@@ -8,7 +8,6 @@ import {
   Salad,
   Cake,
   HeartCrack,
-  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 import { Reveal } from "./ui/Reveal";
@@ -184,8 +183,7 @@ export function PainCards() {
               <span className="text-gold-400">próximos 6 meses de birra.</span>
             </p>
             <a href="#pedido">
-              <ShinyButton className="flex items-center gap-2 rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 px-8 py-4 text-[15px] font-bold text-ink-950 shadow-[0_8px_28px_rgba(30,157,241,0.45)]">
-                <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+              <ShinyButton className="inline-flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-8 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue">
                 Quero resolver isso hoje
               </ShinyButton>
             </a>

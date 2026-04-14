@@ -358,14 +358,9 @@ function PlanCard({
       >
         <HoverBorderGradient containerClassName="w-full">
           <ShinyButton
-            className={`flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-[15px] font-bold shadow-[0_8px_28px_rgba(30,157,241,0.45)] ${
-              plan.variant === "gold" 
-                ? "bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 text-ink-950" 
-                : "bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] text-white"
-            }`}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-8 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
             onClick={() => goToCheckout(plan)}
           >
-            <Sparkles className="h-4 w-4" strokeWidth={1.75} />
             {plan.cta}
           </ShinyButton>
         </HoverBorderGradient>

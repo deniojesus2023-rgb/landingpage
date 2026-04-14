@@ -12,11 +12,11 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import {
-  getDownsellUrl,
-  getUpsellUrl,
+  createUpsellCheckout,
   type PlanId,
 } from "@/lib/checkout";
 import { ShinyButton } from "@/components/ui/shiny-button";
+import { fbEvents } from "@/components/TrackingScripts";
 
 type Stage = "success" | "upsell" | "downsell" | "done";
 
@@ -34,6 +34,7 @@ function ObrigadoInner() {
 
   const [stage, setStage] = useState<Stage>(initialStage);
   const [secondsLeft, setSecondsLeft] = useState(600); // 10 min
+  const [loadingUpsell, setLoadingUpsell] = useState(false);
 
   // Countdown só durante upsell / downsell
   useEffect(() => {
@@ -43,6 +44,16 @@ function ObrigadoInner() {
     }, 1000);
     return () => clearInterval(i);
   }, [stage]);
+
+  // Dispara evento Purchase do Facebook Pixel (apenas uma vez)
+  useEffect(() => {
+    const purchaseValue = plan === "duplo" ? 147 : 67;
+    fbEvents.purchase({
+      value: purchaseValue,
+      currency: "BRL",
+      content_name: plan === "duplo" ? "Plano Duplo" : "Plano Essencial",
+    });
+  }, [plan]);
 
   // Auto-advance do "success" pro upsell depois de 2s
   useEffect(() => {
@@ -55,17 +66,32 @@ function ObrigadoInner() {
   const ss = String(secondsLeft % 60).padStart(2, "0");
   const isUrgent = secondsLeft <= 60;
 
-  const handleAcceptUpsell = () => {
-    window.location.href = getUpsellUrl(plan);
+  const handleAcceptUpsell = async () => {
+    if (loadingUpsell) return;
+    setLoadingUpsell(true);
+    try {
+      const url = await createUpsellCheckout({ type: "upsell", plan });
+      window.location.href = url;
+    } catch {
+      setLoadingUpsell(false);
+    }
   };
 
   const handleRejectUpsell = () => {
     setStage("downsell");
     setSecondsLeft(600);
+    setLoadingUpsell(false);
   };
 
-  const handleAcceptDownsell = () => {
-    window.location.href = getDownsellUrl(plan);
+  const handleAcceptDownsell = async () => {
+    if (loadingUpsell) return;
+    setLoadingUpsell(true);
+    try {
+      const url = await createUpsellCheckout({ type: "downsell", plan });
+      window.location.href = url;
+    } catch {
+      setLoadingUpsell(false);
+    }
   };
 
   const handleRejectDownsell = () => {
@@ -215,11 +241,22 @@ function ObrigadoInner() {
                 <div className="mt-5 flex flex-col gap-2.5">
                   <ShinyButton
                     onClick={handleAcceptUpsell}
-                    className="w-full rounded-[14px] bg-gradient-to-r from-[#1E9DF1] to-[#4FB5F7] px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-[#1E9DF1]/25 hover:shadow-xl hover:shadow-[#1E9DF1]/30"
+                    disabled={loadingUpsell}
+                    className={`inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-4 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue ${loadingUpsell ? "pointer-events-none opacity-70" : ""}`}
                   >
-                    {plan === "essencial"
-                      ? "Sim! Quero adicionar o 2º vídeo"
-                      : "Sim! Quero entrega VIP + pôster"}
+                    {loadingUpsell ? (
+                      <>
+                        <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Gerando checkout...
+                      </>
+                    ) : plan === "essencial" ? (
+                      "Sim! Quero adicionar o 2º vídeo"
+                    ) : (
+                      "Sim! Quero entrega VIP + pôster"
+                    )}
                   </ShinyButton>
                   <button
                     onClick={handleRejectUpsell}
@@ -322,9 +359,20 @@ function ObrigadoInner() {
                 <div className="mt-5 flex flex-col gap-2.5">
                   <ShinyButton
                     onClick={handleAcceptDownsell}
-                    className="w-full rounded-[14px] bg-gradient-to-r from-violet-500 to-violet-600 px-4 py-4 text-center text-[16px] font-semibold text-white shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/30"
+                    disabled={loadingUpsell}
+                    className={`inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-4 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue ${loadingUpsell ? "pointer-events-none opacity-70" : ""}`}
                   >
-                    Ok, quero o pôster por R$ 17
+                    {loadingUpsell ? (
+                      <>
+                        <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Gerando checkout...
+                      </>
+                    ) : (
+                      "Ok, quero o pôster por R$ 17"
+                    )}
                   </ShinyButton>
                   <button
                     onClick={handleRejectDownsell}
