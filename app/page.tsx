@@ -12,7 +12,7 @@ import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Objections } from "@/components/Objections";
 import { Footer } from "@/components/Footer";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+
 import { SocialProofToasts } from "@/components/SocialProofToasts";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { TimedOfferPopup } from "@/components/TimedOfferPopup";
@@ -34,7 +34,6 @@ export default function HomePage() {
       <FAQ />
       <FinalCTA />
       <Footer />
-      <WhatsAppFloat />
       <StickyMobileCTA />
       <TimedOfferPopup />
       <SocialProofToasts />
