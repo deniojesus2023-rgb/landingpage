@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getCheckoutUrl } from "@/lib/checkout";
 
 const DELAY_MS = 1 * 60 * 1000; // 1 minuto
@@ -17,6 +17,7 @@ const COUNTDOWN_SECONDS = 10 * 60; // 10 minutos para decidir
 export function TimedOfferPopup() {
   const [open, setOpen] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(COUNTDOWN_SECONDS);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Timer para abrir
   useEffect(() => {
@@ -29,11 +30,28 @@ export function TimedOfferPopup() {
 
   // Countdown de urgência enquanto o popup está aberto
   useEffect(() => {
-    if (!open) return;
-    const i = setInterval(() => {
+    if (!open) {
+      // Limpa interval se o popup fechar
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return;
+    }
+    
+    // Só cria o interval se ainda não existir
+    if (intervalRef.current) return;
+    
+    intervalRef.current = setInterval(() => {
       setSecondsLeft((s) => Math.max(0, s - 1));
     }, 1000);
-    return () => clearInterval(i);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
   }, [open]);
 
   // ESC fecha
