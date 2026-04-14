@@ -6,6 +6,7 @@ import {
   Check,
   Gift,
   PartyPopper,
+  Sparkles,
   X,
   type LucideIcon,
 } from "lucide-react";
