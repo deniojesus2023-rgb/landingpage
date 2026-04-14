@@ -72,11 +72,11 @@ export function StickyMobileCTA() {
               </div>
               <ShinyButton
                 onClick={handleClick}
-                className="flex items-center gap-1.5 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-5 py-3 text-[13px] font-bold text-white shadow-glow-green"
+                className="inline-flex items-center gap-1.5 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-5 py-3 text-[13px] font-bold leading-none text-white shadow-glow-blue"
                 aria-label="Fazer pedido agora pelo WhatsApp"
               >
                 <span>Quero agora</span>
-                <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
               </ShinyButton>
             </div>
           </div>

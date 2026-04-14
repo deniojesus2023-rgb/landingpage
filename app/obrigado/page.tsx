@@ -216,12 +216,12 @@ function ObrigadoInner() {
                 <div className="mt-5 flex flex-col gap-2.5">
                   <ShinyButton
                     onClick={handleAcceptUpsell}
-                    className="flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-[16px] font-bold text-white shadow-glow-green"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-4 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
                   >
                     {plan === "essencial"
                       ? "Sim! Quero adicionar o 2º vídeo"
                       : "Sim! Quero entrega VIP + pôster"}
-                    <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                    <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
                   </ShinyButton>
                   <button
                     onClick={handleRejectUpsell}
@@ -324,10 +324,10 @@ function ObrigadoInner() {
                 <div className="mt-5 flex flex-col gap-2.5">
                   <ShinyButton
                     onClick={handleAcceptDownsell}
-                    className="flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 px-4 py-4 text-[16px] font-bold text-white shadow-glow-green"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-4 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
                   >
                     Ok, quero o pôster por R$ 17
-                    <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                    <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2} />
                   </ShinyButton>
                   <button
                     onClick={handleRejectDownsell}

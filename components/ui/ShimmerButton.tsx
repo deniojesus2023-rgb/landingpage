@@ -16,8 +16,8 @@ type ShimmerButtonProps = {
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 text-white shadow-[0_0_30px_rgba(16,185,129,0.5),0_0_60px_rgba(16,185,129,0.25)] hover:shadow-[0_0_40px_rgba(16,185,129,0.6),0_0_80px_rgba(16,185,129,0.3)]",
-  gold: "bg-gradient-to-r from-emerald-500 via-emerald-500 to-emerald-600 text-white shadow-[0_0_30px_rgba(16,185,129,0.5),0_0_60px_rgba(16,185,129,0.25)] hover:shadow-[0_0_40px_rgba(16,185,129,0.6),0_0_80px_rgba(16,185,129,0.3)]",
+    "bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 text-white shadow-[0_0_30px_rgba(59,130,246,0.5),0_0_60px_rgba(59,130,246,0.25)] hover:shadow-[0_0_40px_rgba(59,130,246,0.6),0_0_80px_rgba(59,130,246,0.3)]",
+  gold: "bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 text-white shadow-[0_0_30px_rgba(59,130,246,0.5),0_0_60px_rgba(59,130,246,0.25)] hover:shadow-[0_0_40px_rgba(59,130,246,0.6),0_0_80px_rgba(59,130,246,0.3)]",
   secondary:
     "bg-white/5 border border-white/15 text-white backdrop-blur-xl hover:bg-white/10",
   ghost: "bg-transparent text-white/80 hover:text-white",
@@ -54,7 +54,7 @@ export const ShimmerButton = forwardRef<HTMLButtonElement, ShimmerButtonProps>(
           style={{
             background:
               variant === "gold" || variant === "primary"
-                ? "radial-gradient(60% 60% at 50% 50%, rgba(16,185,129,0.75), transparent 70%)"
+                ? "radial-gradient(60% 60% at 50% 50%, rgba(59,130,246,0.75), transparent 70%)"
                 : "radial-gradient(60% 60% at 50% 50%, rgba(124,92,255,0.6), transparent 70%)",
           }}
         />
