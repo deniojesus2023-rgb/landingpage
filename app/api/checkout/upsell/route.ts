@@ -4,7 +4,9 @@ const INFINITEPAY_API = "https://api.infinitepay.io/invoices/public/checkout/lin
 
 export async function POST(req: NextRequest) {
   try {
-    const handle = process.env.INFINITEPAY_HANDLE;
+    const rawHandle = process.env.INFINITEPAY_HANDLE ?? "";
+    const handle = rawHandle.trim().replace(/^\$/, "");
+
     if (!handle) {
       return NextResponse.json(
         { error: "INFINITEPAY_HANDLE não configurado" },

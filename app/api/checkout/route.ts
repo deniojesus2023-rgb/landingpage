@@ -4,11 +4,11 @@ const INFINITEPAY_API = "https://api.infinitepay.io/invoices/public/checkout/lin
 
 export async function POST(req: NextRequest) {
   try {
-    const handle = process.env.INFINITEPAY_HANDLE;
-    console.log("[v0] INFINITEPAY_HANDLE:", handle ? `configurado (${handle.substring(0, 3)}...)` : "NAO CONFIGURADO");
-    
+    // Sanitiza o handle: remove espacos, $ e outros caracteres invalidos
+    const rawHandle = process.env.INFINITEPAY_HANDLE ?? "";
+    const handle = rawHandle.trim().replace(/^\$/, "");
+
     if (!handle) {
-      console.error("[v0] Erro: INFINITEPAY_HANDLE não configurado");
       return NextResponse.json(
         { error: "INFINITEPAY_HANDLE não configurado" },
         { status: 500 },
