@@ -19,6 +19,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { ShinyButton } from "./ui/shiny-button";
 
 type Plan = "essencial" | "duplo";
 
@@ -314,15 +315,13 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
                   />
                 </button>
               ) : (
-                <button
+                <ShinyButton
                   onClick={handleSubmit}
-                  className="btn-shimmer relative flex items-center gap-2 overflow-hidden rounded-[7px] bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_40px_rgba(255,59,71,0.5)] transition-transform hover:-translate-y-0.5"
+                  className="flex items-center gap-2 rounded-[7px] bg-gradient-to-br from-crimson-500 via-crimson-600 to-[#b31520] px-7 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_40px_rgba(255,59,71,0.5)]"
                 >
-                  <span className="relative flex items-center gap-2">
-                    <Lock className="h-4 w-4" strokeWidth={1.75} />
-                    Pagar com segurança · R$ {totalPriceStr}
-                  </span>
-                </button>
+                  <Lock className="h-4 w-4" strokeWidth={1.75} />
+                  Pagar com segurança · R$ {totalPriceStr}
+                </ShinyButton>
               )}
             </div>
           </motion.div>
