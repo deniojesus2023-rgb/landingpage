@@ -17,8 +17,8 @@ export function Guarantee() {
           <SectionLabel tone="gold">Garantia incondicional</SectionLabel>
           <Reveal delay={0.1}>
             <h2 className="mx-auto mt-6 max-w-3xl text-balance font-display text-4xl font-light leading-[1.05] sm:text-5xl md:text-6xl">
-              Se ele não se emocionar,{" "}
-              <span className="text-gradient-gold italic">você não paga.</span>
+              Refazemos quantas vezes for preciso, até você{" "}
+              <span className="text-gradient-gold italic">chorar de alegria.</span>
             </h2>
           </Reveal>
         </div>
@@ -42,27 +42,29 @@ export function Guarantee() {
 
               <div className="relative">
                 <p className="text-[15px] leading-relaxed text-white/75 sm:text-[16px]">
-                  Nossa garantia é radical porque nossa confiança é radical.
-                  Você recebe o vídeo, mostra pro seu filho, e só aí decide.
+                  Nossa promessa é simples: você mostra o vídeo pro seu filho.
+                  Se os olhinhos dele não brilharem, a gente refaz. E refaz. E
+                  refaz. Até ficar perfeito — ou você recebe 100% do seu
+                  dinheiro de volta.
                 </p>
 
                 <ul className="mt-8 space-y-5">
                   {[
                     {
-                      title: "7 dias para testar",
-                      desc: "Você tem uma semana inteira após receber o vídeo para decidir se ficou perfeito.",
+                      title: "Refações ilimitadas",
+                      desc: "Não gostou do tom de voz, do roteiro, da entrega? A gente refaz. Quantas vezes for preciso. Sem cobrar um centavo.",
                     },
                     {
-                      title: "Refazemos de graça",
-                      desc: "Se algo não atingiu suas expectativas, refazemos o vídeo quantas vezes precisar, sem cobrar nada.",
+                      title: "14 dias pra testar",
+                      desc: "Você tem duas semanas inteiras após receber o vídeo pra decidir. Mostra pro pequeno, mostra pra família — sem pressão.",
                     },
                     {
-                      title: "Ou reembolso total",
-                      desc: "Se mesmo assim você não estiver 100% satisfeito, devolvemos o valor integral. Sem burocracia. Sem perguntas.",
+                      title: "100% do dinheiro de volta",
+                      desc: "Se mesmo depois das refações você não amar, devolvemos o valor integral no mesmo dia. Pix na hora. Sem burocracia.",
                     },
                     {
-                      title: "Sem pegadinha, sem letra miúda",
-                      desc: "Não tem asterisco, não tem fila, não tem formulário infinito. Um e-mail e está feito.",
+                      title: "Zero letra miúda",
+                      desc: "Não tem asterisco, não tem cláusula escondida, não tem formulário de 8 páginas. Um WhatsApp resolve tudo.",
                     },
                   ].map((item) => (
                     <li key={item.title} className="flex gap-4">
@@ -99,9 +101,10 @@ export function Guarantee() {
                     />
                   </div>
                   <p className="text-[12px] italic text-white/60">
-                    &ldquo;Ainda não precisamos devolver o dinheiro de ninguém.
-                    Mas a promessa existe — e é o que nos força a entregar o
-                    nosso melhor sempre.&rdquo;
+                    &ldquo;Nunca precisamos devolver o dinheiro de ninguém em
+                    847 pedidos. Mas a promessa continua de pé — é o que nos
+                    obriga a entregar algo que emociona de verdade, todas as
+                    vezes.&rdquo;
                   </p>
                 </div>
               </div>
@@ -141,7 +144,7 @@ function SealSvg() {
           fontFamily="var(--font-sans), sans-serif"
         >
           <textPath href="#seal-curve">
-            GARANTIA INCONDICIONAL · 7 DIAS · 100% SATISFAÇÃO · GARANTIA INCONDICIONAL · 7 DIAS · 100% SATISFAÇÃO ·
+            GARANTIA INCONDICIONAL · 14 DIAS · REFAÇÕES ILIMITADAS · GARANTIA INCONDICIONAL · 14 DIAS · REFAÇÕES ILIMITADAS ·
           </textPath>
         </text>
       </motion.svg>

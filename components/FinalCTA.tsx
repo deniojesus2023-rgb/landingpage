@@ -57,7 +57,7 @@ export function FinalCTA() {
                 size="xl"
                 icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
               >
-                Quero esse momento agora
+                Criar o vídeo do meu filho agora
               </ShimmerButton>
             </HoverBorderGradient>
           </div>

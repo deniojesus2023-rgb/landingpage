@@ -32,8 +32,22 @@ export function VideoDemo() {
         <div className="absolute right-1/3 bottom-0 h-96 w-96 rounded-full bg-violet-500/20 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-6xl px-5 text-center sm:px-8">
-        <SectionLabel tone="cyan">Veja o momento mágico</SectionLabel>
+      <div className="mx-auto mt-16 max-w-6xl px-5 text-center sm:mt-24 sm:px-8">
+        <Reveal delay={0}>
+          <h1 className="mx-auto max-w-5xl text-balance font-display text-5xl font-light leading-[0.95] sm:text-6xl md:text-7xl">
+            O herói favorito do seu filho vai{" "}
+            <span className="text-gradient-gold italic">falar o nome dele</span>{" "}
+            num vídeo cinematográfico.
+          </h1>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mx-auto mt-6 max-w-2xl text-[17px] text-white/60">
+            Entrega em 24h no WhatsApp · Garantia total se ele não se emocionar · Mais de 500 crianças já se emocionaram.
+          </p>
+        </Reveal>
+        <div className="mt-16">
+          <SectionLabel tone="cyan">Veja o momento mágico</SectionLabel>
+        </div>
         <Reveal delay={0.1}>
           <h2 className="mx-auto mt-6 max-w-4xl text-balance font-display text-4xl font-light leading-[1.05] sm:text-5xl md:text-6xl">
             A reação dele ao ouvir o herói{" "}

@@ -45,7 +45,11 @@ type FormData = {
   whatsapp: string;
   email: string;
   videos: VideoData[];
+  bumpPoster: boolean;
+  consent: boolean;
 };
+
+const BUMP_POSTER_PRICE = 27;
 
 const characters: { name: string }[] = [
   { name: "Homem-Aranha" },
@@ -92,6 +96,7 @@ const emptyVideo: VideoData = {
 
 export function OrderModal({ open, plan, onClose }: OrderModalProps) {
   const isDuplo = plan === "duplo";
+  const basePrice = isDuplo ? 147 : 97;
   const price = isDuplo ? "147,00" : "97,00";
   const videoCount = isDuplo ? 2 : 1;
 
@@ -104,6 +109,8 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
     whatsapp: "",
     email: "",
     videos: Array.from({ length: videoCount }, () => ({ ...emptyVideo })),
+    bumpPoster: false,
+    consent: false,
   });
 
   // Reset when plan changes or modal opens
@@ -115,6 +122,8 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
         whatsapp: "",
         email: "",
         videos: Array.from({ length: videoCount }, () => ({ ...emptyVideo })),
+        bumpPoster: false,
+        consent: false,
       });
     }
   }, [open, videoCount]);
@@ -134,6 +143,12 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
 
   const progress = ((step + 1) / totalSteps) * 100;
 
+  const totalPrice = basePrice + (form.bumpPoster && !isDuplo ? BUMP_POSTER_PRICE : 0);
+  const totalPriceStr = `${totalPrice},00`;
+
+  const toggleBump = () =>
+    setForm((f) => ({ ...f, bumpPoster: !f.bumpPoster }));
+
   const updateVideo = (idx: number, patch: Partial<VideoData>) => {
     setForm((f) => ({
       ...f,
@@ -146,7 +161,8 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
       return (
         form.parentName.trim().length > 1 &&
         form.whatsapp.trim().length > 7 &&
-        /\S+@\S+\.\S+/.test(form.email)
+        /\S+@\S+\.\S+/.test(form.email) &&
+        form.consent
       );
     }
     if (step >= 1 && step <= videoCount) {
@@ -221,7 +237,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
             <div className="relative border-b border-white/5 px-7 pt-7 sm:px-10">
               <div className="flex items-center justify-between gap-3">
                 <div className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
-                  Plano {isDuplo ? "Duplo" : "Essencial"} · R$ {price}
+                  Plano {isDuplo ? "Duplo" : "Essencial"} · R$ {totalPriceStr}
                 </div>
                 <div className="text-[11px] font-semibold text-white/50">
                   Etapa {step + 1} de {totalSteps}
@@ -263,7 +279,12 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
                     />
                   )}
                   {step === videoCount + 1 && (
-                    <ReviewStep form={form} plan={plan} />
+                    <ReviewStep
+                      form={form}
+                      plan={plan}
+                      totalPriceStr={totalPriceStr}
+                      onToggleBump={toggleBump}
+                    />
                   )}
                 </motion.div>
               </AnimatePresence>
@@ -299,7 +320,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
                 >
                   <span className="relative flex items-center gap-2">
                     <Lock className="h-4 w-4" strokeWidth={1.75} />
-                    Finalizar pedido · R$ {price}
+                    Pagar com segurança · R$ {totalPriceStr}
                   </span>
                 </button>
               )}
@@ -359,6 +380,37 @@ function ParentStep({
           compartilhamos com terceiros.
         </span>
       </div>
+
+      <label className="flex cursor-pointer items-start gap-3 rounded-[7px] border border-white/10 bg-white/[0.03] p-4 transition hover:border-white/20">
+        <input
+          type="checkbox"
+          checked={form.consent}
+          onChange={(e) => setForm({ ...form, consent: e.target.checked })}
+          className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-gold-400"
+          aria-label="Aceitar termos e política de privacidade"
+        />
+        <span className="text-[12px] leading-relaxed text-white/70">
+          Li e aceito a{" "}
+          <a
+            href="/privacidade"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gold-400 underline underline-offset-2 hover:text-white"
+          >
+            Política de Privacidade
+          </a>{" "}
+          e os{" "}
+          <a
+            href="/termos"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gold-400 underline underline-offset-2 hover:text-white"
+          >
+            Termos de Uso
+          </a>
+          . Autorizo o uso dos dados da criança apenas para produção do vídeo.
+        </span>
+      </label>
     </div>
   );
 }
@@ -507,9 +559,18 @@ function VideoStep({
   );
 }
 
-function ReviewStep({ form, plan }: { form: FormData; plan: Plan }) {
+function ReviewStep({
+  form,
+  plan,
+  totalPriceStr,
+  onToggleBump,
+}: {
+  form: FormData;
+  plan: Plan;
+  totalPriceStr: string;
+  onToggleBump: () => void;
+}) {
   const isDuplo = plan === "duplo";
-  const price = isDuplo ? "147,00" : "97,00";
 
   return (
     <div className="space-y-5">
@@ -571,14 +632,88 @@ function ReviewStep({ form, plan }: { form: FormData; plan: Plan }) {
         </div>
       ))}
 
+      {!isDuplo && (
+        <button
+          type="button"
+          onClick={onToggleBump}
+          className={`group relative w-full overflow-hidden rounded-[7px] border p-5 text-left transition ${
+            form.bumpPoster
+              ? "border-gold-400/60 bg-gradient-to-br from-gold-400/[0.12] to-gold-400/[0.04] shadow-[0_0_30px_rgba(30,157,241,0.2)]"
+              : "border-dashed border-gold-400/40 bg-gold-400/[0.04] hover:border-gold-400/60 hover:bg-gold-400/[0.08]"
+          }`}
+          aria-pressed={form.bumpPoster}
+        >
+          <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-gold-400/20 blur-2xl" />
+          <div className="relative flex items-start gap-4">
+            <div
+              className={`mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-[5px] border-2 transition ${
+                form.bumpPoster
+                  ? "border-gold-400 bg-gold-400"
+                  : "border-white/30 bg-transparent"
+              }`}
+            >
+              {form.bumpPoster && (
+                <svg
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  className="h-3.5 w-3.5 text-ink-950"
+                >
+                  <path
+                    d="M2 6l3 3 5-6"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-crimson-500">
+                  ● Só aparece aqui · só agora
+                </span>
+              </div>
+              <div className="mt-1.5 flex items-baseline gap-2">
+                <span className="font-display text-lg font-light text-white">
+                  Adicionar Pôster Cinematográfico
+                </span>
+                <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-400">
+                  -46%
+                </span>
+              </div>
+              <p className="mt-1 text-[12px] leading-snug text-white/60">
+                Cartaz digital estilo filme com o nome e o herói da criança,
+                pronto pra imprimir ou usar de papel de parede. Entregue junto
+                com o vídeo.
+              </p>
+              <div className="mt-3 flex items-baseline gap-2">
+                <span className="text-[12px] text-white/40 line-through">
+                  R$ 50
+                </span>
+                <span className="font-display text-xl font-light text-gold-400">
+                  + R$ 27
+                </span>
+                <span className="text-[10px] text-white/40">uma vez só</span>
+              </div>
+            </div>
+          </div>
+        </button>
+      )}
+
       <div className="flex items-center justify-between rounded-[7px] border border-white/10 bg-white/[0.04] p-5">
         <div>
           <div className="text-[11px] font-bold uppercase tracking-wider text-white/50">
             Total
           </div>
           <div className="mt-1 font-display text-3xl font-light text-white">
-            R$ {price}
+            R$ {totalPriceStr}
           </div>
+          {form.bumpPoster && !isDuplo && (
+            <div className="mt-1 text-[10px] text-white/45">
+              Inclui pôster cinematográfico
+            </div>
+          )}
         </div>
         <div className="space-y-1 text-right text-[11px] text-white/50">
           <div className="flex items-center justify-end gap-1.5">

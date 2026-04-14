@@ -10,9 +10,11 @@ import { Pricing } from "@/components/Pricing";
 import { Guarantee } from "@/components/Guarantee";
 import { FAQ } from "@/components/FAQ";
 import { FinalCTA } from "@/components/FinalCTA";
+import { Objections } from "@/components/Objections";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { SocialProofToasts } from "@/components/SocialProofToasts";
+import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 
 export default function HomePage() {
   return (
@@ -27,10 +29,12 @@ export default function HomePage() {
       <MeetTheTeam />
       <Pricing />
       <Guarantee />
+      <Objections />
       <FAQ />
       <FinalCTA />
       <Footer />
       <WhatsAppFloat />
+      <StickyMobileCTA />
       <SocialProofToasts />
     </main>
   );

@@ -77,7 +77,7 @@ const plans: PlanConfig[] = [
       "Acesso a +20 personagens",
       "Garantia total de satisfação",
     ],
-    cta: "Quero o vídeo",
+    cta: "Quero emocionar meu filho",
     variant: "primary",
     featured: false,
   },
@@ -111,7 +111,7 @@ const plans: PlanConfig[] = [
         value: "R$ 50",
       },
     ],
-    cta: "Quero os 2 vídeos",
+    cta: "Quero os 2 momentos mágicos",
     variant: "gold",
     featured: true,
   },
@@ -384,7 +384,7 @@ function PlanCard({
         </HoverBorderGradient>
         <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11px] text-white/40">
           <Lock className="h-3 w-3" strokeWidth={1.75} />
-          Checkout seguro · Garantia incondicional
+          Pagamento único · Entrega em 48h · Se não amar, refazemos
         </p>
       </div>
     </div>

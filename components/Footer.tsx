@@ -42,9 +42,9 @@ export function Footer() {
             {
               title: "Legal",
               links: [
-                ["Política de Privacidade", "#"],
-                ["Termos de Uso", "#"],
-                ["Cookies", "#"],
+                ["Política de Privacidade", "/privacidade"],
+                ["Termos de Uso", "/termos"],
+                ["Cookies", "/privacidade#cookies"],
               ],
             },
           ].map((col) => (
