@@ -29,27 +29,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const itens: { quantity: number; price: number; description: string }[] = [];
+    const items: { quantity: number; price: number; description: string }[] = [];
 
     if (plan === "essencial") {
-      itens.push({
+      items.push({
         quantity: 1,
         price: 9700,
-        description: "Vídeo Personalizado — Plano Essencial",
+        description: "Video Personalizado - Plano Essencial",
       });
     } else {
-      itens.push({
+      items.push({
         quantity: 1,
         price: 14700,
-        description: "Kit 2 Vídeos Personalizados — Plano Duplo",
+        description: "Kit 2 Videos Personalizados - Plano Duplo",
       });
     }
 
     if (bumpPoster && plan === "essencial") {
-      itens.push({
+      items.push({
         quantity: 1,
         price: 1700,
-        description: "Pôster Cinematográfico",
+        description: "Poster Cinematografico",
       });
     }
 
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
 
     const payload = {
       handle,
-      itens,
+      items,
       order_nsu: orderNsu,
       redirect_url: redirectUrl,
       webhook_url: webhookUrl,

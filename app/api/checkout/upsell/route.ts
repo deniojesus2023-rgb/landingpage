@@ -28,34 +28,34 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let itens: { quantity: number; price: number; description: string }[];
+    let items: { quantity: number; price: number; description: string }[];
     let redirectSuffix: string;
 
     if (type === "upsell") {
       if (plan === "essencial") {
-        itens = [
+        items = [
           {
             quantity: 1,
             price: 5000,
-            description: "Adicionar 2º Vídeo Personalizado",
+            description: "Adicionar 2o Video Personalizado",
           },
         ];
       } else {
-        itens = [
+        items = [
           {
             quantity: 1,
             price: 4700,
-            description: "Entrega VIP 24h + Pôster Cinematográfico",
+            description: "Entrega VIP 24h + Poster Cinematografico",
           },
         ];
       }
       redirectSuffix = `plan=${plan}&upsell=ok`;
     } else {
-      itens = [
+      items = [
         {
           quantity: 1,
           price: 1700,
-          description: "Pôster Cinematográfico Digital",
+          description: "Poster Cinematografico Digital",
         },
       ];
       redirectSuffix = `plan=${plan}&downsell=ok`;
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
 
     const payload: Record<string, unknown> = {
       handle,
-      itens,
+      items,
       order_nsu: orderNsu,
       redirect_url: redirectUrl,
       webhook_url: webhookUrl,
