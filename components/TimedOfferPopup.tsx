@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { getCheckoutUrl } from "@/lib/checkout";
+import { useOrderModal } from "@/contexts/OrderModalContext";
 import { ShinyButton } from "@/components/ui/shiny-button";
 
 const DELAY_MS = 1 * 60 * 1000; // 1 minuto
@@ -77,12 +77,14 @@ export function TimedOfferPopup() {
     }
   };
 
+  const { openOrderModal } = useOrderModal();
+
   const handleAccept = () => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem(STORAGE_KEY, "1");
-      window.open(getCheckoutUrl("duplo"), "_blank");
     }
     setOpen(false);
+    openOrderModal("duplo");
   };
 
   const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");

@@ -11,18 +11,13 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getCheckoutUrl } from "@/lib/checkout";
+import { useOrderModal } from "@/contexts/OrderModalContext";
 import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
 import { ShinyButton } from "./ui/shiny-button";
 
 type Plan = "essencial" | "duplo";
-
-function goToCheckout(plan: PlanConfig) {
-  const url = getCheckoutUrl(plan.id);
-  window.open(url, "_blank");
-}
 
 type PlanBonus = {
   title: string;
@@ -214,6 +209,7 @@ function PlanCard({
 }: {
   plan: PlanConfig;
 }) {
+  const { openOrderModal } = useOrderModal();
   const bonusTotal = plan.bonuses?.reduce(
     (acc, b) => acc + parseInt(b.value.replace(/\D/g, ""), 10),
     0,
@@ -359,7 +355,7 @@ function PlanCard({
         <HoverBorderGradient containerClassName="w-full">
           <ShinyButton
             className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-8 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
-            onClick={() => goToCheckout(plan)}
+            onClick={() => openOrderModal(plan.id)}
           >
             {plan.cta}
           </ShinyButton>

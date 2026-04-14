@@ -20,6 +20,7 @@ import { Footer } from "@/components/Footer";
 import { SocialProofToasts } from "@/components/SocialProofToasts";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { TimedOfferPopup } from "@/components/TimedOfferPopup";
+import { OrderModalProvider } from "@/contexts/OrderModalContext";
 
 export default function HomePage() {
   // Dispara ViewContent quando a pagina carrega
@@ -31,24 +32,26 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="relative overflow-hidden">
-      <VideoDemo />
-      <LogoMarquee />
-      <PainCards />
-      <HowItWorks />
-      <Characters />
-      <GiftComparison />
-      <Testimonials />
-      <MeetTheTeam />
-      <Pricing />
-      <Guarantee />
-      <Objections />
-      <FAQ />
-      <FinalCTA />
-      <Footer />
-      <StickyMobileCTA />
-      <TimedOfferPopup />
-      <SocialProofToasts />
-    </main>
+    <OrderModalProvider>
+      <main className="relative overflow-hidden">
+        <VideoDemo />
+        <LogoMarquee />
+        <PainCards />
+        <HowItWorks />
+        <Characters />
+        <GiftComparison />
+        <Testimonials />
+        <MeetTheTeam />
+        <Pricing />
+        <Guarantee />
+        <Objections />
+        <FAQ />
+        <FinalCTA />
+        <Footer />
+        <StickyMobileCTA />
+        <TimedOfferPopup />
+        <SocialProofToasts />
+      </main>
+    </OrderModalProvider>
   );
 }
