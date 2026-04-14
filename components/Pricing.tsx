@@ -7,6 +7,7 @@ import {
   Gift,
   Lock,
   RefreshCw,
+  Sparkles,
   StarIcon,
   Zap,
 } from "lucide-react";
