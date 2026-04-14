@@ -19,6 +19,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { createCheckout, formatPhone } from "@/lib/checkout";
 import { ShinyButton } from "./ui/shiny-button";
 
 type Plan = "essencial" | "duplo";
@@ -105,6 +106,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
   const totalSteps = videoCount + 2;
 
   const [step, setStep] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<FormData>({
     parentName: "",
     whatsapp: "",
@@ -199,10 +201,26 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
     return "Última olhada antes de finalizar. Você pode voltar pra ajustar.";
   })();
 
-  const handleSubmit = () => {
-    alert(
-      "Pedido recebido!\n\nRedirecionando para o checkout seguro...\n\n(Troque pela URL real de Hotmart/Kiwify/Pix)"
-    );
+  const handleSubmit = async () => {
+    if (submitting) return;
+    setSubmitting(true);
+
+    try {
+      const checkoutUrl = await createCheckout({
+        plan,
+        customer: {
+          name: form.parentName,
+          email: form.email,
+          phone_number: formatPhone(form.whatsapp),
+        },
+        bumpPoster: form.bumpPoster,
+      });
+
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("[OrderModal] Erro no checkout:", error);
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -317,9 +335,20 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
               ) : (
                 <ShinyButton
                   onClick={handleSubmit}
-                  className="inline-flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-7 py-3.5 text-[14px] font-bold leading-none text-white shadow-glow-blue"
+                  disabled={submitting}
+                  className={`inline-flex items-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-7 py-3.5 text-[14px] font-bold leading-none text-white shadow-glow-blue ${submitting ? "pointer-events-none opacity-70" : ""}`}
                 >
-                  Pagar com segurança · R$ {totalPriceStr}
+                  {submitting ? (
+                    <>
+                      <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      Gerando checkout...
+                    </>
+                  ) : (
+                    `Pagar com segurança · R$ ${totalPriceStr}`
+                  )}
                 </ShinyButton>
               )}
             </div>
