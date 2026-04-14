@@ -15,6 +15,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { SocialProofToasts } from "@/components/SocialProofToasts";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
+import { TimedOfferPopup } from "@/components/TimedOfferPopup";
 
 export default function HomePage() {
   return (
@@ -35,6 +36,7 @@ export default function HomePage() {
       <Footer />
       <WhatsAppFloat />
       <StickyMobileCTA />
+      <TimedOfferPopup />
       <SocialProofToasts />
     </main>
   );

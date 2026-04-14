@@ -3,11 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Sparkles, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-
-const WHATSAPP_NUMBER = "5511911346396";
-const WHATSAPP_MESSAGE = `Ola! Vim pela landing page e quero pedir o *Plano Duplo* (2 videos por R$ 97).
-
-Podem me ajudar a finalizar?`;
+import { getCheckoutUrl } from "@/lib/checkout";
 
 /**
  * CTA fixa na parte de baixo da tela em mobile.
@@ -42,8 +38,7 @@ export function StickyMobileCTA() {
   }, []);
 
   const handleClick = () => {
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
-    window.open(url, "_blank");
+    window.open(getCheckoutUrl("duplo"), "_blank");
   };
 
   return (

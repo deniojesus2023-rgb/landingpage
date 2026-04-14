@@ -11,6 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { getCheckoutUrl } from "@/lib/checkout";
 import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
@@ -18,25 +19,9 @@ import { ShimmerButton } from "./ui/ShimmerButton";
 
 type Plan = "essencial" | "duplo";
 
-const WHATSAPP_NUMBER = "5511911346396";
-
-function redirectToWhatsApp(plan: PlanConfig) {
-  const planName = plan.name;
-  const price = `R$ ${plan.price},${plan.cents}`;
-  const videos = plan.id === "essencial" ? "1 video" : "2 videos";
-  
-  const message = `Ola! Tenho interesse no *Plano ${planName}*
-
-*Detalhes do plano:*
-- ${videos} personalizado(s)
-- Valor: ${price}
-
-Gostaria de mais informacoes para finalizar meu pedido!`;
-
-  const encodedMessage = encodeURIComponent(message);
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-  
-  window.open(whatsappUrl, "_blank");
+function goToCheckout(plan: PlanConfig) {
+  const url = getCheckoutUrl(plan.id);
+  window.open(url, "_blank");
 }
 
 type PlanBonus = {
@@ -376,7 +361,7 @@ function PlanCard({
             variant={plan.variant}
             size="xl"
             className="w-full"
-            onClick={() => redirectToWhatsApp(plan)}
+            onClick={() => goToCheckout(plan)}
             icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
           >
             {plan.cta}
