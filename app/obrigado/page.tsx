@@ -9,7 +9,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import {
   createUpsellCheckout,
@@ -32,6 +32,7 @@ function ObrigadoInner() {
     return "success";
   })();
 
+  const router = useRouter();
   const [stage, setStage] = useState<Stage>(initialStage);
   const [secondsLeft, setSecondsLeft] = useState(600); // 10 min
   const [loadingUpsell, setLoadingUpsell] = useState(false);
@@ -55,12 +56,15 @@ function ObrigadoInner() {
     });
   }, [plan]);
 
-  // Auto-advance do "success" pro upsell depois de 2s
+  // Auto-advance do "success": redireciona para a página /upsell dedicada após 2.5s
   useEffect(() => {
     if (stage !== "success") return;
-    const t = setTimeout(() => setStage("upsell"), 2500);
+    const orderNsuParam = searchParams.get("order_nsu") ?? "";
+    const t = setTimeout(() => {
+      router.push(`/upsell?plan=${plan}&order_nsu=${encodeURIComponent(orderNsuParam)}`);
+    }, 2500);
     return () => clearTimeout(t);
-  }, [stage]);
+  }, [stage, plan, router, searchParams]);
 
   const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
   const ss = String(secondsLeft % 60).padStart(2, "0");

@@ -1,5 +1,4 @@
 "use client";
-
 import { motion } from "framer-motion";
 import {
   CreditCard,
@@ -11,7 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useOrderModal } from "@/contexts/OrderModalContext";
+import { useQuizModal } from "@/contexts/QuizModalContext";
 import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
@@ -23,6 +22,7 @@ type PlanBonus = {
   title: string;
   description: string;
   value: string;
+  valueNum: number;
 };
 
 type PlanConfig = {
@@ -65,7 +65,7 @@ const plans: PlanConfig[] = [
     id: "duplo",
     name: "Duplo",
     tagline: "2 vídeos pelo preço de 1",
-    oldPrice: "147",
+    oldPrice: "194",
     price: "97",
     cents: "00",
     note: "pagamento único · mais pedido",
@@ -75,20 +75,29 @@ const plans: PlanConfig[] = [
       "Ideal para 2 filhos ou 2 datas diferentes",
       "Roteiro premium + revisão cinematográfica",
       "Garantia total de satisfação",
-      "Economia de R$ 50 vs. comprar separado",
+      "Economia de R$ 97 vs. comprar separado",
     ],
     bonuses: [
       {
         title: "Entrega VIP em 24h",
         description:
-          "Seus vídeos prontos no dia seguinte — sem fila, com prioridade máxima.",
+          "Seus vídeos prontos no dia seguinte — sem fila, com prioridade máxima de produção.",
         value: "R$ 47",
+        valueNum: 47,
       },
       {
-        title: "Pôster cinematográfico digital",
+        title: "Pôster Cinematográfico Digital",
         description:
           "Cartaz personalizado estilo filme com o nome da criança, pronto pra imprimir ou usar de wallpaper.",
         value: "R$ 50",
+        valueNum: 50,
+      },
+      {
+        title: "Roteiro Premium Revisado",
+        description:
+          "Um roteirista especializado revisa e aprimora a mensagem para garantir o máximo impacto emocional.",
+        value: "R$ 37",
+        valueNum: 37,
       },
     ],
     cta: "Quero os 2 momentos mágicos",
@@ -142,13 +151,14 @@ export function Pricing() {
           <SectionLabel tone="gold">Escolha seu plano</SectionLabel>
           <Reveal delay={0.1}>
             <h2 className="mx-auto mt-6 max-w-3xl text-balance font-display text-4xl font-light leading-[1.05] sm:text-5xl md:text-6xl">
-              Garanta o momento <span className="text-gradient-gold italic">agora mesmo</span>
+              Garanta o momento{" "}
+              <span className="text-gradient-gold italic">agora mesmo</span>
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mx-auto mt-5 max-w-xl text-white/60">
-              Pagamento único, sem mensalidade. Garantia total: se não amar, a gente
-              refaz ou devolve 100%.
+              Pagamento único, sem mensalidade. Garantia total: se não amar, a
+              gente refaz ou devolve 100%.
             </p>
           </Reveal>
 
@@ -160,9 +170,13 @@ export function Pricing() {
             </div>
             <div className="mt-6 flex items-end justify-center gap-3">
               <Digit value={h} label="horas" />
-              <span className="pb-10 font-display text-3xl text-white/30">:</span>
+              <span className="pb-10 font-display text-3xl text-white/30">
+                :
+              </span>
               <Digit value={m} label="minutos" />
-              <span className="pb-10 font-display text-3xl text-white/30">:</span>
+              <span className="pb-10 font-display text-3xl text-white/30">
+                :
+              </span>
               <Digit value={s} label="segundos" />
             </div>
           </Reveal>
@@ -182,6 +196,55 @@ export function Pricing() {
             </motion.div>
           ))}
         </div>
+
+        {/* Value Stack Summary */}
+        <Reveal delay={0.35}>
+          <div className="mx-auto mt-12 max-w-2xl overflow-hidden rounded-2xl border border-gold-400/20 bg-gradient-to-br from-gold-400/[0.06] via-gold-400/[0.03] to-transparent p-6 sm:p-8">
+            <div className="text-center text-[11px] font-bold uppercase tracking-[0.22em] text-gold-400">
+              O que você recebe no Plano Duplo
+            </div>
+            <div className="mt-6 space-y-3">
+              {[
+                { label: "2 Vídeos Personalizados em HD", value: "R$ 194" },
+                { label: "Entrega VIP em 24h", value: "R$ 47" },
+                { label: "Pôster Cinematográfico Digital", value: "R$ 50" },
+                { label: "Roteiro Premium Revisado", value: "R$ 37" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center justify-between text-[13px]"
+                >
+                  <span className="text-white/70">{item.label}</span>
+                  <span className="font-semibold text-white/40 line-through">
+                    {item.value}
+                  </span>
+                </div>
+              ))}
+              <div className="my-2 border-t border-white/10" />
+              <div className="flex items-center justify-between">
+                <span className="text-[14px] font-bold text-white">
+                  Valor total
+                </span>
+                <span className="text-[14px] font-bold text-white/40 line-through">
+                  R$ 328
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[16px] font-bold text-emerald-400">
+                  Você paga hoje
+                </span>
+                <span className="font-display text-[28px] font-light text-emerald-400">
+                  R$ 97
+                </span>
+              </div>
+              <div className="mt-1 text-center text-[11px] text-white/40">
+                Você economiza{" "}
+                <strong className="text-emerald-400">R$ 231</strong> (70% de
+                desconto)
+              </div>
+            </div>
+          </div>
+        </Reveal>
 
         {/* Trust row */}
         <Reveal delay={0.4}>
@@ -204,16 +267,13 @@ export function Pricing() {
   );
 }
 
-function PlanCard({
-  plan,
-}: {
-  plan: PlanConfig;
-}) {
-  const { openOrderModal } = useOrderModal();
-  const bonusTotal = plan.bonuses?.reduce(
-    (acc, b) => acc + parseInt(b.value.replace(/\D/g, ""), 10),
-    0,
-  );
+/* ──────────────────────────────────────────── */
+/*  PlanCard                                    */
+/* ──────────────────────────────────────────── */
+function PlanCard({ plan }: { plan: PlanConfig }) {
+  const { openQuizModal } = useQuizModal();
+  const bonusTotal = plan.bonuses?.reduce((acc, b) => acc + b.valueNum, 0);
+
   return (
     <div
       className={`relative flex h-full flex-col overflow-hidden rounded-[7px] border backdrop-blur-xl ${
@@ -276,8 +336,8 @@ function PlanCard({
           <div className="mt-2 text-[12px] text-white/50">{plan.note}</div>
           {bonusTotal ? (
             <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-gold-400/40 bg-gold-400/10 px-3 py-1 text-[11px] font-semibold text-gold-400">
-              <Gift className="h-3 w-3" strokeWidth={2} />
-              + R$ {bonusTotal} em bônus grátis
+              <Gift className="h-3 w-3" strokeWidth={2} />+ R$ {bonusTotal} em
+              bônus grátis
             </div>
           ) : null}
         </div>
@@ -308,15 +368,16 @@ function PlanCard({
           ))}
         </ul>
 
+        {/* Bonuses — Value Stacking aprimorado */}
         {plan.bonuses && plan.bonuses.length > 0 && (
-          <div className="mt-8 rounded-[7px] border border-gold-400/30 bg-gradient-to-br from-gold-400/[0.08] via-gold-400/[0.04] to-transparent p-5">
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-gold-400">
+          <div className="mt-8 overflow-hidden rounded-[7px] border border-gold-400/30 bg-gradient-to-br from-gold-400/[0.08] via-gold-400/[0.04] to-transparent">
+            <div className="flex items-center gap-2 border-b border-gold-400/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-gold-400">
               <Gift className="h-3.5 w-3.5" strokeWidth={2} />
-              Bônus exclusivos Duplo
+              Bônus exclusivos incluídos
             </div>
-            <ul className="mt-4 space-y-4">
+            <ul className="divide-y divide-white/5">
               {plan.bonuses.map((b) => (
-                <li key={b.title} className="flex items-start gap-3">
+                <li key={b.title} className="flex items-start gap-3 p-5">
                   <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_18px_rgba(30,157,241,0.35)]">
                     <Sparkles
                       className="h-3 w-3 text-ink-950"
@@ -324,12 +385,9 @@ function PlanCard({
                     />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <div className="text-[14px] font-semibold text-white">
                         {b.title}
-                      </div>
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-white/30 line-through">
-                        {b.value}
                       </div>
                       <div className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-400">
                         Grátis
@@ -337,6 +395,15 @@ function PlanCard({
                     </div>
                     <div className="mt-1 text-[12px] leading-snug text-white/60">
                       {b.description}
+                    </div>
+                    <div className="mt-2 flex items-center gap-1.5">
+                      <span className="text-[11px] text-white/30">Valor:</span>
+                      <span className="text-[12px] font-bold text-white/40 line-through">
+                        {b.value}
+                      </span>
+                      <span className="text-[11px] font-bold text-emerald-400">
+                        → incluso
+                      </span>
                     </div>
                   </div>
                 </li>
@@ -355,7 +422,7 @@ function PlanCard({
         <HoverBorderGradient containerClassName="w-full">
           <ShinyButton
             className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-8 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
-            onClick={() => openOrderModal(plan.id)}
+            onClick={() => openQuizModal(plan.id)}
           >
             {plan.cta}
           </ShinyButton>
@@ -372,7 +439,6 @@ function PlanCard({
 /* ──────────────────────────────────────────── */
 /*  BorderTrail — orbiting glow around featured */
 /* ──────────────────────────────────────────── */
-
 function BorderTrail({ size = 100 }: { size?: number }) {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[7px]">
