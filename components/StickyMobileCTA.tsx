@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useOrderModal } from "@/contexts/OrderModalContext";
+import { openWhatsApp } from "@/lib/whatsapp";
 import { ShinyButton } from "@/components/ui/shiny-button";
 
 /**
@@ -38,10 +38,8 @@ export function StickyMobileCTA() {
     };
   }, []);
 
-  const { openOrderModal } = useOrderModal();
-  
   const handleClick = () => {
-    openOrderModal("duplo");
+    openWhatsApp("duplo");
   };
 
   return (

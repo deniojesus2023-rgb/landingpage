@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { useOrderModal } from "@/contexts/OrderModalContext";
+import { openWhatsApp } from "@/lib/whatsapp";
 import { ShinyButton } from "@/components/ui/shiny-button";
 
 const DELAY_MS = 1 * 60 * 1000; // 1 minuto
@@ -19,28 +19,24 @@ export function TimedOfferPopup() {
   const [open, setOpen] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(COUNTDOWN_SECONDS);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const { isOpen: isOrderModalOpen, openOrderModal } = useOrderModal();
 
-  // Timer para abrir (só abre se o OrderModal não estiver aberto)
+  // Timer para abrir
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
 
     const t = setTimeout(() => {
-      // Não abre se o modal de pedido já estiver aberto
-      if (!isOrderModalOpen) {
-        setOpen(true);
-      }
+      setOpen(true);
     }, DELAY_MS);
     return () => clearTimeout(t);
-  }, [isOrderModalOpen]);
+  }, []);
 
-  // Fecha o popup automaticamente se o OrderModal abrir
+  // Fecha o popup automaticamente (placeholder para manter estrutura)
   useEffect(() => {
-    if (isOrderModalOpen && open) {
+    if (false && open) {
       setOpen(false);
     }
-  }, [isOrderModalOpen, open]);
+  }, [open]);
 
   // Countdown de urgência enquanto o popup está aberto
   useEffect(() => {
@@ -95,7 +91,7 @@ export function TimedOfferPopup() {
       sessionStorage.setItem(STORAGE_KEY, "1");
     }
     setOpen(false);
-    openOrderModal("duplo");
+    openWhatsApp("duplo");
   };
 
   const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");

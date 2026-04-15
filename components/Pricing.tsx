@@ -10,7 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useQuizModal } from "@/contexts/QuizModalContext";
+import { openWhatsApp } from "@/lib/whatsapp";
 import { HoverBorderGradient } from "./ui/HoverBorderGradient";
 import { Reveal } from "./ui/Reveal";
 import { SectionLabel } from "./ui/SectionLabel";
@@ -271,7 +271,6 @@ export function Pricing() {
 /*  PlanCard                                    */
 /* ──────────────────────────────────────────── */
 function PlanCard({ plan }: { plan: PlanConfig }) {
-  const { openQuizModal } = useQuizModal();
   const bonusTotal = plan.bonuses?.reduce((acc, b) => acc + b.valueNum, 0);
 
   return (
@@ -422,7 +421,7 @@ function PlanCard({ plan }: { plan: PlanConfig }) {
         <HoverBorderGradient containerClassName="w-full">
           <ShinyButton
             className="inline-flex w-full items-center justify-center gap-2 rounded-[7px] bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600 px-8 py-4 text-[16px] font-bold leading-none text-white shadow-glow-blue"
-            onClick={() => openQuizModal(plan.id)}
+            onClick={() => openWhatsApp(plan.id)}
           >
             {plan.cta}
           </ShinyButton>

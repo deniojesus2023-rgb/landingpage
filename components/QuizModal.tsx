@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import type { PlanId } from "@/lib/checkout";
-import { useOrderModal } from "@/contexts/OrderModalContext";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 /* ─────────────────────── TYPES ─────────────────────── */
 type QuizAnswer = {
@@ -79,7 +79,7 @@ export function QuizModal({
   plan: PlanId;
   onClose: () => void;
 }) {
-  const { openOrderModal } = useOrderModal();
+
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswer>({});
   const [selected, setSelected] = useState<string | null>(null);
@@ -123,15 +123,15 @@ export function QuizModal({
           setStep((s) => s + 1);
           setSelected(null);
         } else {
-          // Último passo: abre o OrderModal com o plano selecionado
+          // Último passo: redireciona para o WhatsApp com mensagem do plano
           onClose();
           setTimeout(() => {
-            openOrderModal(plan);
+            openWhatsApp(plan);
           }, 200);
         }
       }, 350);
     },
-    [answers, currentStep.id, step, totalSteps, onClose, openOrderModal, plan],
+    [answers, currentStep.id, step, totalSteps, onClose, plan],
   );
 
   const handleBack = useCallback(() => {
