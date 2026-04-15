@@ -1,9 +1,9 @@
 "use client";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, ExternalLink, Loader2, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-/* ─────────────────────── TYPES ─────────────────────── */
 type CheckoutIframeProps = {
   checkoutUrl: string;
   onClose: () => void;
@@ -12,9 +12,8 @@ type CheckoutIframeProps = {
   planLabel: string;
 };
 
-type IframeStatus = "loading" | "ready" | "paid" | "error";
+type PopupStatus = "opening" | "open" | "paid";
 
-/* ─────────────────────── COMPONENT ─────────────────────── */
 export function CheckoutIframe({
   checkoutUrl,
   onClose,
@@ -22,108 +21,102 @@ export function CheckoutIframe({
   totalPriceStr,
   planLabel,
 }: CheckoutIframeProps) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [status, setStatus] = useState<IframeStatus>("loading");
-  const [errorMsg, setErrorMsg] = useState("");
+  const popupRef = useRef<Window | null>(null);
+  const pollRef = useRef<NodeJS.Timeout | null>(null);
+  const [status, setStatus] = useState<PopupStatus>("opening");
 
-  // Detecta quando o iframe navega para a redirect_url (domínio próprio)
-  // A InfinitePay redireciona para /obrigado após o pagamento
-  const handleIframeLoad = useCallback(() => {
-    try {
-      const iframeWindow = iframeRef.current?.contentWindow;
-      if (!iframeWindow) return;
-
-      // Tenta ler a URL atual do iframe
-      const currentUrl = iframeWindow.location.href;
-
-      // Se voltou para o nosso domínio (obrigado), pagamento foi concluído
-      if (
-        currentUrl.includes("/obrigado") ||
-        currentUrl.includes("order_nsu") ||
-        currentUrl.includes("transaction_nsu")
-      ) {
-        const url = new URL(currentUrl);
-        const params: Record<string, string> = {};
-        url.searchParams.forEach((value, key) => {
-          params[key] = value;
-        });
-        setStatus("paid");
-        setTimeout(() => {
-          onSuccess?.(params);
-          // Redireciona a janela principal para a página de obrigado
-          window.location.href = currentUrl;
-        }, 1500);
-        return;
-      }
-
-      setStatus("ready");
-    } catch {
-      // Cross-origin: iframe ainda está no domínio da InfinitePay — normal
-      setStatus("ready");
-    }
-  }, [onSuccess]);
-
-  // Polling para detectar redirecionamento pós-pagamento
+  // Abre o popup centralizado assim que o componente monta
   useEffect(() => {
-    if (status === "paid") return;
+    const w = 520;
+    const h = 700;
+    const left = Math.round(window.screenX + (window.outerWidth - w) / 2);
+    const top = Math.round(window.screenY + (window.outerHeight - h) / 2);
 
-    const interval = setInterval(() => {
+    const popup = window.open(
+      checkoutUrl,
+      "infinitepay_checkout",
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`
+    );
+
+    if (!popup) {
+      // Bloqueador de popup ativo — abre em nova aba como fallback
+      window.open(checkoutUrl, "_blank");
+      onClose();
+      return;
+    }
+
+    popupRef.current = popup;
+    setStatus("open");
+
+    // Polling para detectar quando o popup fecha ou redireciona para /obrigado
+    pollRef.current = setInterval(() => {
       try {
-        const iframeWindow = iframeRef.current?.contentWindow;
-        if (!iframeWindow) return;
-        const currentUrl = iframeWindow.location.href;
-
+        if (!popup || popup.closed) {
+          clearInterval(pollRef.current!);
+          onClose();
+          return;
+        }
+        // Tenta ler a URL do popup (só funciona se for same-origin após redirect)
+        const url = popup.location.href;
         if (
-          currentUrl.includes("/obrigado") ||
-          currentUrl.includes("order_nsu") ||
-          currentUrl.includes("transaction_nsu")
+          url.includes("/obrigado") ||
+          url.includes("order_nsu") ||
+          url.includes("transaction_nsu")
         ) {
-          clearInterval(interval);
-          const url = new URL(currentUrl);
-          const params: Record<string, string> = {};
-          url.searchParams.forEach((value, key) => {
-            params[key] = value;
-          });
+          clearInterval(pollRef.current!);
           setStatus("paid");
+          popup.close();
           setTimeout(() => {
+            const urlObj = new URL(url);
+            const params: Record<string, string> = {};
+            urlObj.searchParams.forEach((value, key) => {
+              params[key] = value;
+            });
             onSuccess?.(params);
-            window.location.href = currentUrl;
-          }, 1500);
+            window.location.href = url;
+          }, 1800);
         }
       } catch {
-        // Cross-origin — ainda no domínio da InfinitePay, tudo certo
+        // Cross-origin: popup ainda está na InfinitePay — normal, continua polling
       }
     }, 800);
 
-    return () => clearInterval(interval);
-  }, [status, onSuccess]);
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Fallback: abrir em nova aba se o iframe falhar
   const openInNewTab = useCallback(() => {
     window.open(checkoutUrl, "_blank", "noopener,noreferrer");
     onClose();
   }, [checkoutUrl, onClose]);
 
+  const focusPopup = useCallback(() => {
+    if (popupRef.current && !popupRef.current.closed) {
+      popupRef.current.focus();
+    } else {
+      openInNewTab();
+    }
+  }, [openInNewTab]);
+
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex flex-col" style={{ minHeight: "380px" }}>
       {/* Header */}
       <div className="flex flex-shrink-0 items-center justify-between border-b border-white/10 px-5 py-4">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600">
-            <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4 text-white">
-              <path
-                d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-1 11.41L5.59 10 7 8.59l2 2 4-4L14.41 8 9 13.41z"
-                fill="currentColor"
-              />
-            </svg>
+            {status === "paid" ? (
+              <CheckCircle2 className="h-4 w-4 text-white" strokeWidth={2.5} />
+            ) : (
+              <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4 text-white">
+                <path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-1 11.41L5.59 10 7 8.59l2 2 4-4L14.41 8 9 13.41z" fill="currentColor" />
+              </svg>
+            )}
           </div>
           <div>
-            <div className="text-[13px] font-semibold text-white">
-              Pagamento Seguro
-            </div>
-            <div className="text-[11px] text-white/40">
-              {planLabel} · R$ {totalPriceStr}
-            </div>
+            <div className="text-[13px] font-semibold text-white">Pagamento Seguro</div>
+            <div className="text-[11px] text-white/40">{planLabel} · R$ {totalPriceStr}</div>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -144,85 +137,94 @@ export function CheckoutIframe({
         </div>
       </div>
 
-      {/* iFrame area */}
-      <div className="relative flex-1 overflow-hidden bg-white">
-        {/* Loading overlay */}
-        <AnimatePresence>
-          {status === "loading" && (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-[#05060F]"
-            >
-              <Loader2 className="h-8 w-8 animate-spin text-blue-400" strokeWidth={1.5} />
-              <p className="text-[13px] text-white/50">
-                Carregando pagamento seguro...
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Success overlay */}
-        <AnimatePresence>
-          {status === "paid" && (
+      {/* Corpo principal */}
+      <div className="relative flex flex-1 flex-col items-center justify-center gap-6 bg-ink-900/30 px-8 py-10 text-center">
+        <AnimatePresence mode="wait">
+          {status === "paid" ? (
             <motion.div
               key="paid"
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-[#05060F]"
+              className="flex flex-col items-center gap-4"
             >
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 200, damping: 14 }}
-                className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-[0_0_40px_rgba(52,211,153,0.5)]"
+                className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-[0_0_40px_rgba(52,211,153,0.4)]"
               >
                 <CheckCircle2 className="h-10 w-10 text-white" strokeWidth={2} />
               </motion.div>
-              <div className="text-center">
-                <h3 className="font-display text-2xl font-light text-white">
-                  Pagamento confirmado!
+              <div>
+                <h3 className="font-display text-2xl font-light text-white">Pagamento confirmado!</h3>
+                <p className="mt-2 text-[13px] text-white/50">Redirecionando para a confirmação...</p>
+              </div>
+            </motion.div>
+          ) : status === "opening" ? (
+            <motion.div
+              key="opening"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex flex-col items-center gap-4"
+            >
+              <Loader2 className="h-8 w-8 animate-spin text-blue-400" strokeWidth={1.5} />
+              <p className="text-[13px] text-white/50">Abrindo checkout seguro...</p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="open"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center gap-5"
+            >
+              {/* Ícone de janela popup */}
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-blue-400/20 bg-blue-400/10">
+                <svg viewBox="0 0 24 24" fill="none" className="h-8 w-8 text-blue-400">
+                  <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M3 9h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="6.5" cy="7" r="0.75" fill="currentColor" />
+                  <circle cx="9" cy="7" r="0.75" fill="currentColor" />
+                  <circle cx="11.5" cy="7" r="0.75" fill="currentColor" />
+                </svg>
+              </div>
+
+              <div>
+                <h3 className="font-display text-xl font-light text-white">
+                  Janela de pagamento aberta
                 </h3>
-                <p className="mt-2 text-[13px] text-white/50">
-                  Redirecionando...
+                <p className="mt-2 max-w-xs text-[13px] leading-relaxed text-white/50">
+                  Finalize o pagamento na janela que foi aberta. Esta tela aguarda a confirmação automaticamente.
                 </p>
               </div>
+
+              <button
+                onClick={focusPopup}
+                className="inline-flex items-center gap-2 rounded-[7px] border border-blue-400/30 bg-blue-400/10 px-5 py-2.5 text-[13px] font-semibold text-blue-300 transition hover:bg-blue-400/20"
+              >
+                <ExternalLink className="h-3.5 w-3.5" strokeWidth={2} />
+                Trazer janela para frente
+              </button>
+
+              <p className="text-[11px] text-white/30">
+                Janela bloqueada?{" "}
+                <button
+                  onClick={openInNewTab}
+                  className="underline underline-offset-2 hover:text-white/60"
+                >
+                  Clique aqui para abrir em nova aba
+                </button>
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* The actual iframe */}
-        <iframe
-          ref={iframeRef}
-          src={checkoutUrl}
-          onLoad={handleIframeLoad}
-          onError={() => setErrorMsg("Não foi possível carregar o checkout.")}
-          title="Checkout seguro InfinitePay"
-          allow="payment"
-          className="h-full w-full border-0"
-          style={{ minHeight: "520px" }}
-        />
       </div>
 
       {/* Security footer */}
       <div className="flex flex-shrink-0 items-center justify-center gap-4 border-t border-white/5 bg-ink-900/60 px-5 py-3">
         <div className="flex items-center gap-1.5 text-[10px] text-white/30">
           <svg viewBox="0 0 16 16" fill="none" className="h-3 w-3">
-            <path
-              d="M8 1L2 4v4c0 3.31 2.69 6 6 6s6-2.69 6-6V4L8 1z"
-              stroke="currentColor"
-              strokeWidth="1.2"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M5.5 8l2 2 3-3"
-              stroke="currentColor"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M8 1L2 4v4c0 3.31 2.69 6 6 6s6-2.69 6-6V4L8 1z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+            <path d="M5.5 8l2 2 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           SSL 256-bit
         </div>
@@ -237,19 +239,6 @@ export function CheckoutIframe({
         <div className="h-3 w-px bg-white/10" />
         <div className="text-[10px] text-white/30">Powered by InfinitePay</div>
       </div>
-
-      {/* Error fallback */}
-      {errorMsg && (
-        <div className="flex-shrink-0 bg-crimson-500/10 px-5 py-3 text-center text-[12px] text-crimson-400">
-          {errorMsg}{" "}
-          <button
-            onClick={openInNewTab}
-            className="underline underline-offset-2"
-          >
-            Abrir em nova aba
-          </button>
-        </div>
-      )}
     </div>
   );
 }
