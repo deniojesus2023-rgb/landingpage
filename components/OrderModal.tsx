@@ -22,6 +22,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createCheckout, formatPhone } from "@/lib/checkout";
 import { fbEvents } from "@/components/TrackingScripts";
 import { ShinyButton } from "./ui/shiny-button";
+import { CheckoutIframe } from "./CheckoutIframe";
 
 type Plan = "essencial" | "duplo";
 
@@ -108,6 +109,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
 
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>({
     parentName: "",
     whatsapp: "",
@@ -121,6 +123,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
   useEffect(() => {
     if (open) {
       setStep(0);
+      setCheckoutUrl(null);
       setForm({
         parentName: "",
         whatsapp: "",
@@ -215,7 +218,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
     setSubmitting(true);
 
     try {
-      const checkoutUrl = await createCheckout({
+      const url = await createCheckout({
         plan,
         customer: {
           name: form.parentName,
@@ -225,7 +228,15 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
         bumpPoster: form.bumpPoster,
       });
 
-      window.location.href = checkoutUrl;
+      // Se for URL de WhatsApp (fallback), redireciona normalmente
+      if (url.startsWith("https://wa.me")) {
+        window.location.href = url;
+        return;
+      }
+
+      // Caso contrário, exibe o iFrame dentro do modal
+      setCheckoutUrl(url);
+      setSubmitting(false);
     } catch (error) {
       console.error("[OrderModal] Erro no checkout:", error);
       setSubmitting(false);
@@ -241,7 +252,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-ink-950/85 px-4 py-6 backdrop-blur-xl sm:py-10"
           onClick={(e) => {
-            if (e.target === e.currentTarget) onClose();
+            if (e.target === e.currentTarget && !checkoutUrl) onClose();
           }}
         >
           <motion.div
@@ -249,8 +260,30 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 shadow-2xl"
+            className={`relative w-full overflow-hidden rounded-[7px] border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 shadow-2xl ${
+              checkoutUrl ? "max-w-3xl" : "max-w-2xl"
+            }`}
           >
+            {/* iFrame de pagamento embutido */}
+            {checkoutUrl && (
+              <motion.div
+                key="iframe-view"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col"
+                style={{ minHeight: "640px" }}
+              >
+                <CheckoutIframe
+                  checkoutUrl={checkoutUrl}
+                  onClose={() => setCheckoutUrl(null)}
+                  totalPriceStr={totalPriceStr}
+                  planLabel={`Plano ${isDuplo ? "Duplo" : "Essencial"}`}
+                />
+              </motion.div>
+            )}
+
+            {/* Formulário de pedido (oculto quando iFrame está ativo) */}
+            <div className={checkoutUrl ? "hidden" : ""}>
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(30,157,241,0.12),transparent_60%)]" />
 
             <button
@@ -361,6 +394,7 @@ export function OrderModal({ open, plan, onClose }: OrderModalProps) {
                 </ShinyButton>
               )}
             </div>
+          </div>{/* fim do formulário */}
           </motion.div>
         </motion.div>
       )}
